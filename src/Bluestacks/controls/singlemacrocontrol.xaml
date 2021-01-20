@@ -1,0 +1,103 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.SingleMacroControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MouseEnter="SingleMacroControl_MouseEnter" MouseLeave="SingleMacroControl_MouseLeave"
+             Loaded="ScriptControl_Loaded" Height="40" Width="585"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid x:Name="mGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="15"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <Common:CustomPictureBox PreviewMouseLeftButtonUp="BookMarkScriptImg_PreviewMouseLeftButtonUp" x:Name="mBookmarkImg"
+                             Grid.Column="1" HorizontalAlignment="Center" ImageName="bookmark" Height="16" Width="16"
+                             Margin="0,0,5,0" ToolTip="{Binding Path=LocaleModel.[STRING_BOOKMARK], FallbackValue=Bookmark}"/>
+    <Grid x:Name="mScriptNameGrid" Column="2" Margin="5 0 0 0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Grid Column="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Row="1" VerticalAlignment="Center">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Common:CustomTextBox PreviewLostKeyboardFocus="ScriptName_LostKeyboardFocus" LostFocus="ScriptName_LostFocus"
+                                MouseLeftButtonUp="NoSelection_MouseUp" KeyDown="ScriptName_KeyDown" x:Name="mScriptName"
+                                Grid.Row="0" Text="PUBG multi kills" IsReadOnly="true" Focusable="false" VerticalAlignment="Bottom"
+                                HorizontalAlignment="Left">
+          </Common:CustomTextBox>
+          <TextBlock x:Name="mUserNameTextblock" HorizontalAlignment="Left" Grid.Row="1" Visibility="Collapsed"
+                     VerticalAlignment="Top" FontSize="10"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" Loaded="UserNameHyperlink_Loaded"
+                       x:Name="mUserNameHyperlink" Style="{StaticResource HyperlinkStyle}">Hey You</Hyperlink>
+          </TextBlock>
+        </Grid>
+      </Grid>
+      <Common:CustomPictureBox MouseLeftButtonDown="EditMacroName_MouseDown" Name="mEditNameImg" Grid.Column="1"
+                               Visibility="Hidden" Width="16" HorizontalAlignment="Right" VerticalAlignment="Center"
+                               ImageName="edit_icon" Height="16" Margin="5,0"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_RENAME], FallbackValue=Rename}"/>
+      <TextBlock x:Name="mTimestamp" Grid.Column="2" Width="Auto" IsEnabled="false" FontSize="12" Margin="0 0 10 0"
+                 VerticalAlignment="Center" HorizontalAlignment="Right"
+                 Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimDimColor]}"/>
+      <TextBlock Name="mPrefix" Grid.Row="0" Grid.Column="3" Width="Auto" IsEnabled="false" Text="Ctrl + Alt + "
+                 FontSize="12" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Right"
+                 Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimDimColor]}"/>
+    </Grid>
+    <StackPanel Grid.Column="3" Margin="0,0,6,0" Orientation="Horizontal" HorizontalAlignment="Right">
+      <Common:CustomTextBox PreviewKeyDown="MacroShortcutPreviewKeyDown" x:Name="mMacroShortcutTextBox" Text="Shift"
+                            FontSize="12" MaxLength="1" CharacterCasing="Upper" FontWeight="Bold" TextAlignment="Center"
+                            Height="24" Width="24"/>
+      <StackPanel x:Name="mScriptPlayPanel" Orientation="Horizontal" Visibility="Visible" Width="145"
+                  HorizontalAlignment="Right" Margin="5 0 0 0">
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="BookMarkScriptImg_PreviewMouseLeftButtonUp" x:Name="mAutorunImage"
+                                 HorizontalAlignment="Center" ImageName="autorun_macro" Height="16" Width="16" Margin="5"
+                                 Visibility="Hidden" ToolTip="{Binding Path=LocaleModel.[STRING_EXECUTE_SCRIPT_ON_RESTART]}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="CommunityMacroPage_PreviewMouseLeftButtonUp"
+                                 x:Name="mCommunityMacroImage" HorizontalAlignment="Center" ImageName="community_macro" Height="16"
+                                 Width="16" Margin="5" Visibility="Hidden"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_OPEN_COMMUNITY_PAGE], FallbackValue='Open macro community page'}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="PlayScriptImg_PreviewMouseLeftButtonUp" x:Name="mPlayScriptImg"
+                                 HorizontalAlignment="Right" ImageName="play" Height="16" Width="16" Margin="5"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_PLAY], FallbackValue=Play}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="ScriptSettingsImg_PreviewMouseLeftButtonUp" x:Name="mScriptSettingsImg"
+                                 HorizontalAlignment="Right" ImageName="macro_settings" Height="16" Width="16" Margin="5"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="ScriptSettingsImg_PreviewMouseLeftButtonUp"
+                                 x:Name="mMergeScriptSettingsImg" HorizontalAlignment="Right" ImageName="mergesettings" Height="16"
+                                 Width="16" Margin="5" Visibility="Collapsed"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_MERGE_SETTINGS], FallbackValue='Merge Settings'}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="DeleteScriptImg_PreviewMouseLeftButtonUp" x:Name="mDeleteScriptImg"
+                                 HorizontalAlignment="Right" ImageName="macro_delete" Height="16" Width="16" Margin="5"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_DELETE], FallbackValue=Delete}"/>
+      </StackPanel>
+      <StackPanel x:Name="mScriptRunningPanel" Orientation="Horizontal" Visibility="Collapsed" Width="145"
+                  Margin="5 0 0 0" HorizontalAlignment="Right">
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="StopScriptImg_PreviewMouseLeftButtonUp" x:Name="mStopScriptImg"
+                                 HorizontalAlignment="Right" ImageName="stop_title_bar" Height="16" Width="16" Margin="60, 5, 5, 5"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_STOP], FallbackValue=Stop}"/>
+        <TextBlock Name="mRunning" MaxWidth="50" Margin="0,0,5,0" VerticalAlignment="Center"
+                   TextTrimming="CharacterEllipsis" FontSize="12"
+                   Text="{Binding Path=LocaleModel.[STRING_RUNNING], FallbackValue=Running}"
+                   ToolTip="{Binding Path=LocaleModel.[STRING_RUNNING], FallbackValue=Running}"
+                   Foreground="{Binding Path=ColorModel.[InstallerWindowTextForeground]}"/>
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</UserControl>

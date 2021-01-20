@@ -1,0 +1,56 @@
+<local:CustomPopUp x:Class="BlueStacks.BlueStacksUI.SkillIconToolTipPopup"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+                   xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                   AllowsTransparency="true" StaysOpen="false" IsOpen="false" Placement="Top" PopupAnimation="Fade"
+                   VerticalOffset="5">
+  <FrameworkElement.Resources>
+    <Common:XamlSizeConverter x:Key="XamlSizeConverter"/>
+  </FrameworkElement.Resources>
+  <FrameworkElement.Style>
+    <Style TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Style>
+  <Border Style="{StaticResource ShadowBorderForPopup}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+      </Grid.RowDefinitions>
+      <Border Style="{StaticResource OuterBorder}">
+        <Grid>
+          <UIElement.OpacityMask>
+            <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder1}"/>
+          </UIElement.OpacityMask>
+          <Border x:Name="mMaskBorder1" Style="{StaticResource MaskBorder}"/>
+          <Grid Margin="5">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="mSkillIconHeaderText" Grid.Row="0" FontSize="12" FontWeight="Bold" MaxWidth="130"
+                       TextWrapping="WrapWithOverflow" Grid.Column="0"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"
+                       Text="{Binding Path=LocaleModel.[STRING_CHANGE_SKILL_SETTINGS], FallbackValue='Change skill settings'}"/>
+          </Grid>
+        </Grid>
+      </Border>
+      <Grid Row="1">
+        <Path x:Name="mDownArrow" Grid.Column="5" Margin="0,-1,0,0" Data="M 0,0 L 6,6 12,0 "
+              HorizontalAlignment="Center" VerticalAlignment="Top"
+              Stroke="{Binding ColorModel.[PopupBorderBrush]}"
+              Fill="{Binding ColorModel.[ContextMenuItemBackgroundColor]}"/>
+      </Grid>
+    </Grid>
+  </Border>
+</local:CustomPopUp>

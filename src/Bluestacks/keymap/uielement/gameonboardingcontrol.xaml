@@ -1,0 +1,33 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.GameOnboardingControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Loaded="Control_Loaded" KeyDown="Control_KeyDown" Width="720" Height="516"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="40"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid Row="1">
+      <Border Background="{Binding Path=ColorModel.[ApplicationBackgroundBrush]}">
+        <Grid x:Name="mBrowserGrid" Opacity="1"/>
+      </Border>
+      <Grid x:Name="mCloseOnboardingGrid" Margin="10" Height="32" Width="32" HorizontalAlignment="Right"
+            VerticalAlignment="Top" Background="#33000000" Visibility="Collapsed">
+        <Common:CustomPictureBox MouseLeftButtonUp="CloseOnboardingButton_MouseLeftButtonUp" x:Name="mCloseOnboardingButton"
+                                 Height="16" Width="16" Margin="8" Opacity="1" HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" ImageName="close"/>
+      </Grid>
+    </Grid>
+    <Grid Row="0">
+      <Common:CustomButton Click="SkipOnboardingButton_Click" x:Name="mSkipOnboardingButton" ButtonColor="Overlay" Height="32"
+                           FontSize="12" MinWidth="80" Visibility="Collapsed" HorizontalAlignment="Right"
+                           VerticalAlignment="Center" Content="{Binding Path=LocaleModel.[STRING_SKIP], FallbackValue=Skip}"/>
+      <Grid x:Name="mBrowserGridTemp" Height="1" Width="1"/>
+    </Grid>
+  </Grid>
+</UserControl>

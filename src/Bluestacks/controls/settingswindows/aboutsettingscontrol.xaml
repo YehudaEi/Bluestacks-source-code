@@ -1,0 +1,156 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.AboutSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid Margin="30,25,20,25">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Label Grid.Row="0" HorizontalAlignment="Left" Margin="-5,0,0,0">
+      <TextBlock FontWeight="Normal" FontSize="16" Padding="0"
+                 Text="{Binding Path=LocaleModel.[STRING_ABOUT_BLUESTACKS], FallbackValue='About BlueStacks'}"
+                 Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+    </Label>
+    <Grid Row="1" Margin="0,15,0,0">
+      <Grid x:Name="mPoweredByBSGrid" Visibility="Hidden">
+        <Common:CustomPictureBox ImageName="powered_by_bs.png" HorizontalAlignment="Left" Width="60" Height="60"/>
+      </Grid>
+      <Grid x:Name="mBSIconAndNameGrid">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox ImageName="ProductLogo.png" HorizontalAlignment="Left" Width="60" Height="60"/>
+        <Grid x:Name="mProductTextGrid" Column="1" Margin="20,0,0,0" HorizontalAlignment="Left"
+              VerticalAlignment="Center">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Label VerticalAlignment="Stretch" Grid.Row="0" FontFamily="NeoSans" FontSize="22" Padding="0"
+                 Content="{Binding Path=LocaleModel.[BlueStacks], FallbackValue=BlueStacks}"
+                 Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+          <Label x:Name="mVersionLabel" VerticalAlignment="Top" Grid.Row="1" FontSize="14" Padding="0"
+                 Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid Row="2">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Line Grid.Row="0" X1="0" Y1="0" X2="500" Y2="0" Margin="0,30,0,15" StrokeThickness="1" Opacity="0.5"
+            Stroke="{Binding Path=ColorModel.[HorizontalSeparator]}"/>
+      <Grid Row="1" VerticalAlignment="Center">
+        <Grid x:Name="mUpdateInfoGrid" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox Grid.Column="0" ImageName="update_icon_settings" VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+          <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"
+                      Margin="15,0,0,0">
+            <Label x:Name="bodyLabel" FontSize="14" FontWeight="Medium"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"
+                   Content="{Binding Path=LocaleModel.[STRING_UPDATE_AVAILABLE], FallbackValue='Update available'}"/>
+            <Label x:Name="mLabelVersion" FontSize="13" Padding="5,0,0,0" FontWeight="Light"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+            <Label FontSize="13" Padding="5,0,0,0" Margin="0,5,0,0"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+              <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" x:Name="mDetailedChangeLogs"
+                         Style="{StaticResource HyperlinkStyle}"/>
+            </Label>
+          </StackPanel>
+        </Grid>
+        <Common:CustomButton Click="mCheckUpdateBtn_Click" x:Name="mCheckUpdateBtn" ButtonColor="Blue"
+                             HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Content="{Binding Path=LocaleModel.[STRING_CHECK_UPDATES], FallbackValue='Check for updates'}"/>
+        <TextBlock x:Name="mStatusLabel" MaxWidth="325" Visibility="Collapsed" HorizontalAlignment="Left"
+                   VerticalAlignment="Center" FontSize="14" TextWrapping="WrapWithOverflow"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"
+                   Text="{Binding Path=LocaleModel.[STRING_LATEST_VERSION], FallbackValue='You are on the latest version'}"/>
+        <Grid x:Name="mCheckingGrid" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox Grid.Column="0" ImageName="loading" IsImageToBeRotated="true"/>
+          <Label Grid.Column="1" Margin="5,0,0,0" FontSize="14"
+                 Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"
+                 Content="{Binding Path=LocaleModel.[STRING_CHECKING_UPDATES], FallbackValue='Checking for updates'}"/>
+        </Grid>
+      </Grid>
+      <Line Grid.Row="2" X1="0" Y1="0" X2="500" Y2="0" Margin="0,15,0,30" StrokeThickness="1" Opacity="0.5"
+            Stroke="{Binding Path=ColorModel.[HorizontalSeparator]}"/>
+    </Grid>
+    <Grid Name="ContactInfoGrid" Row="3">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="mWebsiteLabel" HorizontalAlignment="Left" Padding="0" FontSize="14" Content="Website - "
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+        <Label Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" FontSize="14"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+          <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="www.bluestacks.com"
+                     Style="{StaticResource HyperlinkStyle}">www.bluestacks.com</Hyperlink>
+        </Label>
+      </Grid>
+      <Grid Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="mSupportLabel" HorizontalAlignment="Left" Padding="0" FontSize="14" Content="Support - "
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+        <Label Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="14" Padding="0"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+          <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://support.bluestacks.com"
+                     Style="{StaticResource HyperlinkStyle}">
+            support.bluestacks.com
+          </Hyperlink>
+        </Label>
+      </Grid>
+      <Grid Row="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="mSupportMailLabel" HorizontalAlignment="Left" Padding="0" FontSize="14"
+               Content="Support e-mail - "
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+        <Label Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" FontSize="14"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+          <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" x:Name="mSupportEMailHyperlink"
+                     Style="{StaticResource HyperlinkStyle}" NavigateUri="mailto:support@bluestacks.com">
+            support@bluestacks.com
+          </Hyperlink>
+        </Label>
+      </Grid>
+    </Grid>
+    <TextBlock x:Name="mTermsOfUse" Grid.Row="4" Margin="0,15,0,0" Width="500" TextWrapping="WrapWithOverflow"
+               HorizontalAlignment="Left" FontSize="14"
+               Text="{Binding Path=LocaleModel.[STRING_TERMS_OF_USE], StringFormat='{0} '}"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+      <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" Loaded="mTermsOfUseLink_Loaded"
+                 x:Name="mTermsOfUseLink" Style="{StaticResource HyperlinkStyle}">Terms of Use</Hyperlink>
+    </TextBlock>
+  </Grid>
+</UserControl>

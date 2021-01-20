@@ -1,0 +1,36 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ImageTranslateControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             Loaded="UserControl_Loaded"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid x:Name="mGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="40"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid x:Name="mTopBar" Row="0" Background="{Binding Path=ColorModel.[SettingsWindowTitleBarBackground]}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Label x:Name="mTitleLabel" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="16,0,0,0"
+             Foreground="{Binding Path=ColorModel.[FrontendPopupTitleColor]}"
+             Content="{Binding Path=LocaleModel.[STRING_TRANSLATED_IMAGE], FallbackValue='Translated image'}"/>
+      <Common:CustomPictureBox MouseLeftButtonUp="CloseButton_MouseLeftButtonUp" x:Name="mCloseButton" Width="18" Height="18"
+                               HorizontalAlignment="Right" VerticalAlignment="Center" ImageName="popup_close" Margin="0,0,12,0"
+                               Grid.Column="2" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"/>
+    </Grid>
+    <Common:CustomPictureBox x:Name="mFrontEndImage" Grid.Row="1"/>
+    <Common:CustomPictureBox x:Name="mLoadingImage" ImageName="img_busy.png" Grid.Row="0" Grid.RowSpan="3"
+                             IsImageToBeRotated="true" Height="60" Width="60"/>
+    <TextBlock x:Name="mBootText" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Center"
+               VerticalAlignment="Center" FontSize="24" Margin="0,80,0,0" Text="Translating.."
+               Foreground="{Binding Path=ColorModel.[BootPromotionTextColor]}"/>
+  </Grid>
+</UserControl>

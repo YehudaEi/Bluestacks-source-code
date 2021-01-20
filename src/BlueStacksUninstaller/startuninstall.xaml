@@ -1,0 +1,23 @@
+<UserControl x:Class="BlueStacks.Uninstaller.StartUninstall"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.Uninstaller"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Background="{Binding Path=ColorModel.[InstallerWindowBackground]}"
+             DataContext="{Binding Source={x:Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <ResourceDictionary Source="pack://application:,,,/HD-Common;component/Resources/ButtonResource.xaml"/>
+  </FrameworkElement.Resources>
+  <Grid>
+    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+      <Button Name="mUninstallCancel" Grid.Column="1" Style="{StaticResource MaterialDesignButton}"
+              HorizontalAlignment="Left" Margin="15,15,7.5,15"
+              Content="{Binding Path=LocaleModel.[STRING_CANCEL], FallbackValue=Cancel}"/>
+      <Button Name="mUninstallStart" Grid.Column="1" Style="{StaticResource MaterialDesignButtonRed}"
+              HorizontalAlignment="Right" Margin="7.5,15,15,15"
+              Content="{Binding Path=LocaleModel.[STRING_UNINSTALL], FallbackValue=Uninstall}"/>
+    </StackPanel>
+  </Grid>
+</UserControl>

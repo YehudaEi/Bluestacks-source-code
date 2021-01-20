@@ -1,0 +1,501 @@
+<bluestacksCore:UiWindowBase x:Class="MultiInstanceManagerMVVM.View.Classes.MultiInstance.MultiInstanceView"
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                             xmlns:bluestacksCore="clr-namespace:BlueStacks.Core;assembly=BlueStacks.Core"
+                             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                             xmlns:command="http://www.galasoft.ch/mvvmlight"
+                             Deactivated="MultiInstanceWindow_Deactivated" x:Name="MultiInstanceWindow" Background="Transparent"
+                             AllowsTransparency="true" ResizeMode="CanMinimize" WindowStyle="None"
+                             WindowStartupLocation="CenterScreen" Height="480" Width="680" WindowState="Normal"
+                             Title="{Binding Title}" Icon="{Binding Icon}" FocusVisualStyle="{x:Null}"
+                             DataContext="{Binding MultiInstanceViewModel, Source={StaticResource ViewModelLocator}}">
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Loaded">
+      <command:EventToCommand Command="{Binding GetWindowCommand}" CommandParameter="{Binding ElementName=MultiInstanceWindow}"/>
+    </i:EventTrigger>
+    <i:EventTrigger EventName="Closing">
+      <command:EventToCommand Command="{Binding ClosingWindowCommand}"/>
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+  <FrameworkElement.Resources>
+    <Style x:Key="ControlGridStyle" TargetType="{x:Type Grid}">
+      <Setter Property="Panel.Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="TextblockStyle" TargetType="{x:Type TextBlock}">
+      <Setter Property="TextBlock.Foreground" Value="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+      <Setter Property="TextBlock.FontSize" Value="16"/>
+      <Setter Property="FrameworkElement.Margin" Value="10,5,10,5"/>
+      <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
+      <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis"/>
+      <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
+      <Setter Property="FrameworkElement.ToolTip"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+    </Style>
+    <Common:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{x:Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style TargetType="{x:Type FrameworkElement}">
+      <Setter Property="Common:CustomPictureBox.IsImageHover" Value="false"/>
+      <Setter Property="TextBlock.Foreground"
+              Value="{Binding Path=ColorModel.[ContextMenuItemForegroundDimDimColor]}"/>
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=IsMouseOver}"
+                     Value="True">
+          <Setter Property="Common:CustomPictureBox.IsImageHover" Value="true"/>
+          <Setter Property="TextBlock.Foreground" Value="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid>
+    <i:Interaction.Behaviors>
+      <bluestacksCore:DragBehavior/>
+    </i:Interaction.Behaviors>
+    <Border Style="{StaticResource OuterBorder}">
+      <Grid x:Name="mMainGrid">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Row="0" Background="Transparent" Margin="15,8,10,8">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox Grid.Column="0" ImageName="instancemanagerlogo" VerticalAlignment="Center" Height="24" Width="24"/>
+          <TextBlock Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold"
+                     Text="{Binding Path=LocaleModel.[STRING_MULTIINSTANCE_MANAGER], FallbackValue='BlueStacks Multi-Instance Manager'}"
+                     Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+          <StackPanel Grid.Column="3" Margin="8,0,0,0" VerticalAlignment="Center" Orientation="Horizontal">
+            <Common:CustomPictureBox Height="24" Width="24" ImageName="help_blue" Cursor="Hand"
+                                     ToolTip="{Binding Path=LocaleModel.[STRING_HELP_AND_SUPPORT], FallbackValue=Help}"
+                                     Visibility="{Binding HelpSupportVisibility, Converter={StaticResource booleanToVisibilityConverter}}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                  <command:EventToCommand Command="{Binding MIMHelpCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </Common:CustomPictureBox>
+            <ToggleButton x:Name="mConfigButton" HorizontalContentAlignment="Stretch" Background="Transparent"
+                          BorderThickness="0" BorderBrush="{Binding Path=ColorModel.[ComboBoxBorderColor]}"
+                          Visibility="{Binding ConfigButtonVisibility, Converter={StaticResource booleanToVisibilityConverter}}"
+                          IsHitTestVisible="{Binding ElementName=mConfigMenuItem, Path=IsOpen, Converter={StaticResource InverseBooleanConverter}}">
+              <FrameworkElement.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                  <Setter Property="Control.Template">
+                    <Setter.Value>
+                      <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="border" Background="{TemplateBinding Control.Background}"
+                                BorderThickness="{TemplateBinding Control.BorderThickness}"
+                                BorderBrush="{TemplateBinding Control.BorderBrush}" SnapsToDevicePixels="true">
+                          <ContentPresenter x:Name="contentPresenter" Focusable="false"
+                                            HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                            Margin="{TemplateBinding Control.Padding}" RecognizesAccessKey="true"
+                                            SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                                            VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"/>
+                        </Border>
+                      </ControlTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </Style>
+              </FrameworkElement.Style>
+              <Common:CustomPictureBox Height="24" Width="24" Margin="3,0,-4,-3" ImageName="{Binding MenuButtonImage}"
+                                       ToolTip="{Binding Path=LocaleModel.[STRING_MENU], FallbackValue=Menu}"/>
+            </ToggleButton>
+            <Common:CustomPictureBox ImageName="minimize_multiinstance" Height="24" Width="24" VerticalAlignment="Bottom"
+                                     Margin="9,0,0,0"
+                                     ToolTip="{Binding Path=LocaleModel.[STRING_MINIMIZE_TOOLTIP], FallbackValue=Minimize}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                  <command:EventToCommand Command="{Binding MinimizeWindowCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </Common:CustomPictureBox>
+            <Common:CustomPictureBox ImageName="close_multiinstance" Height="24" Width="24" Margin="7,0,0,0"
+                                     ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                  <command:EventToCommand Command="{Binding CloseWindowCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </Common:CustomPictureBox>
+          </StackPanel>
+        </Grid>
+        <Border BorderThickness="0,1,0,1" Grid.Row="1"
+                BorderBrush="{Binding Path=ColorModel.[HorizontalSeparator]}">
+          <Grid Margin="15,10,15,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomCheckbox Grid.Column="0" VerticalAlignment="Center" Height="16" TextFontSize="13" MaxWidth="94"
+                                   Content="{Binding Path=LocaleModel.[STRING_SELECT_ALL], FallbackValue='Select all'}"
+                                   IsChecked="{Binding SelectAllChecked, Mode=TwoWay}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Checked">
+                  <command:EventToCommand Command="{Binding SelectAllCheckedCommand}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Unchecked">
+                  <command:EventToCommand Command="{Binding SelectAllCheckedUnCheckedCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </Common:CustomCheckbox>
+            <Separator Grid.Column="1" Margin="8,5,0,3" Background="{Binding Path=ColorModel.[VerticalSeparator]}"
+                       Visibility="{Binding BatchVerticalSeperatorVisibility, Converter={StaticResource booleanToVisibilityConverter}}">
+              <FrameworkElement.LayoutTransform>
+                <RotateTransform Angle="90"/>
+              </FrameworkElement.LayoutTransform>
+            </Separator>
+            <StackPanel Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"
+                        Orientation="Horizontal">
+              <Common:CustomButton Height="24" Width="68" VerticalAlignment="Center" FontSize="12" ButtonColor="Blue"
+                                   Content="{Binding Path=LocaleModel.[STRING_START], FallbackValue=Start}"
+                                   Visibility="{Binding BatchStartButtonVisibility, Mode=TwoWay, Converter={StaticResource booleanToVisibilityConverter}}"
+                                   Command="{Binding BatchStartButtonClickCommand}"/>
+              <Common:CustomButton Height="24" Width="68" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="12"
+                                   ButtonColor="White" Content="{Binding Path=LocaleModel.[STRING_STOP], FallbackValue=Stop}"
+                                   Visibility="{Binding BatchStopButtonVisibility, Mode=TwoWay, Converter={StaticResource booleanToVisibilityConverter}}"
+                                   Command="{Binding BatchStopButtonClickCommand}"/>
+              <Common:CustomButton x:Name="mBatchDeleteButton" Margin="8,0,0,0" Height="24" FontSize="12" Width="68"
+                                   VerticalAlignment="Center" ButtonColor="Red"
+                                   Visibility="{Binding BatchDeleteButtonVisibility, Mode=TwoWay, Converter={StaticResource booleanToVisibilityConverter}}"
+                                   Content="{Binding Path=LocaleModel.[STRING_DELETE], FallbackValue=Delete}"
+                                   Command="{Binding BatchDeleteButtonClickCommand}"/>
+            </StackPanel>
+            <Grid Column="3" VerticalAlignment="Center" HorizontalAlignment="Right">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto"/>
+                  <ColumnDefinition Width="Auto"/>
+                  <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Common:CustomPictureBox ImageName="refresh" Grid.Column="0" Height="16" Width="16" Margin="0,0,8,0"
+                                         IsEnabled="{Binding IsRefreshAvailable}"
+                                         ToolTip="{Binding Path=LocaleModel.[STRING_REFRESH], FallbackValue=Refresh}">
+                  <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                      <command:EventToCommand Command="{Binding RefreshWindowCommand}"/>
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>
+                </Common:CustomPictureBox>
+                <Grid Column="1">
+                  <FrameworkElement.Resources>
+                    <DataTemplate x:Key="SortOptionTemplate">
+                      <Common:CustomTextBlock x:Name="mDisplayTextBlock" Text="{Binding SortOption}"/>
+                      <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}"
+                                     Value="{x:Null}">
+                          <Setter TargetName="mDisplayTextBlock" Value="{Binding SelectedDisplayText}" Property="TextBlock.Text"/>
+                        </DataTrigger>
+                      </DataTemplate.Triggers>
+                    </DataTemplate>
+                  </FrameworkElement.Resources>
+                  <Common:CustomComboBox x:Name="SortOptionComboBox" Margin="0,0,8,0" Height="24" Width="126" FontSize="12"
+                                         VerticalAlignment="Center" ToolTipWhenTrimmed="true"
+                                         ItemTemplate="{StaticResource SortOptionTemplate}"
+                                         ToolTipText="{Binding SelectedItem.SelectedDisplayText, ElementName=SortOptionComboBox}"
+                                         ItemsSource="{Binding InstanceSortOptionList}"
+                                         SelectedValue="{Binding SelectedInstanceSortOption, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="DropDownOpened">
+                        <command:EventToCommand Command="{Binding SortInstanceComboBoxOpenedCommand}"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </Common:CustomComboBox>
+                </Grid>
+                <Grid Column="2">
+                  <Common:CustomTextBox Width="140" Height="24" FontSize="12" AcceptsReturn="false"
+                                        Text="{Binding SearchInstanceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        WatermarkText="{Binding Path=LocaleModel.[STRING_SEARCH], FallbackValue=Search}">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="LostKeyboardFocus">
+                        <command:EventToCommand Command="{Binding SearchInstanceLostFocusCommand}"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </Common:CustomTextBox>
+                  <Common:CustomPictureBox ImageName="search_box" Height="18" Width="18" VerticalAlignment="Center"
+                                           HorizontalAlignment="Right">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <command:EventToCommand Command="{Binding SearchInstanceCommand}"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </Common:CustomPictureBox>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Border>
+        <Grid Row="2" IsSharedSizeScope="true">
+          <Grid>
+            <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" FontSize="14"
+                       Visibility="{Binding NoInstanceTextVisibility, Mode=TwoWay, Converter={StaticResource BooleanToHiddenVisibilityConverter}}"
+                       Text="{Binding Path=LocaleModel.[STRING_NO_INSTANCE_FOUND], FallbackValue='No BlueStacks instances found!'}"
+                       Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+          </Grid>
+          <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding InstanceList, Mode=TwoWay}">
+              <i:Interaction.Behaviors>
+                <bluestacksCore:ScrollOnNewItemBehaviour/>
+              </i:Interaction.Behaviors>
+            </ItemsControl>
+          </ScrollViewer>
+          <Grid VerticalAlignment="Bottom" Height="80" Margin="16"
+                Visibility="{Binding PromotionalTeaserVisibility}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="307"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
+              <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                  <GradientStop Color="#1AA6C5" Offset="0.0"/>
+                  <GradientStop Color="#4E2E93" Offset="1"/>
+                </LinearGradientBrush>
+              </Shape.Fill>
+            </Rectangle>
+            <Common:CustomPictureBox Grid.Column="0" ImageName="bluestacks64logo" Height="48" Width="48" Margin="16"/>
+            <TextBlock FontWeight="Bold" Grid.Column="1" FontSize="14" Margin="0,19,0,23" Width="307" TextWrapping="Wrap"
+                       TextTrimming="CharacterEllipsis"
+                       Text="{Binding Path=LocaleModel.[STRING_PROMOTIONAL_TEASER], FallbackValue='Use the Multi-Instance Manager to play Android 64-bit games! Game on!'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+            <Common:CustomButton Grid.Column="3" Margin="-36,23,0,22" Width="144" Height="35" FontSize="16" ButtonColor="Blue"
+                                 Content="{Binding Path=LocaleModel.[STRING_CREATE_INSTANCE], FallbackValue='Create instance'}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                  <command:EventToCommand Command="{Binding Create64BitInstanceClickCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </Common:CustomButton>
+            <Common:CustomPictureBox ImageName="close" Grid.Column="4" Height="17" Width="17" Margin="10,0,14,0"
+                                     VerticalAlignment="Center" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                  <command:EventToCommand Command="{Binding ClosePromotionalTeaserCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </Common:CustomPictureBox>
+          </Grid>
+        </Grid>
+        <Border BorderThickness="0,1,0,0" Grid.Row="3"
+                BorderBrush="{Binding Path=ColorModel.[HorizontalSeparator]}">
+          <Grid Margin="15,10,15,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Background="Transparent">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                  <command:EventToCommand Command="{Binding ArrangeButtonClickCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+              <FrameworkElement.Resources>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type FrameworkElement}}"/>
+                <Style TargetType="{x:Type Common:CustomPictureBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}"/>
+              </FrameworkElement.Resources>
+              <Common:CustomPictureBox ImageName="arrange" VerticalAlignment="Center" Height="16" Width="16"/>
+              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" FontSize="14"
+                         Text="{Binding Path=LocaleModel.[STRING_ARRANGE], FallbackValue=Arrange}"/>
+            </StackPanel>
+            <Separator Grid.Column="1" Margin="14,5,14,3" Background="{Binding Path=ColorModel.[VerticalSeparator]}">
+              <FrameworkElement.LayoutTransform>
+                <RotateTransform Angle="90"/>
+              </FrameworkElement.LayoutTransform>
+            </Separator>
+            <StackPanel x:Name="mEcoModeStackPanel" Grid.Column="2" VerticalAlignment="Center" Background="Transparent"
+                        Orientation="Horizontal" IsEnabled="{Binding IsFarmModeEnabled, Mode=TwoWay}"
+                        Visibility="{Binding FarmButtonVisibility, Mode=OneWay, Converter={StaticResource BooleanToHiddenVisibilityConverter}}">
+              <FrameworkElement.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                  <Style.Triggers>
+                    <Trigger Property="UIElement.IsEnabled" Value="false">
+                      <Setter Property="UIElement.Opacity" Value="0.5"/>
+                    </Trigger>
+                    <Trigger Property="UIElement.IsEnabled" Value="true">
+                      <Setter Property="UIElement.Opacity" Value="1"/>
+                    </Trigger>
+                  </Style.Triggers>
+                </Style>
+              </FrameworkElement.Style>
+              <FrameworkElement.Resources>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type FrameworkElement}}"/>
+                <Style TargetType="{x:Type Common:CustomPictureBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}"/>
+              </FrameworkElement.Resources>
+              <Common:CustomToggleButtonWithState LabelVisibility="Collapsed" Height="16" Width="32" BoolValue="{Binding IsFarming}">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <command:EventToCommand Command="{Binding ToggleFarmButtonClickCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </Common:CustomToggleButtonWithState>
+              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" FontSize="14"
+                         Text="{Binding Path=LocaleModel.[STRING_ECO_MODE], FallbackValue='Eco mode'}"/>
+              <Common:CustomPictureBox MouseEnter="EcoModeHelp_MouseEnter" MouseLeave="EcoModeHelp_MouseLeave" x:Name="mEcoModeHelp"
+                                       Height="14" Width="14" ImageName="menu_help" Margin="13,0,0,0" Cursor="Hand"/>
+            </StackPanel>
+            <Separator Grid.Column="3" Margin="14,5,14,3" Background="{Binding Path=ColorModel.[VerticalSeparator]}">
+              <FrameworkElement.LayoutTransform>
+                <RotateTransform Angle="90"/>
+              </FrameworkElement.LayoutTransform>
+            </Separator>
+            <StackPanel Grid.Column="4" Orientation="Horizontal" Background="Transparent">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                  <command:EventToCommand Command="{Binding SettingsButtonClickCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+              <FrameworkElement.Resources>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type FrameworkElement}}"/>
+                <Style TargetType="{x:Type Common:CustomPictureBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}"/>
+              </FrameworkElement.Resources>
+              <Common:CustomPictureBox ImageName="menu_settings" VerticalAlignment="Center" Height="16" Width="16"/>
+              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" FontSize="14"
+                         Text="{Binding Path=LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="5" HorizontalAlignment="Right" Orientation="Horizontal">
+              <Common:CustomButton Height="25" MinWidth="95" VerticalAlignment="Center" FontSize="12" ButtonColor="Red"
+                                   Visibility="{Binding StopAllButtonVisibility, Converter={StaticResource BooleanToHiddenVisibilityConverter}}"
+                                   Content="{Binding Path=LocaleModel.[STRING_STOP_ALL], FallbackValue='Stop all'}">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="Click">
+                    <command:EventToCommand Command="{Binding StopAllButtonClickCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </Common:CustomButton>
+              <Common:CustomButton Margin="10,0,0,0" Height="25" FontSize="12" MinWidth="110" VerticalAlignment="Center"
+                                   ButtonColor="Background"
+                                   Content="{Binding Path=LocaleModel.[STRING_NEW_INSTANCE], FallbackValue='New Instance'}">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="Click">
+                    <command:EventToCommand Command="{Binding CreateNewInstanceCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </Common:CustomButton>
+            </StackPanel>
+          </Grid>
+        </Border>
+        <Grid x:Name="mOverlayGrid" Row="1" RowSpan="3"
+              Visibility="{Binding OverlayGridVisibility, Mode=TwoWay, Converter={StaticResource BooleanToHiddenVisibilityConverter}}">
+          <Grid Background="{Binding Path=ColorModel.[DimOverlayColor]}">
+            <UIElement.Effect>
+              <BlurEffect Radius="0" KernelType="Gaussian"/>
+            </UIElement.Effect>
+          </Grid>
+        </Grid>
+        <Common:CustomPopUp Opened="mConfigMenuItem_Opened" x:Name="mConfigMenuItem" StaysOpen="false" Placement="Bottom"
+                            Style="{StaticResource CenteredHorizontalOffsetStyle}" RenderOptions.EdgeMode="Aliased"
+                            PopupAnimation="Fade" AllowsTransparency="true"
+                            IsOpen="{Binding IsChecked, ElementName=mConfigButton, Mode=TwoWay}"
+                            PlacementTarget="{Binding ElementName=mConfigButton}">
+          <Border x:Name="mShadowBorder" Style="{StaticResource ShadowBorder}">
+            <Grid>
+              <Border Style="{StaticResource OuterBorder}">
+                <Grid x:Name="mGrid">
+                  <UIElement.OpacityMask>
+                    <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+                  </UIElement.OpacityMask>
+                  <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+                  <StackPanel>
+                    <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Style="{StaticResource ControlGridStyle}"
+                          Visibility="{Binding IsShowMimUpdateIcon, Converter={StaticResource booleanToVisibilityConverter}}">
+                      <TextBlock Style="{StaticResource TextblockStyle}"
+                                 Text="{Binding Path=LocaleModel.[STRING_CHECK_UPDATES], FallbackValue='Check for updates'}"/>
+                      <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                          <command:EventToCommand Command="{Binding CheckForUpdateCommand}"/>
+                        </i:EventTrigger>
+                      </i:Interaction.Triggers>
+                    </Grid>
+                    <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Style="{StaticResource ControlGridStyle}">
+                      <TextBlock Style="{StaticResource TextblockStyle}"
+                                 Text="{Binding Path=LocaleModel.[STRING_REPORT_A_PROBLEM], FallbackValue='Report a Problem'}"/>
+                      <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                          <command:EventToCommand Command="{Binding LogCollectorCommand}"/>
+                        </i:EventTrigger>
+                      </i:Interaction.Triggers>
+                    </Grid>
+                  </StackPanel>
+                </Grid>
+              </Border>
+            </Grid>
+          </Border>
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Opened">
+              <command:EventToCommand Command="{Binding OpenedMenuPopupCommand}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="Closed">
+              <command:EventToCommand Command="{Binding ClosedMenuPopupCommand}"/>
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+        </Common:CustomPopUp>
+        <Common:CustomPopUp MouseLeave="EcoModeHelp_MouseLeave" x:Name="mEcoModeHelpPopup" StaysOpen="true" Placement="Top"
+                            VerticalOffset="-5" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                            RenderOptions.EdgeMode="Aliased" PopupAnimation="Fade" AllowsTransparency="true"
+                            PlacementTarget="{Binding ElementName=mEcoModeHelp}">
+          <Border Style="{StaticResource ShadowBorder}" Width="200">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="8"/>
+              </Grid.RowDefinitions>
+              <Border Style="{StaticResource OuterBorder}">
+                <Grid>
+                  <UIElement.OpacityMask>
+                    <VisualBrush Stretch="None" Visual="{Binding ElementName=mEcoModeHelpPopupBorder}"/>
+                  </UIElement.OpacityMask>
+                  <Border x:Name="mEcoModeHelpPopupBorder" Style="{StaticResource MaskBorder}"/>
+                  <StackPanel Margin="9">
+                    <TextBlock FontSize="12" VerticalAlignment="Center" TextWrapping="Wrap"
+                               Text="{Binding Path=LocaleModel.[STRING_ECO_MODE_HELP], FallbackValue='Reduces the resources consumed by BlueStacks so that you can multitask more.'}"
+                               Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+                    <TextBlock Margin="0,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="12"
+                               Cursor="Hand">
+                      <Hyperlink Style="{StaticResource HyperlinkStyle}">
+                        <TextBlock MouseDown="EcoModeHelpPopup_MouseDown"
+                                   Text="{Binding Path=LocaleModel.[STRING_READ_MORE], FallbackValue='Read more'}"/>
+                      </Hyperlink>
+                      <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                          <command:EventToCommand Command="{Binding EcoModeHelpCommand}"/>
+                        </i:EventTrigger>
+                      </i:Interaction.Triggers>
+                    </TextBlock>
+                  </StackPanel>
+                </Grid>
+              </Border>
+              <Path Data="M 0,0 L 6,8 12,0 " Grid.Row="1" Margin="93,0,0,0" VerticalAlignment="Center"
+                    Stroke="{Binding ColorModel.[PopupBorderBrush]}"
+                    Fill="{Binding ColorModel.[ContextMenuItemBackgroundColor]}"/>
+            </Grid>
+          </Border>
+        </Common:CustomPopUp>
+      </Grid>
+    </Border>
+  </Grid>
+</bluestacksCore:UiWindowBase>

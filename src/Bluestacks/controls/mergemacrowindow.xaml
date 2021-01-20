@@ -1,0 +1,159 @@
+<Common:CustomWindow x:Class="BlueStacks.BlueStacksUI.MergeMacroWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+                     xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                     ShowInTaskbar="false" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+                     Background="Transparent" AllowsTransparency="true" Height="540" Width="685"
+                     DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Popup.VerticalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="ImageStyle" TargetType="{Type Common:CustomPictureBox}">
+      <Setter Property="Grid.Column" Value="0"/>
+      <Setter Property="FrameworkElement.Margin" Value="4,0,0,0"/>
+      <Setter Property="FrameworkElement.Width" Value="12"/>
+      <Setter Property="FrameworkElement.Height" Value="12"/>
+    </Style>
+  </FrameworkElement.Resources>
+  <Border Style="{StaticResource ShadowBorder}">
+    <Grid>
+      <Border Style="{StaticResource OuterBorder}">
+        <Grid>
+          <UIElement.OpacityMask>
+            <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+          </UIElement.OpacityMask>
+          <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+          <Grid Margin="15,0,15,15">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="40"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Row="0">
+              <TextBlock x:Name="mMergeMacroWindowHeading" Grid.Row="0" FontSize="16" HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Text="{Binding Path=LocaleModel.[STRING_MERGE_MACROS], FallbackValue='Merge macros'}"
+                         Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+              <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Common:CustomButton Click="UnifyButton_Click" x:Name="mUnifyButton" Margin="8,0,16,0" Height="30"
+                                     ButtonColor="Transparent" Content="{Binding Path=LocaleModel.[STRING_UNIFY], FallbackValue=Unify}"
+                                     ToolTip="{Binding Path=LocaleModel.[STRING_MERGE_MACRO], FallbackValue='Merge chosen scripts to create a single script'}"/>
+                <Common:CustomPictureBox MouseLeftButtonUp="Close_MouseLeftButtonUp" ImageName="close" HorizontalAlignment="Right"
+                                         VerticalAlignment="Center" Height="16" Width="16"
+                                         ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE]}"/>
+              </StackPanel>
+            </Grid>
+            <Grid Row="1" Margin="0,12,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Grid Column="0">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="0" HorizontalAlignment="Left" FontSize="12"
+                           Text="{Binding Path=LocaleModel.[STRING_EXISTING_MACROS], FallbackValue='Existing macros'}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1"
+                              Margin="0,12,0,28">
+                  <StackPanel x:Name="mCurrentMacroScripts"/>
+                </ScrollViewer>
+              </Grid>
+              <Line x:Name="mLineSeperator" Grid.Column="1" X1="0" Y1="0" X2="0" Y2="415" StrokeThickness="1"
+                    Margin="15,0,15,0" Stroke="{Binding Path=ColorModel.[VerticalSeparator]}"/>
+              <Grid Column="2">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Height="20">
+                  <TextBlock x:Name="mMergedMacrosHeader" TextWrapping="WrapWithOverflow" Grid.Row="0" Visibility="Collapsed"
+                             HorizontalAlignment="Left" FontSize="12"
+                             Text="{Binding Path=LocaleModel.[STRING_MACROS_TO_MERGE], FallbackValue='Macros to merge'}"
+                             Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+                  <Common:CustomPictureBox MouseDown="mHelpCenterImage_MouseDown" x:Name="mHelpCenterImage"
+                                           Style="{StaticResource ImageStyle}" VerticalAlignment="Center" Cursor="Hand" ImageName="menu_help"
+                                           ToolTip="{Binding Path=LocaleModel.[STRING_HELP_AND_SUPPORT], FallbackValue=Help}"/>
+                </StackPanel>
+                <local:MacroAddedDragControl x:Name="mMacroDragControl" Grid.Row="1" Margin="0,7,0,10"/>
+                <StackPanel x:Name="mMergedMacrosFooter" Grid.Row="2" IsEnabled="false" VerticalAlignment="Bottom">
+                  <StackPanel x:Name="mMacroNameStackPanel">
+                    <TextBlock TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="14"
+                               Text="{Binding Path=LocaleModel.[STRING_NAME_MERGED_MACRO], FallbackValue='Name of merged macro'}"
+                               Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+                    <Common:CustomTextBox MouseEnter="MacroName_MouseEnter" MouseLeave="MacroName_MouseLeave"
+                                          TextChanged="MacroName_TextChanged" x:Name="MacroName" Width="280" HorizontalAlignment="Left"
+                                          Margin="0,8,0,8"/>
+                  </StackPanel>
+                  <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Common:CustomButton Click="MacroSettings_Click" x:Name="mMacroSettings" Margin="0,0,8,0" ImageName="macro_settings"
+                                         ImageMargin="0,7,5,7" Height="30" FontSize="14" MaxWidth="170" ButtonColor="Transparent"
+                                         Content="{Binding Path=LocaleModel.[STRING_MACRO_SETTINGS], FallbackValue='Macro settings'}"/>
+                    <Common:CustomButton Click="MergeButton_Click" x:Name="mMergeButton" Height="30" FontSize="14" MinWidth="90"
+                                         MaxWidth="105" HorizontalAlignment="Right"
+                                         Content="{Binding Path=LocaleModel.[STRING_MERGE], FallbackValue=Merge}"/>
+                  </StackPanel>
+                  <local:CustomPopUp x:Name="mErrorNamePopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false" Placement="Top"
+                                     PopupAnimation="Fade" Style="{StaticResource CenteredHorizontalOffsetStyle}" VerticalOffset="0"
+                                     PlacementTarget="{Binding ElementName=MacroName}">
+                    <Border Style="{StaticResource ShadowBorderForPopup}">
+                      <Grid>
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="Auto"/>
+                          <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Border Style="{StaticResource OuterBorder}"
+                                BorderBrush="{Binding Path=ColorModel.[RedMouseOutGridBackGround]}"
+                                Background="{Binding Path=ColorModel.[ComboBoxBackgroundColor]}">
+                          <Grid>
+                            <UIElement.OpacityMask>
+                              <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder1}"/>
+                            </UIElement.OpacityMask>
+                            <Border x:Name="mMaskBorder1" Style="{StaticResource MaskBorder}"
+                                    Background="{Binding Path=ColorModel.[ComboBoxBackgroundColor]}"/>
+                            <Grid Margin="7,5,7,5">
+                              <TextBlock x:Name="mErrorText" MaxWidth="180" TextWrapping="WrapWithOverflow" FontWeight="Normal"
+                                         Grid.Column="0" Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                                         Text="{Binding Path=LocaleModel.[STRING_DUPLICATE_SHORTCUTS_WARNING]}"/>
+                            </Grid>
+                          </Grid>
+                        </Border>
+                        <Grid Row="1">
+                          <Path x:Name="mDownArrow" Data="M 0,0 L 8,10 16,0 " Margin="0,-1,0,0" HorizontalAlignment="Center"
+                                Fill="{Binding Path=ColorModel.[ComboBoxBackgroundColor]}"
+                                Stroke="{Binding Path=ColorModel.[RedMouseOutGridBackGround]}"/>
+                        </Grid>
+                      </Grid>
+                    </Border>
+                  </local:CustomPopUp>
+                </StackPanel>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Border>
+    </Grid>
+  </Border>
+</Common:CustomWindow>

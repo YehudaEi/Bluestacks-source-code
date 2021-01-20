@@ -1,0 +1,74 @@
+<local:CustomPopUp x:Class="BlueStacks.BlueStacksUI.MOBASkillSettingsMoreInfoPopup"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+                   xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                   x:Name="mMOBASkillSettingsMoreInfoPopup" VerticalOffset="-12" HorizontalOffset="-5"
+                   PopupAnimation="Fade" IsOpen="false" StaysOpen="false" AllowsTransparency="true"
+                   HorizontalAlignment="Left" Placement="Right">
+  <FrameworkElement.Resources>
+    <Common:XamlSizeConverter x:Key="XamlSizeConverter"/>
+  </FrameworkElement.Resources>
+  <FrameworkElement.Style>
+    <Style TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Style>
+  <StackPanel>
+    <Border Style="{StaticResource ShadowBorderForPopup}" Visibility="Visible">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="8"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="1" Style="{StaticResource OuterBorder}">
+          <Grid Column="1">
+            <UIElement.OpacityMask>
+              <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder4}"/>
+            </UIElement.OpacityMask>
+            <Border x:Name="mMaskBorder4" Style="{StaticResource MaskBorder}"/>
+            <StackPanel Orientation="Vertical" Margin="8" MaxWidth="186">
+              <TextBlock FontSize="12" TextWrapping="WrapWithOverflow" Text="{Binding Path=LocaleModel.[STRING_QUICK_CAST]}"
+                         Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+              <TextBlock FontSize="12" TextWrapping="WrapWithOverflow"
+                         Text="{Binding Path=LocaleModel.[STRING_QUICK_CAST_SKILL_DESCRIPTION]}"
+                         Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+              <TextBlock FontSize="12" Margin="0,5,0,0" TextWrapping="WrapWithOverflow"
+                         Text="{Binding Path=LocaleModel.[STRING_AUTOCAST]}"
+                         Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+              <TextBlock FontSize="12" TextWrapping="WrapWithOverflow"
+                         Text="{Binding Path=LocaleModel.[STRING_AUTOCAST_SKILL_DESCRIPTION]}"
+                         Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+              <TextBlock FontSize="12" Margin="0,5,0,0" TextWrapping="WrapWithOverflow"
+                         Text="{Binding Path=LocaleModel.[STRING_MANUAL_MODE]}"
+                         Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+              <TextBlock Margin="0,0,0,5" FontSize="12" TextWrapping="WrapWithOverflow"
+                         Text="{Binding Path=LocaleModel.[STRING_MANUAL_MODE_SKILL_CAST]}"
+                         Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+              <TextBlock HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"
+                         Foreground="{Binding Path=ColorModel.[HyperlinkForeground]}">
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" x:Name="mHyperLink"
+                           Style="{StaticResource HyperlinkStyle}">
+                </Hyperlink>
+              </TextBlock>
+            </StackPanel>
+          </Grid>
+        </Border>
+        <Grid Row="1" Column="0">
+          <Path x:Name="LeftArrow" Margin="9,10,-8,0" Data="M 0,0 L -7,6 0,12 " HorizontalAlignment="Left"
+                VerticalAlignment="Top" Stroke="{Binding ColorModel.[PopupBorderBrush]}"
+                Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+        </Grid>
+      </Grid>
+    </Border>
+  </StackPanel>
+</local:CustomPopUp>

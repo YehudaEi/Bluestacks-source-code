@@ -1,0 +1,88 @@
+<Common:CustomWindow x:Class="BlueStacks.BlueStacksUI.Gl3CustomWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                     ShowInTaskbar="false" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+                     SizeToContent="WidthAndHeight" WindowStyle="None" Background="Transparent"
+                     Title="CustomMessageWindow" MinWidth="420" AllowsTransparency="true"
+                     DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Border Style="{StaticResource ShadowBorder}">
+    <Grid>
+      <Border Style="{StaticResource OuterBorder}">
+        <Grid>
+          <UIElement.OpacityMask>
+            <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+          </UIElement.OpacityMask>
+          <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+          <Grid x:Name="mParentGrid">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="mTextBlockGrid" RowSpan="10">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="20"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="20"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomPictureBox PreviewMouseLeftButtonUp="Close_PreviewMouseLeftButtonUp" x:Name="mCustomMessageBoxCloseButton"
+                                       Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="10"
+                                       HorizontalAlignment="Right" VerticalAlignment="Top" ImageName="exit_close" Height="20" Width="20"
+                                       ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"/>
+              <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock x:Name="mTitleText" FontWeight="SemiBold" FontSize="21"
+                           Text="{Binding Path=LocaleModel.[STRING_GL3_WINDOW_TITLE], FallbackValue='Can not play the game'}"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3">
+                <Common:CustomPictureBox x:Name="mTitleIcon" ImageName="gl3error" Visibility="Visible" Width="56" Margin="0,0,10,0"/>
+                <TextBlock x:Name="mBodyTextBlock" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="18"
+                           MaxWidth="360" FontWeight="Regular" TextWrapping="Wrap"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"
+                           Text="{Binding Path=LocaleModel.[STRING_GL3_WINDOW_BODY_DIRECTX], FallbackValue='Can not play the game'}"/>
+              </StackPanel>
+              <Grid x:Name="mHintGrid" Visibility="Visible" Row="5" Column="1">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="10"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="mHintTextBlock" Grid.Row="1" HorizontalAlignment="Left" MaxWidth="430" FontSize="16"
+                           TextWrapping="Wrap" FontWeight="Regular"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"
+                           Text="{Binding Path=LocaleModel.[STRING_SWITCH_OPENGL_MODE], FallbackValue='Can not play the game'}"/>
+              </Grid>
+              <Grid x:Name="mHintGrid1" Visibility="Visible" Row="6" Column="1">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="10"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="mHintTextBlock1" Grid.Row="1" HorizontalAlignment="Left" MaxWidth="380" FontSize="14"
+                           TextWrapping="Wrap" FontWeight="ExtraLight" Margin="0,10,0,0"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"
+                           Text="{Binding Path=LocaleModel.[STRING_GL_MODE_RESTART], FallbackValue='Can not play the game'}"/>
+              </Grid>
+              <Common:CustomButton Click="mGetButton_Click" x:Name="mButton" MinHeight="38" MinWidth="30" ButtonColor="Blue"
+                                   Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" MaxHeight="50"
+                                   Content="{Binding Path=LocaleModel.[STRING_GL3_SWITCH], FallbackValue='Fallback Now'}"/>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Border>
+    </Grid>
+  </Border>
+</Common:CustomWindow>

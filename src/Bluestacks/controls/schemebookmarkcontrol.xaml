@@ -1,0 +1,16 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.SchemeBookmarkControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
+             MouseDown="UserControl_PreviewMouseDown"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <DockPanel Background="Transparent" LastChildFill="false" Margin="0,10,0,0">
+    <TextBlock x:Name="mSchemeName" FontSize="14" TextTrimming="CharacterEllipsis" Text="Bookmarked scheme"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+    <Common:CustomPictureBox x:Name="mPictureBox" DockPanel.Dock="Right" Height="12" Width="12" ImageName="radio_unselected"/>
+  </DockPanel>
+</UserControl>

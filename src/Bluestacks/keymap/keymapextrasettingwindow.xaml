@@ -1,0 +1,189 @@
+<local:CustomPopUp x:Class="BlueStacks.BlueStacksUI.KeymapExtraSettingWindow"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+                   xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                   MaxWidth="352" DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Border BorderThickness="1,1,1,1.5"
+          BorderBrush="{Binding Path=ColorModel.[KeymapExtraSettingsWindowBorder]}"
+          Background="{Binding Path=ColorModel.[KeymapExtraSettingsWindowBackground]}">
+    <Grid>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="38"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="38"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="mHeaderGrid" Background="Transparent" Row="0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock x:Name="mHeader" Text="SomeTextNotToBeBinded" FontWeight="Bold" FontSize="14"
+                     HorizontalAlignment="Left" Margin="9,0,0,0" VerticalAlignment="Center"
+                     Foreground="{Binding Path=ColorModel.[AdvancedGameControlHeaderForegroundColor]}"/>
+          <Common:CustomPictureBox PreviewMouseLeftButtonDown="CloseButton_MouseLeftButtonDown" HorizontalAlignment="Right"
+                                   ImageName="close" Margin="0,10,8,10" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE]}"/>
+        </Grid>
+        <local:CustomScrollViewer x:Name="mScrollBar" Grid.Row=" 1" HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto">
+          <StackPanel Margin="0" Background="{Binding Path=ColorModel.[AdvancedGameControlBackgroundColor]}">
+            <FrameworkElement.Resources>
+              <Style TargetType="{Type GroupBox}">
+                <Setter Property="Control.Background" Value="Transparent"/>
+                <Setter Property="Control.BorderThickness" Value="0"/>
+                <Setter Property="Control.Foreground"
+                        Value="{Binding Path=ColorModel.[KeymapExtraSettingsWindowForeground]}"/>
+                <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="FrameworkElement.Margin" Value="10"/>
+              </Style>
+              <Style TargetType="{Type StackPanel}">
+                <Setter Property="FrameworkElement.Margin" Value="0,5,0,0"/>
+              </Style>
+            </FrameworkElement.Resources>
+          </StackPanel>
+        </local:CustomScrollViewer>
+        <Grid Row="2" Background="{Binding Path=ColorModel.[KeymapExtraSettingsWindowBackground]}">
+          <Common:CustomButton Click="DeleteButton_Click" x:Name="mDeleteButton" Margin="0,4,12,4" Height="26" FontSize="14"
+                               ButtonColor="Red" HorizontalAlignment="Right" VerticalAlignment="Center"
+                               Content="{Binding Path=LocaleModel.[STRING_DELETE], FallbackValue=Delete}"/>
+        </Grid>
+        <Grid Row="2">
+          <TextBlock Margin="12,0,0,0" MaxWidth="200" TextWrapping="WrapWithOverflow" FontSize="12"
+                     HorizontalAlignment="Left" VerticalAlignment="Center"
+                     Text="{Binding Path=LocaleModel.[STRING_CHANGES_APPLY_AUTOMATIC], FallbackValue='Changes will be saved automatically'}"
+                     Foreground="{Binding Path=ColorModel.[OrangeMouseOutGridBackGround]}"/>
+        </Grid>
+      </Grid>
+      <Grid x:Name="mDummyGrid" Visibility="Collapsed">
+        <GroupBox x:Name="mMOBAGB" Margin="9,0,0,-15"
+                  Header="{Binding Path='LocaleModel.[IMAP_STRING_Hero_Dummy ]', FallbackValue='Hero dummy'}">
+          <StackPanel x:Name="mMOBAPanel">
+            <Grid Margin="0,7,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomPictureBox MouseEnter="CustomPictureBox_MouseEnter" MouseLeave="CustomPictureBox_MouseLeave"
+                                       MouseDown="MOBAHeroPictureBox_MouseDown" x:Name="mMOBAPB" ImageName="MOBAHero_popup" Height="21"
+                                       Margin="0,0,7,5"/>
+              <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="10"
+                         Text="{Binding Path=LocaleModel.[STRING_MOBA_HERO_DUMMY], FallbackValue='Place the hero dummy to the center of the screen for calibration'}"
+                         Foreground="{Binding Path=ColorModel.[KeymapDummyMobaForeground]}"/>
+            </Grid>
+          </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="mGuidanceCategory"
+                  Header="{Binding Path=LocaleModel.[STRING_GUIDANCE_CATEGORY], FallbackValue='Guidance category'}">
+          <local:AutoCompleteComboBox x:Name="mGuidanceCategoryComboBox" VerticalAlignment="Top" Margin="1"/>
+        </GroupBox>
+        <GroupBox x:Name="mTabsGrid">
+          <Grid Column="1" Row="1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="100*"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+            <Border MouseLeftButtonUp="mKeyboardTabBorder_MouseLeftButtonUp" x:Name="mKeyboardTabBorder"
+                    Grid.Column="1" MaxWidth="146" Padding="2" CornerRadius="4,0,0,4" HorizontalAlignment="Stretch"
+                    Background="{Binding Path=ColorModel.[GuidanceKeyBorderBackgroundColor]}">
+              <TextBlock x:Name="keyboardBtn" Grid.Column="1" Margin="15,0,15,0" FontWeight="DemiBold"
+                         VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextAlignment="Center"
+                         Text="{Binding Path=LocaleModel.[STRING_KEYBOARD_MOUSE]}"
+                         Foreground="{Binding Path=ColorModel.[GameControlCategoryHeaderForeground]}"
+                         ToolTip="{Binding Path=LocaleModel.[STRING_KEYBOARD_MOUSE]}"/>
+            </Border>
+            <Border MouseLeftButtonUp="mGamepadTabBorder_MouseLeftButtonUp" x:Name="mGamepadTabBorder" Grid.Column="2"
+                    Padding="5" MaxWidth="135" BorderThickness="0,1,1,1" CornerRadius="0,4,4,0"
+                    HorizontalAlignment="Stretch"
+                    BorderBrush="{Binding Path=ColorModel.[GuidanceKeyBorderBackgroundColor]}">
+              <TextBlock x:Name="gamepadBtn" TextTrimming="CharacterEllipsis" Margin="15,0,15,0" FontWeight="DemiBold"
+                         VerticalAlignment="Center"
+                         Text="{Binding Path=LocaleModel.[STRING_GAMEPAD], FallbackValue=Gamepad}"
+                         Foreground="{Binding Path=ColorModel.[GameControlCategoryHeaderForeground]}"
+                         ToolTip="{Binding Path=LocaleModel.[STRING_GAMEPAD]}"/>
+            </Border>
+          </Grid>
+        </GroupBox>
+        <GroupBox x:Name="mMOBASkillCancelGB"
+                  Header="{Binding Path=LocaleModel.[STRING_CANCEL_SKILL], FallbackValue='Cancel Skill'}">
+          <StackPanel x:Name="mMOBASkillCancelGBPanel">
+            <Common:CustomCheckbox Checked="MOBASkillCancelCB_CheckedChanged" Unchecked="MOBASkillCancelCB_CheckedChanged"
+                                   x:Name="mMOBASkillCancelCB" IsChecked="True" TextFontSize="14"
+                                   Content="{Binding Path=LocaleModel.[STRING_ENABLE_FEATURES], FallbackValue='Enable features'}"
+                                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+            <Grid Margin="0,7,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomPictureBox MouseEnter="CustomPictureBox_MouseEnter" MouseLeave="CustomPictureBox_MouseLeave"
+                                       MouseDown="MOBASkillCancelPictureBox_MouseDown" x:Name="mMOBASkillCancelPB"
+                                       ImageName="MOBASkillCancel_popup" Height="21" Margin="0,0,7,0"/>
+              <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="10"
+                         Text="{Binding Path=LocaleModel.[STRING_MOBA_SKILL_CANCEL], FallbackValue='Place the pont on the cancel key'}"
+                         Foreground="{Binding Path=ColorModel.[KeymapDummyMobaForeground]}"/>
+            </Grid>
+          </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="mLookAroundGB"
+                  Header="{Binding Path=LocaleModel.[STRING_LOOK_AROUND_MODE_HEADER_TEXT], FallbackValue='Look around mode'}">
+          <StackPanel x:Name="mLookAroundPanel">
+            <Common:CustomCheckbox Checked="LookAroundCB_CheckedChanged" Unchecked="LookAroundCB_CheckedChanged"
+                                   x:Name="mLookAroundCB" IsChecked="True" TextFontSize="14"
+                                   Content="{Binding Path=LocaleModel.[STRING_ENABLE_MODE], FallbackValue='Enable mode'}"
+                                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+            <Grid Margin="0,7,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomPictureBox MouseEnter="CustomPictureBox_MouseEnter" MouseLeave="CustomPictureBox_MouseLeave"
+                                       MouseDown="LookAroundPictureBox_MouseDown" x:Name="mLookAroundPB" ImageName="LookAround_popup"
+                                       Height="21" Margin="0,0,7,0"/>
+              <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="10"
+                         Text="{Binding Path=LocaleModel.[STRING_LOOK_AROUND_MODE], FallbackValue='Place the eye icon on the look around control if available'}"
+                         Foreground="{Binding Path=ColorModel.[KeymapDummyMobaForeground]}"/>
+            </Grid>
+          </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="mShootGB"
+                  Header="{Binding Path=LocaleModel.[STRING_FIRE_WITH_MOUSE_LEFT], FallbackValue='Fire with mouse left'}">
+          <StackPanel x:Name="mShootGBPanel">
+            <Common:CustomCheckbox Checked="ShootCB_CheckedChanged" Unchecked="ShootCB_CheckedChanged" x:Name="mShootCB"
+                                   IsChecked="True" TextFontSize="14"
+                                   Content="{Binding Path=LocaleModel.[STRING_ENABLE_MODE], FallbackValue='Enable mode'}"
+                                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+            <Grid Margin="0,7,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomPictureBox MouseEnter="CustomPictureBox_MouseEnter" MouseLeave="CustomPictureBox_MouseLeave"
+                                       MouseDown="ShootPictureBox_MouseDown" x:Name="mShootPB" ImageName="PanShoot_popup" Height="21"
+                                       Margin="0,0,7,0"/>
+              <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="10"
+                         Text="{Binding Path=LocaleModel.[STRING_SHOOT_MODE], FallbackValue='Place the fire icon over the fire control on the screen'}"
+                         Foreground="{Binding Path=ColorModel.[KeymapDummyMobaForeground]}"/>
+            </Grid>
+          </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="mSchemesGB"
+                  Header="{Binding Path=LocaleModel.[STRING_TAGS], FallbackValue='Tags (Optional)'}"/>
+        <GroupBox x:Name="mEnableConditionGB" Visibility="Collapsed" Header="Enable Condition"/>
+        <GroupBox x:Name="mNoteGB" Visibility="Collapsed" Header="Note"/>
+        <GroupBox x:Name="mStartConditionGB" Visibility="Collapsed" Header="Start Condition"/>
+        <GroupBox x:Name="mOverlayGB" Header="{Binding Path=LocaleModel.[STRING_OVERLAY], FallbackValue=Overlay}">
+          <Common:CustomCheckbox Checked="mOverlayCB_Checked" Unchecked="mOverlayCB_Unchecked" x:Name="mOverlayCB" Margin="5,5,0,0"
+                                 IsChecked="False" TextFontSize="14"
+                                 Content="{Binding Path=LocaleModel.[STRING_SHOW_ON_OVERLAY], FallbackValue='Show keys on overlay'}"
+                                 Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+        </GroupBox>
+      </Grid>
+      <Canvas PreviewMouseMove="mCanvas_PreviewMouseMove" MouseUp="mCanvas_MouseUp" x:Name="mCanvas"/>
+    </Grid>
+  </Border>
+</local:CustomPopUp>

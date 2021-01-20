@@ -1,0 +1,300 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.TopBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+             Loaded="TopBar_Loaded" SizeChanged="TopBar_SizeChanged"
+             Background="{Binding Path=ColorModel.[TopBarColor]}"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Common:BrushToColorConvertor x:Key="BrushToColorConvertor"/>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid x:Name="mMainGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <Grid x:Name="WindowHeaderGrid">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Common:CustomPictureBox x:Name="mTitleIcon" Grid.Column="0" Width="30" ImageName="ProductLogo" Margin="7,7,7,7"
+                               ToolTip="{Binding ElementName=mTitleText, Path=Text}"/>
+      <Grid x:Name="mTitleTextGrid" Column="1" Margin="0,3,5,3">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="1.5*"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="mTitleText" Grid.Row="0" HorizontalAlignment="Left" MaxWidth="85"
+                   TextTrimming="CharacterEllipsis" Text="BlueStacks" FontSize="15" FontWeight="SemiBold"
+                   Foreground="{Binding Path=ColorModel.[BluestacksTitleColor]}"/>
+        <TextBlock x:Name="mVersionText" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text="v4.90.0" FontSize="10" Margin="0,-3,0,3" Opacity=".6"
+                   Foreground="{Binding Path=ColorModel.[BluestacksTitleColor]}"/>
+      </Grid>
+    </Grid>
+    <DockPanel x:Name="mOptionsDockPanel" Margin="0,0,0,0" Grid.Column="2">
+      <Common:CustomPictureBox MouseLeftButtonUp="MSidebarButton_MouseLeftButtonUp" x:Name="mSidebarButton" DockPanel.Dock="Right"
+                               Width="60" Height="40" Stretch="Fill" ImageName="sidebar_hide"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE_SIDEBAR]}"/>
+      <Common:CustomPictureBox MouseLeftButtonUp="CloseButton_MouseLeftButtonUp" x:Name="mCloseButton" DockPanel.Dock="Right"
+                               Width="40" Height="40" ImageName="closewindow" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE]}"/>
+      <Common:CustomPictureBox MouseLeftButtonUp="MaxmizeButton_MouseLeftButtonUp" x:Name="mMaximizeButton" DockPanel.Dock="Right"
+                               ImageName="maximize"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_MAXIMIZE_TOOLTIP], FallbackValue=Maximize}"/>
+      <Common:CustomPictureBox MouseLeftButtonUp="MinimizeButton_MouseLeftButtonUp" x:Name="mMinimizeButton"
+                               DockPanel.Dock="Right" Width="40" Height="40" ImageName="minimize"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_MINIMIZE_TOOLTIP], FallbackValue=Minimize}"/>
+      <Grid x:Name="mConfigButtonGrid" DockPanel.Dock="Right" Width="40" Height="40">
+        <Common:CustomPictureBox MouseLeftButtonUp="ConfigButton_MouseLeftButtonUp" x:Name="mConfigButton" ImageName="cfgmenu"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_CUSTOMIZE_CONTROL_BST], FallbackValue='Customize and control BlueStacks'}"/>
+        <Ellipse x:Name="mSettingsBtnNotification" Fill="Red" Height="8" Width="8" StrokeThickness="5"
+                 VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Margin="0,8,8,0"/>
+      </Grid>
+      <local:CustomPopUp x:Name="mSettingsMenuPopup" Opened="NotificationPopup_Opened" Closed="NotificationPopup_Closed"
+                         PopupAnimation="Fade" AllowsTransparency="true" StaysOpen="false" Placement="Bottom"
+                         Style="{StaticResource CenteredHorizontalOffsetStyle}" RenderOptions.EdgeMode="Aliased"
+                         PlacementTarget="{Binding ElementName=mConfigButton}">
+        <Border x:Name="mPreferenceDropDownBorder" Style="{StaticResource ShadowBorder}">
+          <Grid>
+            <Border Style="{StaticResource OuterBorder}">
+              <Grid x:Name="mGrid">
+                <UIElement.OpacityMask>
+                  <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+                </UIElement.OpacityMask>
+                <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+                <local:PreferenceDropDownControl x:Name="mPreferenceDropDownControl"
+                                                 PreviewMouseDoubleClick="PreferenceDropDownControl_MouseDoubleClick"/>
+              </Grid>
+            </Border>
+          </Grid>
+        </Border>
+      </local:CustomPopUp>
+      <Common:CustomPictureBox MouseLeftButtonUp="HelpButton_MouseLeftButtonUp" x:Name="mHelpButton" DockPanel.Dock="Right"
+                               Width="40" Height="40" Tag="0" ImageName="help_icon" Visibility="Collapsed"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_FEEDBACK], FallbackValue='Help and support'}"/>
+      <Common:CustomPictureBox MouseLeftButtonUp="UserAccountButton_MouseLeftButtonUp" x:Name="mUserAccountBtn"
+                               DockPanel.Dock="Right" ImageName="unloggedin" Width="40" Height="40" Tag="4" Visibility="Collapsed"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_ACCOUNT], FallbackValue='My Account'}"/>
+      <Grid x:Name="mNotificationGrid" DockPanel.Dock="Right" Width="40" Height="40" Visibility="Collapsed"
+            Tag="3">
+        <Common:CustomPictureBox MouseLeftButtonUp="mNotificationCentreButton_MouseLeftButtonUp" x:Name="mNotificationCentreButton"
+                                 ImageName="notification" Width="40" Height="40"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_NOTIFICATION_CENTER], FallbackValue='Notification Center'}"/>
+        <Canvas x:Name="mNotificationCountBadge" Width="40" Height="40" Focusable="false"
+                VerticalAlignment="Center" IsHitTestVisible="false" Visibility="Collapsed"/>
+      </Grid>
+      <local:CustomPopUp x:Name="mNotificationCentrePopup" Opened="mNotificationCentrePopup_Opened"
+                         Closed="mNotificationCentrePopup_Closed" PopupAnimation="Fade" AllowsTransparency="true"
+                         StaysOpen="false" Placement="Left" VerticalOffset="30" HorizontalOffset="54"
+                         Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                         PlacementTarget="{Binding ElementName=mNotificationCentreButton}">
+        <Border Style="{StaticResource ShadowBorder}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Path Name="mNotificationCaret" Data="M 9,0 L 0,10 18,10 Z" Grid.Row="0" StrokeThickness="1"
+                  Margin="0,0,23.5,-1" HorizontalAlignment="Right"
+                  Stroke="{Binding ColorModel.[ContextMenuItemBackgroundColor]}"
+                  Fill="{Binding ColorModel.[ContextMenuItemBackgroundColor]}"/>
+            <Border LayoutUpdated="mNotificationCentreDropDownBorder_LayoutUpdated"
+                    x:Name="mNotificationCentreDropDownBorder" Grid.Row="1" Style="{StaticResource OuterBorder}"
+                    ClipToBounds="true">
+              <Grid>
+                <UIElement.OpacityMask>
+                  <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder1}"/>
+                </UIElement.OpacityMask>
+                <Border x:Name="mMaskBorder1" Style="{StaticResource MaskBorder}"/>
+                <local:NotificationDrawer x:Name="mNotificationDrawerControl"
+                                          PreviewMouseDoubleClick="PreferenceDropDownControl_MouseDoubleClick"/>
+              </Grid>
+            </Border>
+          </Grid>
+        </Border>
+      </local:CustomPopUp>
+      <Common:CustomPictureBox MouseLeftButtonUp="mBtvButton_MouseLeftButtonUp" x:Name="mBtvButton" Width="40" Height="40"
+                               DockPanel.Dock="Right" ImageName="btv" Tag="1" Visibility="Collapsed"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_BTV], FallbackValue=Btv}"/>
+      <Common:CustomPictureBox MouseLeftButtonUp="mWarningButton_MouseLeftButtonUp" x:Name="mWarningButton" DockPanel.Dock="Right"
+                               ImageName="warning_unseen" Visibility="Visible" Width="40" Height="40" Tag="2"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_SPEEDUP_BLUESTACKS], FallbackValue='Speedup BlueStacks'}"/>
+      <Grid MouseEnter="OperationsSyncGrid_MouseEnter" MouseLeave="OperationsSyncGrid_MouseLeave"
+            x:Name="mOperationsSyncGrid" DockPanel.Dock="Right" Height="32" Margin="0,0,4,0"
+            Visibility="Collapsed">
+        <Border BorderThickness="1" SnapsToDevicePixels="true" CornerRadius="4"
+                Background="{Binding Path=ColorModel.[SelectedTabBackgroundColor], FallbackValue=#262C4B}">
+          <Border.BorderBrush>
+            <SolidColorBrush Opacity="0.16"
+                             Color="{Binding Path=ColorModel.[SelectedTabBorderColor], Converter={StaticResource BrushToColorConvertor}, Source={Static Common:BlueStacksUIBinding.Instance}, FallbackValue=#FFCBD6EF}"/>
+          </Border.BorderBrush>
+          <Grid>
+            <UIElement.OpacityMask>
+              <VisualBrush Stretch="None" Visual="{Binding ElementName=mSyncMaskBorder}"/>
+            </UIElement.OpacityMask>
+            <Border x:Name="mSyncMaskBorder" Margin="5,2,5,2" CornerRadius="4"
+                    Background="{Binding Path=ColorModel.[SelectedTabBackgroundColor], FallbackValue=#262C4B}">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto"/>
+                  <ColumnDefinition Width="Auto"/>
+                  <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Common:CustomPictureBox Grid.Column="0" Margin="2,0,2,0" Width="16" Height="16" ImageName="sync_instance"/>
+                <Common:CustomPictureBox PreviewMouseLeftButtonUp="PlayPauseSyncButton_PreviewMouseLeftButtonUp"
+                                         x:Name="mPlayPauseSyncButton" Grid.Column="1" Margin="2,0,2,0" Width="16" Height="16"
+                                         ImageName="pause_title_bar" Visibility="Collapsed"/>
+                <Common:CustomPictureBox PreviewMouseLeftButtonUp="StopSyncButton_PreviewMouseLeftButtonUp" x:Name="mStopSyncButton"
+                                         Grid.Column="2" Margin="2,0,2,0" Width="16" Height="16" ImageName="stop_title_bar"
+                                         Visibility="Collapsed"/>
+              </Grid>
+            </Border>
+          </Grid>
+        </Border>
+      </Grid>
+      <local:CustomPopUp x:Name="mSyncInstancesToolTipPopup" MouseLeave="SyncInstancesToolTip_MouseLeave"
+                         AllowsTransparency="true" Placement="Bottom" PopupAnimation="Fade"
+                         Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                         PlacementTarget="{Binding ElementName=mOperationsSyncGrid}">
+        <Border Style="{StaticResource ShadowBorderForPopup}">
+          <Grid x:Name="mDummyGrid">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="12"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Style="{StaticResource OuterBorder}">
+              <Grid>
+                <UIElement.OpacityMask>
+                  <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder2}"/>
+                </UIElement.OpacityMask>
+                <Border x:Name="mMaskBorder2" Style="{StaticResource MaskBorder}"/>
+                <Grid Margin="7,5,7,7">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="4"/>
+                    <RowDefinition Height="Auto"/>
+                  </Grid.RowDefinitions>
+                  <TextBlock Grid.Row="0" Grid.Column="0" FontSize="12" MaxWidth="150" HorizontalAlignment="Left"
+                             FontWeight="Bold" TextWrapping="WrapWithOverflow"
+                             Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                             Text="{Binding Path=LocaleModel.[STRING_SYNC_OPERATION_ON], FallbackValue='Sync operations is on'}"/>
+                  <TextBlock Grid.Row="2" Grid.Column="0" FontSize="12" MaxWidth="150" TextWrapping="WrapWithOverflow"
+                             Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                             Text="{Binding Path=LocaleModel.[STRING_SYNC_PERFORM_ACTIONS], FallbackValue='Actions you perform on this instance will be performed on other instances as well.'}"/>
+                </Grid>
+              </Grid>
+            </Border>
+            <Grid Row="0">
+              <Path x:Name="mUpwardArrow" Margin="0,0,0,-13.2" Data="M 0,0 L 5,-5 10,0 " HorizontalAlignment="Center"
+                    Height="12" VerticalAlignment="Bottom" Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                    Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+            </Grid>
+          </Grid>
+        </Border>
+      </local:CustomPopUp>
+      <Grid DockPanel.Dock="Right" Width="{Binding ActualWidth, ElementName=mVideoRecordStatusControl}"
+            Visibility="{Binding Visibility, ElementName=mVideoRecordStatusControl}"/>
+      <Grid DockPanel.Dock="Right" Width="{Binding ActualWidth, ElementName=mMacroRecordControl}"
+            Visibility="{Binding Visibility, ElementName=mMacroRecordControl}"/>
+      <Grid DockPanel.Dock="Right" Width="{Binding ActualWidth, ElementName=mMacroPlayControl}"
+            Visibility="{Binding Visibility, ElementName=mMacroPlayControl}"/>
+      <Common:CustomPictureBox x:Name="mLocalConfigIndicator" Visibility="Collapsed" ImageName="red_dot_icon" Width="15"
+                               Height="15" ToolTip="Using local config"/>
+    </DockPanel>
+    <local:AppTabButtons x:Name="mAppTabButtons" Grid.Column="1" Margin="0,2,1,0"/>
+    <Grid x:Name="mVideoRecordingStatusGrid" Column="2" HorizontalAlignment="Left">
+      <local:VideoRecordingStatus x:Name="mVideoRecordStatusControl" Height="32" MaxWidth="235" Visibility="Collapsed"/>
+    </Grid>
+    <Grid x:Name="mMacroGrid" Column="2" HorizontalAlignment="Left">
+      <local:MacroTopBarRecordControl x:Name="mMacroRecordControl" Height="32" MaxWidth="154" Visibility="Collapsed"/>
+      <local:MacroTopBarPlayControl x:Name="mMacroPlayControl" Height="32" MaxWidth="235" Visibility="Collapsed"/>
+      <local:CustomPopUp x:Name="mMacroRecorderToolTipPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false"
+                         Placement="Bottom" PopupAnimation="Fade" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                         PlacementTarget="{Binding ElementName=mMacroRecordControl}">
+        <Border Style="{StaticResource ShadowBorderForPopup}">
+          <Grid x:Name="dummyGrid">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="12"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Style="{StaticResource OuterBorder}">
+              <Grid>
+                <UIElement.OpacityMask>
+                  <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder3}"/>
+                </UIElement.OpacityMask>
+                <Border x:Name="mMaskBorder3" Style="{StaticResource MaskBorder}"/>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Name="mMacroRecordingTooltip" FontSize="10" Grid.Column="0" MaxWidth="90" Margin="10 5 10 5"
+                             TextWrapping="WrapWithOverflow"
+                             Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                             Text="{Binding Path=LocaleModel.[STRING_PAUSE_RECORDING_TOOLTIP], FallbackValue='Recording macro, click here to pause or stop.'}"/>
+                </Grid>
+              </Grid>
+            </Border>
+            <Grid Row="0">
+              <Path x:Name="mUpArrow" Margin="0,0,0,-13.2" Data="M 0,0 L 5,-5 10,0 " HorizontalAlignment="Center"
+                    Height="12" VerticalAlignment="Bottom" Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                    Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+            </Grid>
+          </Grid>
+        </Border>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mMacroRunningToolTipPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false"
+                         Placement="Bottom" PopupAnimation="Fade" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                         PlacementTarget="{Binding ElementName=mMacroPlayControl}">
+        <Border Style="{StaticResource ShadowBorderForPopup}">
+          <Grid x:Name="grid">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="12"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Style="{StaticResource OuterBorder}">
+              <Grid>
+                <UIElement.OpacityMask>
+                  <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder4}"/>
+                </UIElement.OpacityMask>
+                <Border x:Name="mMaskBorder4" Style="{StaticResource MaskBorder}"/>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Name="mMacroRunningTooltip" FontSize="10" Grid.Column="0" MaxWidth="90" Margin="10,5,10,5"
+                             TextWrapping="WrapWithOverflow"
+                             Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                             Text="{Binding Path=LocaleModel.[STRING_EXECUTING_MACRO], FallbackValue='Executing macro, click here to pause or stop.'}"/>
+                </Grid>
+              </Grid>
+            </Border>
+            <Grid Row="0">
+              <Path Margin="0,0,0,-13.2" Data="M 0,0 L 5,-5 10,0 " HorizontalAlignment="Center" Height="12"
+                    VerticalAlignment="Bottom" Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                    Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+            </Grid>
+          </Grid>
+        </Border>
+      </local:CustomPopUp>
+    </Grid>
+  </Grid>
+</UserControl>

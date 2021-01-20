@@ -1,0 +1,111 @@
+<Window x:Class="BlueStacks.DataManager.ProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlueStacks.DataManager"
+        xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+        WindowStartupLocation="CenterScreen" AllowsTransparency="true" Title="ProgressWindow" Height="212"
+        Width="370" ResizeMode="NoResize" WindowStyle="None" Background="Transparent"
+        DataContext="{Binding Source={x:Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <SolidColorBrush x:Key="ProgressBar.Progress" Color="#FF06B025"/>
+    <SolidColorBrush x:Key="ProgressBar.Background" Color="#FFE6E6E6"/>
+    <SolidColorBrush x:Key="ProgressBar.Border" Color="#FFBCBCBC"/>
+    <Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}">
+      <Setter Property="Control.Foreground" Value="{StaticResource ProgressBar.Progress}"/>
+      <Setter Property="Control.Background" Value="{StaticResource ProgressBar.Background}"/>
+      <Setter Property="Control.BorderBrush" Value="{StaticResource ProgressBar.Border}"/>
+      <Setter Property="Control.BorderThickness" Value="1"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ProgressBar}">
+            <Grid x:Name="TemplateRoot">
+              <Border BorderBrush="{TemplateBinding Control.BorderBrush}"
+                      BorderThickness="{TemplateBinding Control.BorderThickness}"
+                      Background="{TemplateBinding Control.Background}" CornerRadius="5"/>
+              <Rectangle x:Name="PART_Track"/>
+              <Grid x:Name="PART_Indicator" ClipToBounds="true" HorizontalAlignment="Left">
+                <Rectangle x:Name="Indicator" Fill="{TemplateBinding Control.Foreground}" RadiusX="5" RadiusY="5"/>
+                <Rectangle x:Name="Animation" Fill="{TemplateBinding Control.Foreground}" RenderTransformOrigin="0.5,0.5"
+                           RadiusX="5" RadiusY="5">
+                  <UIElement.RenderTransform>
+                    <TransformGroup>
+                      <ScaleTransform/>
+                      <SkewTransform/>
+                      <RotateTransform/>
+                      <TranslateTransform/>
+                    </TransformGroup>
+                  </UIElement.RenderTransform>
+                </Rectangle>
+              </Grid>
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="ProgressBar.Orientation" Value="Vertical">
+                <Setter TargetName="TemplateRoot" Property="FrameworkElement.LayoutTransform">
+                  <Setter.Value>
+                    <RotateTransform Angle="-90"/>
+                  </Setter.Value>
+                </Setter>
+              </Trigger>
+              <Trigger Property="ProgressBar.IsIndeterminate" Value="true">
+                <Setter TargetName="Indicator" Property="UIElement.Visibility" Value="Collapsed"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Border BorderThickness="1" SnapsToDevicePixels="true" Background="Transparent"
+          BorderBrush="{Binding Path=ColorModel.[PopupBorderBrush]}"
+          CornerRadius="{Binding Path=CornerRadiusModel.[SettingsWindowRadius]}">
+    <Grid>
+      <UIElement.OpacityMask>
+        <VisualBrush Stretch="None" Visual="{Binding ElementName=clipMask}"/>
+      </UIElement.OpacityMask>
+      <Border x:Name="clipMask" SnapsToDevicePixels="true" RenderOptions.EdgeMode="Aliased"
+              Background="{Binding Path=ColorModel.[SettingsWindowBackground]}"
+              CornerRadius="{Binding Path=CornerRadiusModel.[SettingsWindowRadius]}"/>
+      <Grid x:Name="mProgressWindowGrid">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="8*"/>
+          <ColumnDefinition Width="84*"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="5*"/>
+          <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="8*"/>
+          <RowDefinition Height="2*"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="8*"/>
+          <RowDefinition Height="40*"/>
+          <RowDefinition Height="12*"/>
+          <RowDefinition Height="4*"/>
+          <RowDefinition x:Name="mLastRow" Height="20*"/>
+          <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid MouseDown="DraggableGrid_MouseDown" ColumnSpan="4"/>
+        <Grid MouseDown="DraggableGrid_MouseDown" Row="1" ColumnSpan="2"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="MinimizeBtn_PreviewMouseLeftButtonUp" x:Name="MinimizeBtn"
+                                 Grid.Column="2" Grid.Row="2" ImageName="minimize" Height="30" Width="30"
+                                 HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed"/>
+        <Grid MouseDown="DraggableGrid_MouseDown" Row="2" Column="1">
+          <TextBlock x:Name="mProgressHeader" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap"
+                     FontSize="20" Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                     Text="{Binding Path=[FORM_TEXT], FallbackValue=HeaderText}"/>
+        </Grid>
+        <TextBlock x:Name="mProgressText" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text=" Display Message"
+                   FontSize="14" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+        <Grid Row="5" Column="1" ColumnSpan="2">
+          <Common:BlueProgressBar x:Name="mProgressBar" Height="10" BorderThickness="1" Value="0" Minimum="0" Maximum="100"/>
+        </Grid>
+        <Common:CustomButton PreviewMouseLeftButtonUp="CancelBtn_MouseLeftButtonUp" x:Name="mBtnGrid" Grid.Row="7"
+                             Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" MinWidth="100" ButtonColor="Blue"
+                             Content="{Binding Path=[CANCELBUTTONTEXT], FallbackValue=Cancel}"/>
+      </Grid>
+    </Grid>
+  </Border>
+</Window>

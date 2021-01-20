@@ -1,0 +1,30 @@
+<Common:CustomWindow x:Class="BlueStacks.BlueStacksUI.GuidanceVideoWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+                     xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                     IsVisibleChanged="GuidanceVideoWindow_IsVisibleChanged" Closing="mWindow_Closing" x:Name="mWindow"
+                     AllowsTransparency="true" Background="Transparent" WindowStyle="None" ResizeMode="NoResize"
+                     WindowStartupLocation="CenterOwner" ShowInTaskbar="false"
+                     DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Border Style="{StaticResource ShadowBorder}">
+    <Grid>
+      <Border Style="{StaticResource OuterBorder}">
+        <Grid x:Name="mMainBrowserGrid">
+          <UIElement.OpacityMask>
+            <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+          </UIElement.OpacityMask>
+          <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+          <Grid>
+            <Grid x:Name="mBrowserGrid" Opacity="1"/>
+            <Common:CustomPictureBox PreviewMouseUp="CloseButton_PreviewMouseUp" ImageName="rectangular_close" MaxHeight="40"
+                                     VerticalAlignment="Top" HorizontalAlignment="Right"
+                                     ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE]}"/>
+          </Grid>
+        </Grid>
+      </Border>
+    </Grid>
+  </Border>
+</Common:CustomWindow>

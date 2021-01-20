@@ -1,0 +1,19 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.RecommendedAppsSection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Margin="0,28,0,0" DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <TextBlock x:Name="mSectionHeader" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+               FontWeight="SemiBold" Opacity="0.6" Margin="20,0,20,0" Text="" FontSize="12"
+               Foreground="{Binding Path=ColorModel.[AppIconTextColor]}"/>
+    <StackPanel x:Name="mAppRecommendationsPanel" Grid.Row="1" Orientation="Vertical"/>
+  </Grid>
+</UserControl>

@@ -1,0 +1,25 @@
+<Window x:Class="BlueStacks.Common.NotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:BlueStacks.Common"
+        AllowsTransparency="true" WindowStyle="None" ResizeMode="NoResize" Background="Transparent"
+        Width="273" Height="614" Topmost="true" ShowInTaskbar="false">
+  <Grid>
+    <StackPanel x:Name="mStackPanel" Orientation="Vertical">
+      <FrameworkElement.Resources>
+        <Style TargetType="{x:Type local:NotificationPopup}">
+          <Setter Property="FrameworkElement.LayoutTransform">
+            <Setter.Value>
+              <RotateTransform Angle="180"/>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </FrameworkElement.Resources>
+      <FrameworkElement.LayoutTransform>
+        <RotateTransform Angle="180"/>
+      </FrameworkElement.LayoutTransform>
+    </StackPanel>
+  </Grid>
+</Window>

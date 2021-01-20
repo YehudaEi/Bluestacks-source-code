@@ -1,0 +1,51 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.TopbarOptions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Loaded="Topbar_Loaded" DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <SolidColorBrush x:Key="LabelBackground" Color="Black" Opacity="0.5"/>
+    <SolidColorBrush x:Key="LabelMouseHoverBackground" Color="Black" Opacity="0.8"/>
+  </FrameworkElement.Resources>
+  <Border>
+    <Grid Name="TopMenu" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition x:Name="GameGuideColumn"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave"
+             MouseLeftButtonDown="FullScreen_MouseLeftButtonDown" VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch" Padding="10,15,10,15"
+             Background="{StaticResource LabelBackground}">
+        <StackPanel VerticalAlignment="Center">
+          <Common:CustomPictureBox Width="24" Height="24" ImageName="sidebar_fullscreen_minimize"/>
+          <TextBlock x:Name="mFullScreenTextBlock" Grid.Column="0" Text="Exit full screen" HorizontalAlignment="Center"
+                     Foreground="White" FontSize="14" Margin="0,10,0,0"/>
+        </StackPanel>
+      </Label>
+      <Label MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave"
+             MouseLeftButtonDown="GameGuide_MouseLeftButtonDown" Grid.Column="1" VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch" Padding="10" Background="{StaticResource LabelBackground}">
+        <StackPanel VerticalAlignment="Center">
+          <Common:CustomPictureBox Width="24" Height="24" ImageName="gameguide"/>
+          <TextBlock Grid.Column="0" HorizontalAlignment="Center" Foreground="White" FontSize="14" Margin="0,10,0,0"
+                     Text="{Binding LocaleModel.[STRING_TOGGLE_KEYMAP_WINDOW], FallbackValue='Game guide'}"/>
+        </StackPanel>
+      </Label>
+      <Label MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave"
+             MouseLeftButtonDown="Setting_MouseLeftButtonDown" Grid.Column="2" VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch" Padding="10" Background="{StaticResource LabelBackground}">
+        <StackPanel VerticalAlignment="Center">
+          <Common:CustomPictureBox Width="24" Height="24" ImageName="sidebar_settings"/>
+          <TextBlock Grid.Column="0" HorizontalAlignment="Center" Foreground="White" FontSize="14" Margin="0,10,0,0"
+                     Text="{Binding LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"/>
+        </StackPanel>
+      </Label>
+    </Grid>
+  </Border>
+</UserControl>

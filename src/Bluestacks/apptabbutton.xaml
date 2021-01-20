@@ -1,0 +1,65 @@
+<Button x:Class="BlueStacks.BlueStacksUI.AppTabButton"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+        xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+        Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+        PreviewMouseDown="Button_PreviewMouseDown" IsEnabledChanged="Button_IsEnabledChanged"
+        Background="Transparent" MaxHeight="38" MinHeight="38" Margin="8,0,0,0" MaxWidth="200"
+        Style="{DynamicResource ButtonStyle1}" Focusable="false"
+        DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Style x:Key="ButtonStyle1" TargetType="{Type Button}">
+      <Setter Property="Control.BorderThickness" Value="0"/>
+      <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Control.Padding" Value="0"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type Button}">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                              Margin="{TemplateBinding Control.Padding}" RecognizesAccessKey="true"
+                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                              VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid x:Name="ParallelogramGrid" RenderTransform="{Binding Path=TransformModel.[TabTransform]}">
+      <Border x:Name="mBorder" BorderThickness="1,1,1,0"
+              Background="{Binding Path=ColorModel.[TabBackgroundColor]}"
+              CornerRadius="{Binding Path=CornerRadiusModel.[TabRadius]}"
+              BorderBrush="{Binding Path=ColorModel.[AppTabBorderBrush]}"/>
+    </Grid>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1"/>
+        <ColumnDefinition x:Name="mImageColumn" Width="38"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Common:CustomPictureBox x:Name="mAppTabIcon" Grid.Column="1" HorizontalAlignment="Left" Margin="5" ImageName="home"/>
+      <Label x:Name="mTabLabel" FontSize="16" Grid.Column="2" HorizontalAlignment="Left" Margin="3,1,5,1"
+             VerticalAlignment="Center" Width="1000"
+             Foreground="{Binding Path=ColorModel.[SelectedTabForegroundColor]}"
+             Content="{Binding Path=LocaleModel.[STRING_HOME], FallbackValue=Home}"/>
+      <Common:CustomPictureBox x:Name="CloseTabButtonPortrait" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                               Visibility="Hidden" Width="15" Height="15" Margin="0,1,1,0" VerticalAlignment="Top"
+                               ImageName="tabclose"/>
+      <Common:CustomPictureBox x:Name="CloseTabButtonLandScape" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                               Visibility="Hidden" Width="15" Height="15" Margin="0,1,1,0" VerticalAlignment="Top"
+                               ImageName="tabclose"/>
+      <Common:CustomPictureBox x:Name="CloseTabButtonDropDown" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                               Visibility="Hidden" Width="15" Height="15" Margin="0,1,1,0" VerticalAlignment="Top"
+                               ImageName="tabclose"/>
+      <Grid x:Name="mDownArrowGrid" Column="2" HorizontalAlignment="Right" Visibility="Collapsed">
+        <Path x:Name="Arrow" Data="M 0,0 L 5,8 10,0 Z" Margin="0,0,5,0" VerticalAlignment="Center"
+              Fill="{Binding Path=ColorModel.[SelectedTabBackgroundColor]}"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</Button>

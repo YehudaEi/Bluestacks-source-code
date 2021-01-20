@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files\BlueStacks\BlueStacks.Core.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA906AA8-65C6-4209-8844-6E3FFEA47E5C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>BlueStacks.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>BlueStacks.Core</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>lib\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NaturalSortComparer.cs" />
+    <Compile Include="UiUserControlBase.cs" />
+    <Compile Include="UiViewModelBase.cs" />
+    <Compile Include="UiWindowBase.cs" />
+    <Compile Include="NumericBehavior.cs" />
+    <Compile Include="DragBehavior.cs" />
+    <Compile Include="ScrollOnNewItemBehaviour.cs" />
+    <Compile Include="TextBoxEnterKeyUpdateBehavior.cs" />
+    <Compile Include="CrossButton.cs" />
+    <Compile Include="ArrayMultiValueConverter.cs" />
+    <Compile Include="BooleansToInverseBooleanConverter.cs" />
+    <Compile Include="BooleanToImageNameConverter.cs" />
+    <Compile Include="BooleanToVisibilityConverter.cs" />
+    <Compile Include="EnumToBoolConverter.cs" />
+    <Compile Include="InverseVisibilityConverter.cs" />
+    <Compile Include="MultiBooleanToVisibilityConverter.cs" />
+    <Compile Include="NullToBooleanConverter.cs" />
+    <Compile Include="NullToVisibilityConverter.cs" />
+    <Compile Include="RelayKeyBinding.cs" />
+    <Compile Include="RenderHelper.cs" />
+    <Compile Include="BindingProxy.cs" />
+    <Compile Include="Wrapper.cs" />
+    <Compile Include="MinMaxRangeValidationRule.cs" />
+    <Compile Include="CodeDescriptionViewModel.cs" />
+    <Compile Include="ICodeDescriptionViewModel.cs" />
+    <Compile Include="IView.cs" />
+    <Compile Include="IViewModel.cs" />
+    <Compile Include="ArrangePanel.cs" />
+    <Compile Include="ILayoutStrategy.cs" />
+    <Compile Include="LayoutItemBase.cs" />
+    <Compile Include="TableLayoutStrategy.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="assets\resources\crossbutton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

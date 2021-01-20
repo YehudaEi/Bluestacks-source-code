@@ -1,0 +1,148 @@
+<Window x:Class="BlueStacks.LogCollector.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+        WindowStyle="None" AllowsTransparency="true" Background="Transparent"
+        WindowStartupLocation="CenterScreen" SizeToContent="Height" Title="MainWindow" Width="464"
+        DataContext="{Binding Source={x:Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/HD-Common;component/UIElements/CustomScrollBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/HD-Common;component/UIElements/CustomToolTip.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+      <Common:FilePathToFileNameConverter x:Key="FilePathToFileNameConverter"/>
+      <Common:BooleanToVisibilityConverter2 x:Key="BooleanToVisibilityConverter"/>
+      <Style x:Key="ImageStyle" TargetType="{x:Type Common:CustomPictureBox}">
+        <Setter Property="FrameworkElement.Margin" Value="10,5,4,5"/>
+        <Setter Property="FrameworkElement.Width" Value="20"/>
+        <Setter Property="FrameworkElement.Height" Value="20"/>
+      </Style>
+      <Style x:Key="ContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Control.Padding" Value="0"/>
+        <Setter Property="FrameworkElement.Margin" Value="0"/>
+        <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Control.BorderThickness" Value="0"/>
+        <Setter Property="Control.Background" Value="Transparent"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+              <Border BorderThickness="1" Padding="0,5" HorizontalAlignment="Stretch"
+                      BorderBrush="{Binding Path=ColorModel.[TextBoxBorderColor], Source={x:Static Common:BlueStacksUIBinding.Instance}}">
+                <DockPanel LastChildFill="true">
+                  <Common:CustomPictureBox Width="12" DockPanel.Dock="Right" Margin="5,0" ImageName="exit_close"/>
+                  <TextBlock x:Name="mAttachedFilesTextBlock" HorizontalAlignment="Left" Width="300" FontWeight="ExtraLight"
+                             Margin="5,0" TextTrimming="CharacterEllipsis" ToolTip="{Binding Mode=OneWay}"
+                             Text="{Binding Mode=OneWay, Converter={StaticResource FilePathToFileNameConverter}}"
+                             Foreground="{Binding Path=ColorModel.[TextBoxForegroundColor], Source={x:Static Common:BlueStacksUIBinding.Instance}}"/>
+                </DockPanel>
+              </Border>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+          <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+            <Setter Property="Control.Background"
+                    Value="{Binding Path=ColorModel.[LightBandingColor], Source={x:Static Common:BlueStacksUIBinding.Instance}}"/>
+          </Trigger>
+          <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+            <Setter Property="Control.Background"
+                    Value="{Binding Path=ColorModel.[DarkBandingColor], Source={x:Static Common:BlueStacksUIBinding.Instance}}"/>
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Border x:Name="mBorder" SnapsToDevicePixels="true" BorderThickness="1"
+          Background="{Binding Path=ColorModel.[SettingsWindowBackground]}"
+          BorderBrush="{Binding Path=ColorModel.[ApplicationBorderBrush]}"
+          CornerRadius="{Binding Path=CornerRadiusModel.[SettingsWindowRadius]}">
+    <StackPanel>
+      <DockPanel MouseLeftButtonDown="TitleMouseButonDown" LastChildFill="true">
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="CloseBtn_MouseLeftButtonUp" x:Name="CloseBtn" DockPanel.Dock="Right"
+                                 Height="25" Width="25" Margin="0,20,25,0" ImageName="exit_close"/>
+        <TextBlock x:Name="label" Padding="25,20,0,0" HorizontalAlignment="Stretch" FontSize="18"
+                   Text="{Binding Path=LocaleModel.[STRING_REPORT_A_PROBLEM], FallbackValue='Report a problem'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+      </DockPanel>
+      <StackPanel Margin="25 0 25 25">
+        <StackPanel Height="140">
+          <StackPanel x:Name="mGifGrid" Height="140">
+            <Image x:Name="mLoadingImage" Stretch="Uniform" VerticalAlignment="Center" Margin="0, 35" Height="70"
+                   Common:ImageBehavior.RepeatBehavior="Forever" Common:ImageBehavior.AutoStart="true"/>
+          </StackPanel>
+          <StackPanel Name="mCategoryStackPanel" Height="70" Visibility="Collapsed">
+            <TextBlock x:Name="mCategoryTextBlock" Margin="0 10 0 0" FontWeight="Bold"
+                       Text="{Binding Path=LocaleModel.[STRING_PROBLEM_TYPE], FallbackValue='Problem type'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+            <Common:CustomComboBox PreviewMouseDown="mCategoryComboBox_PreviewMouseDown" SelectionChanged="CategoryChanged"
+                                   x:Name="mCategoryComboBox" MaxDropDownHeight="100" Height="28" Margin="0 10 0 0"/>
+          </StackPanel>
+          <StackPanel Name="mSubCategoryStackPanel" Height="70" Visibility="Collapsed">
+            <TextBlock x:Name="mSubCategoryTextBlock" FontWeight="Bold" Margin="0 10 0 0"
+                       Text="{Binding Path=LocaleModel.[STRING_SUBCATEGORY], FallbackValue=Subcategory}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+            <Common:CustomComboBox PreviewMouseDown="mSubCategoryCombobox_PreviewMouseDown" SelectionChanged="SubCategoryChanged"
+                                   x:Name="mSubCategoryCombobox" Margin="0 10 0 0" MaxDropDownHeight="100" Padding="100" Height="28"/>
+          </StackPanel>
+        </StackPanel>
+        <TextBlock x:Name="mAppDetailsTextBlock" Margin="0 10 0 0" FontWeight="Bold"
+                   Text="{Binding Path=LocaleModel.[STRING_APP_DETAILS], FallbackValue='Application details'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+        <TextBlock x:Name="mAppNameTitle" Margin="0 10 0 0"
+                   Text="{Binding Path=LocaleModel.[STRING_APPLICATION_NAME], FallbackValue='Application name'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor]}"/>
+        <StackPanel>
+          <Common:CustomComboBox PreviewMouseDown="mAppListComboBox_PreviewMouseDown" x:Name="mAppListComboBox"
+                                 MaxDropDownHeight="120" Margin="0 10 0 0" Height="28" Padding="4" Visibility="Collapsed"/>
+          <Grid x:Name="mAppNameGrid">
+            <Common:CustomTextBox x:Name="mAppNameTextBox" Padding="4" FontSize="12" Margin="0 10 0 0" MaxLength="70" Height="28"
+                                  HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
+                                  WatermarkText="{Binding Path=LocaleModel.[STRING_APP_NAME_WATERMARK], FallbackValue='Type Application name here'}">
+            </Common:CustomTextBox>
+          </Grid>
+        </StackPanel>
+        <TextBlock x:Name="mDescribeProblemTextBlock" Margin="0 10 0 0"
+                   Text="{Binding Path=LocaleModel.[STRING_DESCRIBE_PROBLEM], FallbackValue='Describe the problem'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor]}"/>
+        <Common:CustomTextBox GotKeyboardFocus="DescribeProblemTextBox_GotKeyboardFocus" x:Name="mDescribeProblemTextBox"
+                              Margin="0 10 0 0" Padding="4" AcceptsReturn="true" HorizontalContentAlignment="Left" FontSize="12"
+                              MinHeight="100" MaxHeight="100" TextWrapping="Wrap" VerticalContentAlignment="Top"
+                              WatermarkText="{Binding Path=LocaleModel.[STRING_OUTLINE_ISSUE], FallbackValue='Describe the issue in brief here'}">
+        </Common:CustomTextBox>
+        <Common:CustomButton PreviewMouseLeftButtonUp="mChooseButton_PreviewMouseLeftButtonUp" x:Name="mChooseButton"
+                             Width="auto" HorizontalAlignment="Left" Height="28" FontSize="12" Margin="0 20 0 0"
+                             ButtonColor="Blue"
+                             Content="{Binding Path=LocaleModel.[STRING_ATTACH_FILES], FallbackValue='Attach Files'}"/>
+        <ListBox x:Name="mAttachedFilesListBox" MaxHeight="88" ScrollViewer.CanContentScroll="true"
+                 ItemContainerStyle="{StaticResource ContainerStyle}" Background="Transparent" BorderThickness="0"
+                 HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 Margin="0 10 0 0" ItemsSource="{Binding}"/>
+        <TextBlock x:Name="mEmailTextBlock" Margin="0 10 0 0" FontWeight="Bold"
+                   Text="{Binding Path=LocaleModel.[STRING_YOUR_EMAIL], FallbackValue='Email Address'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+        <Common:CustomTextBox GotKeyboardFocus="EmailTextBox_GotKeyboardFocus" x:Name="mEmailTextBox" Margin="0 10 0 0"
+                              HorizontalContentAlignment="Left" VerticalContentAlignment="Top" FontSize="12" Padding="4"
+                              Height="28"/>
+        <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+          <Common:CustomCheckbox Unchecked="mAllInstancesCheckbox_Unchecked" x:Name="mAlIOemsCheckbox" Visibility="Collapsed"
+                                 Content="{Binding Path=LocaleModel.[STRING_COLLECTS_LOGS_FROM_ALL_INSTANCES], FallbackValue='Collect logs from all instances'}"/>
+          <Common:CustomPictureBox MouseDown="CustomPictureBox_MouseDown" x:Name="mHelpIcon" Style="{StaticResource ImageStyle}"
+                                   ImageName="menu_help" Visibility="Collapsed" Cursor="Hand"
+                                   ToolTip="{Binding Path=LocaleModel.[STRING_HELP_AND_SUPPORT], FallbackValue=Help}"/>
+        </StackPanel>
+        <Common:CustomCheckbox x:Name="mStartAllOemsCheckbox" Margin="20 5 0 0" VerticalAlignment="Center"
+                               Visibility="{Binding ElementName=mAlIOemsCheckbox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               Content="{Binding Path=LocaleModel.[STRING_START_ALL_INSTANCES], FallbackValue='Start all instances'}"/>
+        <Common:CustomButton PreviewMouseLeftButtonUp="mSubmitBtn_PreviewMouseLeftButtonUp" x:Name="mBtn" Margin="0 20 0 0"
+                             HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="12" Height="28" Width="auto"
+                             ButtonColor="Blue"
+                             Content="{Binding Path=LocaleModel.[STRING_SUBMIT_REPORT], FallbackValue='Submit report'}"/>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</Window>

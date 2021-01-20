@@ -1,0 +1,35 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.SlideShowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Loaded="SlideShowControl_Loaded" x:Name="slideControl" Background="#21233a">
+  <FrameworkElement.Resources>
+    <Storyboard x:Key="FadeIn" FillBehavior="Stop">
+      <DoubleAnimation Duration="0:0:.6" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+    </Storyboard>
+    <Storyboard x:Key="FadeOut" FillBehavior="Stop">
+      <DoubleAnimation Duration="0:0:.6" Storyboard.TargetProperty="Opacity" To="0"/>
+    </Storyboard>
+    <Storyboard x:Key="SlideIn">
+      <ThicknessAnimation Duration="0:0:.6" Storyboard.TargetProperty="Margin" From="800,0,-800,0" To="0"
+                          DecelerationRatio=".9"/>
+    </Storyboard>
+    <Storyboard x:Key="SlideOut">
+      <ThicknessAnimation Duration="0:0:.6" Storyboard.TargetProperty="Margin" To="-800,0,800,0" AccelerationRatio=".9"/>
+    </Storyboard>
+  </FrameworkElement.Resources>
+  <Grid Name="SlideshowGrid">
+    <Common:CustomPictureBox MouseEnter="image1_MouseEnter" MouseLeave="image1_MouseLeave" x:Name="image1"
+                             Stretch="UniformToFill" ImageName="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Common:CustomPictureBox MouseLeftButtonUp="mPrevBtn_MouseLeftButtonUp" MouseLeave="image1_MouseLeave" x:Name="mPrevBtn"
+                             MaxWidth="40" VerticalAlignment="Center" HorizontalAlignment="Left" ImageName="guide_prev"/>
+    <Common:CustomPictureBox MouseLeftButtonUp="mNextBtn_MouseLeftButtonUp" MouseLeave="image1_MouseLeave" x:Name="mNextBtn"
+                             MaxWidth="40" VerticalAlignment="Center" HorizontalAlignment="Right" ImageName="guide_next"/>
+    <TextBlock Name="SlideshowName" Foreground="White" FontSize="20" Margin="10" Text=""
+               HorizontalAlignment="{Binding ElementName=slideControl, Path=TextHorizontalAlignment}"
+               VerticalAlignment="{Binding ElementName=slideControl, Path=TextVerticalAlignment}"/>
+  </Grid>
+</UserControl>

@@ -1,0 +1,17 @@
+<UserControl x:Class="BlueStacks.Common.TextWrapCustomCheckBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.Common">
+  <Grid MouseDown="CustomCheckBox_MouseDown" Cursor="Hand">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <local:CustomPictureBox x:Name="mCheckBoxImage" Grid.Column="0" ImageName="unchecked_gray" MaxHeight="16" Margin="0,2,0,2"
+                            VerticalAlignment="Center" HorizontalAlignment="Left"/>
+    <TextBlock x:Name="mCheckBoxContent" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap"
+               HorizontalAlignment="Stretch" Text="Agree" Foreground="White" Margin="6,0,0,0"/>
+  </Grid>
+</UserControl>

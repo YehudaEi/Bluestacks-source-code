@@ -1,0 +1,332 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.GameSettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:command="http://www.galasoft.ch/mvvmlight">
+  <FrameworkElement.Resources>
+    <common:EnumToBoolConverter2 x:Key="enumToBoolConverter"/>
+    <common:EnumToVisibilityConverter x:Key="enumToVisibilityConverter"/>
+    <common:InverseEnumToVisibilityConverter x:Key="inverseEnumToVisibilityConverter"/>
+    <common:LocalizedStringMultiConverter x:Key="LocalizedStringMultiConverter"/>
+    <common:BooleanToImageNameConverter x:Key="BooleanToImageNameConverter"/>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <ScrollViewer ScrollChanged="ScrollViewer_ScrollChanged" HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+      <UIElement.OpacityMask>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="Transparent" Offset="0"/>
+          <GradientStop Color="#FF000000" Offset=".15"/>
+          <GradientStop Color="#FF000000" Offset=".8"/>
+          <GradientStop Color="Transparent" Offset="1"/>
+        </LinearGradientBrush>
+      </UIElement.OpacityMask>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="30,20,20,20" Grid.Row="0">
+          <TextBlock FontWeight="Normal" HorizontalAlignment="Left" FontSize="16"
+                     Text="{Binding Path=LocaleModel.[STRING_ALL_GAMES], FallbackValue='All Games', Source={Static common:BlueStacksUIBinding.Instance}}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+          <Grid Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock FontSize="14" VerticalAlignment="Top" Grid.Column="0" HorizontalAlignment="Left"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                       Text="{Binding Path=LocaleModel.[STRING_CURSOR], FallbackValue=Cursor, Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            <common:CustomRadioButton GroupName="Cursors" Grid.Column="1" HorizontalAlignment="Left" Margin="0" Height="16"
+                                      ImageName="white_cursor" Content="" TextMargin="0"
+                                      IsChecked="{Binding CursorMode, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:CursorMode.Normal}, Mode=TwoWay}"/>
+            <common:CustomRadioButton GroupName="Cursors" Grid.Column="2" HorizontalAlignment="Left" Margin="0" Height="16" Content=""
+                                      TextMargin="0"
+                                      IsChecked="{Binding CursorMode, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:CursorMode.Custom}, Mode=TwoWay}"
+                                      ImageName="{Binding CustomCursorImageName}"/>
+          </Grid>
+        </StackPanel>
+        <StackPanel Margin="30,0,20,15" Grid.Row="1"
+                    Visibility="{Binding CurrentGame, Converter={StaticResource inverseEnumToVisibilityConverter}, ConverterParameter={Static local:CurrentGame.None}}">
+          <Line StrokeThickness="1" X1="0" X2="500" Y1="0" Y2="0" Margin="0,0,0,20"
+                Stroke="{Binding Path=ColorModel.[HorizontalSeparator], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+          <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+            <common:CustomPictureBox Height="24" ImageName="{Binding ImageName}"/>
+            <Label FontSize="16" HorizontalAlignment="Left"
+                   Foreground="{Binding Path=ColorModel.[SelectedTabForegroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                   Content="{Binding AppName, FallbackValue=Appname}"/>
+          </StackPanel>
+          <StackPanel Margin="0,12,0,0"
+                      Visibility="{Binding CurrentGame, Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={Static local:CurrentGame.FreeFire}}">
+            <common:CustomCheckbox TextFontSize="14" ImageMargin="2" Padding="5,0,5,2"
+                                   DataContext="{Binding FreeFireGameSettingViewModel}" IsChecked="{Binding OptimizeInGameSetting}"
+                                   Content="{Binding Path=LocaleModel.[STRING_OPTIMIZE_INGAME_SETTINGS], FallbackValue='Optimize in-game settings', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" FontSize="12" Margin="25,-5,0,0"
+                       Padding="5,0,5,0"
+                       Text="{Binding Path=LocaleModel.[STRING_RECOMMENDED_SETTING], FallbackValue='Automatically choose the best game settings based on my hardware', Source={Static common:BlueStacksUIBinding.Instance}}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+          </StackPanel>
+          <StackPanel Margin="0,12,0,0"
+                      Visibility="{Binding CurrentGame, Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={Static local:CurrentGame.PubG}}">
+            <Label FontSize="14" Padding="0,0,5,2"
+                   Content="{Binding Path=LocaleModel.[STRING_IN_GAME_RESOLUTION], FallbackValue='In game resolution', Source={Static common:BlueStacksUIBinding.Instance}}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            <StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <common:CustomRadioButton GroupName="PubgInGameResolution" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          FontSize="13" DataContext="{Binding PubgGameSettingViewModel}"
+                                          IsChecked="{Binding InGameResolution, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:InGameResolution.HD_720p}, Mode=TwoWay}"
+                                          Content="{Binding Path=LocaleModel.[STRING_720RESOLUTION], FallbackValue='HD 720p', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="12" VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"
+                           MaxWidth="400" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Text="{Binding Path=LocaleModel.[STRING_DEFAULT_IN_GAME_RESOLUTION], FallbackValue='(Default in game resolution)', StringFormat=({0}), Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <common:CustomRadioButton GroupName="PubgInGameResolution" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          FontSize="13" DataContext="{Binding PubgGameSettingViewModel}"
+                                          IsChecked="{Binding InGameResolution, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:InGameResolution.FHD_1080p}, Mode=TwoWay}"
+                                          Content="{Binding Path=LocaleModel.[STRING_1080RESOLUTION], FallbackValue='FHD 1080p', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="12" VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"
+                           MaxWidth="400" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Text="{Binding Path=LocaleModel.[STRING_1080RESOLUTION_MESSAGE], FallbackValue='(GPU comparable with GTX 660 or higher)', StringFormat=({0}), Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <common:CustomRadioButton GroupName="PubgInGameResolution" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          FontSize="13" DataContext="{Binding PubgGameSettingViewModel}"
+                                          IsChecked="{Binding InGameResolution, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:InGameResolution.QHD_1440p}, Mode=TwoWay}"
+                                          Content="{Binding Path=LocaleModel.[STRING_2KRESOLUTION], FallbackValue='QHD 1440p', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="12" VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"
+                           MaxWidth="400" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Text="{Binding Path=LocaleModel.[STRING_2KRESOLUTION_MESSAGE], FallbackValue='(GPU comparable with GTX 1060 or higher)', StringFormat=({0}), Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+            </StackPanel>
+            <Label FontSize="14" Padding="0,0,5,2" Margin="0,15,0,0"
+                   Content="{Binding Path=LocaleModel.[STRING_GRAPHICS_QUALITY], FallbackValue='Graphics quality', Source={Static common:BlueStacksUIBinding.Instance}}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            <Grid Margin="0,10,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <common:CustomRadioButton GroupName="PubgGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="0" FontSize="12"
+                                        Content="{Binding Path=LocaleModel.[STRING_AUTO], FallbackValue=Auto, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding PubgGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.Auto}, Mode=TwoWay}"/>
+              <common:CustomRadioButton GroupName="PubgGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="1" FontSize="12"
+                                        Content="{Binding Path=LocaleModel.[STRING_SMOOTH], FallbackValue=Smooth, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding PubgGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.Smooth}, Mode=TwoWay}"/>
+              <common:CustomRadioButton GroupName="PubgGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="2" FontSize="12"
+                                        Content="{Binding Path=LocaleModel.[STRING_BALANCED], FallbackValue=Balanced, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding PubgGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.Balanced}, Mode=TwoWay}"/>
+              <common:CustomRadioButton GroupName="PubgGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="3" FontSize="12"
+                                        Content="{Binding Path=LocaleModel.[STRING_HD], FallbackValue=HD, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding PubgGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.HD}, Mode=TwoWay}"/>
+            </Grid>
+          </StackPanel>
+          <StackPanel Margin="0,12,0,0"
+                      Visibility="{Binding CurrentGame, Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={Static local:CurrentGame.CallOfDuty}}">
+            <Label FontSize="14" Padding="0,0,5,2"
+                   Content="{Binding Path=LocaleModel.[STRING_IN_GAME_RESOLUTION], FallbackValue='In game resolution', Source={Static common:BlueStacksUIBinding.Instance}}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            <StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <common:CustomRadioButton GroupName="CodInGameResolution" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"
+                                          DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                          IsChecked="{Binding InGameResolution, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:InGameResolution.HD_720p}, Mode=TwoWay}"
+                                          Content="{Binding Path=LocaleModel.[STRING_720RESOLUTION], FallbackValue='HD 720p', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="15" VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"
+                           MaxWidth="400" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Text="{Binding Path=LocaleModel.[STRING_DEFAULT_IN_GAME_RESOLUTION], FallbackValue='(Default in game resolution)', StringFormat=({0}), Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <common:CustomRadioButton GroupName="CodInGameResolution" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"
+                                          DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                          IsChecked="{Binding InGameResolution, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:InGameResolution.FHD_1080p}, Mode=TwoWay}"
+                                          Content="{Binding Path=LocaleModel.[STRING_1080RESOLUTION], FallbackValue='FHD 1080p', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="15" VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"
+                           MaxWidth="400" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Text="{Binding Path=LocaleModel.[STRING_1080RESOLUTION_MESSAGE], FallbackValue='(GPU comparable with GTX 660 or higher)', StringFormat=({0}), Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <common:CustomRadioButton GroupName="CodInGameResolution" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"
+                                          DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                          IsChecked="{Binding InGameResolution, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:InGameResolution.QHD_1440p}, Mode=TwoWay}"
+                                          Content="{Binding Path=LocaleModel.[STRING_2KRESOLUTION], FallbackValue='QHD 1440p', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="15" VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"
+                           MaxWidth="400" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Text="{Binding Path=LocaleModel.[STRING_2KRESOLUTION_MESSAGE], FallbackValue='(GPU comparable with GTX 1060 or higher)', StringFormat=({0}), Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <common:CustomRadioButton GroupName="CodInGameResolution" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"
+                                          DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                          IsChecked="{Binding InGameResolution, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:InGameResolution.UHD_2160p}, Mode=TwoWay}"
+                                          Content="{Binding Path=LocaleModel.[STRING_4KRESOLUTION], FallbackValue='UHD 2160p', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="15" VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"
+                           MaxWidth="400" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Text="{Binding Path=LocaleModel.[STRING_2KRESOLUTION_MESSAGE], FallbackValue='(GPU comparable with GTX 1060 or higher)', StringFormat=({0}), Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+            </StackPanel>
+            <Label FontSize="14" Padding="0,0,5,2" Margin="0,15,0,0"
+                   Content="{Binding Path=LocaleModel.[STRING_GRAPHICS_QUALITY], FallbackValue='Graphics quality', Source={Static common:BlueStacksUIBinding.Instance}}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            <Grid Margin="0,10,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <common:CustomRadioButton GroupName="CodGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="0" FontSize="14"
+                                        Content="{Binding Path=LocaleModel.[STRING_AUTO], FallbackValue=Auto, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.Auto}, Mode=TwoWay}"/>
+              <common:CustomRadioButton GroupName="CodGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="1" FontSize="14"
+                                        Content="{Binding Path=LocaleModel.[STRING_SMOOTH], FallbackValue=Smooth, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.Smooth}, Mode=TwoWay}"/>
+              <common:CustomRadioButton GroupName="CodGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="2" FontSize="14"
+                                        Content="{Binding Path=LocaleModel.[STRING_BALANCED], FallbackValue=Balanced, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.Balanced}, Mode=TwoWay}"/>
+              <common:CustomRadioButton GroupName="CodGraphicsQuality" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Grid.Column="3" FontSize="14"
+                                        Content="{Binding Path=LocaleModel.[STRING_HD], FallbackValue=HD, Source={Static common:BlueStacksUIBinding.Instance}}"
+                                        DataContext="{Binding CallOfDutyGameSettingViewModel}"
+                                        IsChecked="{Binding GraphicsQuality, Converter={StaticResource enumToBoolConverter}, ConverterParameter={Static local:GraphicsQuality.HD}, Mode=TwoWay}"/>
+            </Grid>
+          </StackPanel>
+          <StackPanel Margin="0,12,0,0">
+            <Grid Margin="0,0,0,10" Visibility="{Binding ShowSensitivity}"
+                  DataContext="{Binding OtherAppGameSetting}">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <StackPanel Orientation="Vertical" Margin="0,0,8,0" Grid.Column="0">
+                <TextBlock FontSize="14" TextWrapping="Wrap"
+                           Text="{Binding Path=LocaleModel.[STRING_MOUSE_SENSITIVITY], FallbackValue='Mouse sensitivity', Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="12" TextWrapping="Wrap"
+                           Text="{Binding Path=LocaleModel.[STRING_CHANGE_SENSITIVITY], FallbackValue='Change the sensitivity of the current scheme', Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+              <DockPanel Grid.Column="1" Height="28">
+                <TextBlock Margin="0,0,8,0" FontSize="14" VerticalAlignment="Center"
+                           Text="{Binding Path=LocaleModel.[IMAP_STRING_TAP_X], FallbackValue=X, Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <local:StepperTextBox x:Name="mXSensitivity" SelectAllOnStart="false" Grid.Column="1" VerticalAlignment="Bottom"
+                                      HorizontalAlignment="Left" FontSize="14" Height="24" Width="64" Padding="1" MinValue="0.00"
+                                      MaxValue="10.00" Margin="0,0,0,2"
+                                      Text="{Binding MouseSenstivityX, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                      PropertyType="{Binding SensitivityPropertyType}">
+                  <local:StepperTextBox.IMActionItems>
+                    <Binding>                      <!-- constructor argument:
+                           SensitivityIMActionItemsX
+                      -->
+
+                    </Binding>
+                  </local:StepperTextBox.IMActionItems>
+                </local:StepperTextBox>
+              </DockPanel>
+              <DockPanel Grid.Column="3" Margin="0,0,1,0" Height="28">
+                <TextBlock Margin="0,0,8,0" FontSize="14" VerticalAlignment="Center"
+                           Text="{Binding Path=LocaleModel.[IMAP_STRING_TAP_Y], FallbackValue=Y, Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <local:StepperTextBox x:Name="mYSensitivity" SelectAllOnStart="false" Grid.Column="1" VerticalAlignment="Center"
+                                      HorizontalAlignment="Left" FontSize="14" Height="24" Width="64" Padding="1" MinValue="0.00"
+                                      MaxValue="10.00"
+                                      Text="{Binding MouseSenstivityY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                      PropertyType="{Binding SensitivityPropertyType}">
+                  <local:StepperTextBox.IMActionItems>
+                    <Binding>                      <!-- constructor argument:
+                           SensitivityIMActionItemsY
+                      -->
+
+                    </Binding>
+                  </local:StepperTextBox.IMActionItems>
+                </local:StepperTextBox>
+              </DockPanel>
+            </Grid>
+            <Grid Margin="0,0,0,10" Visibility="{Binding ShowGuideVisibility}">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                <TextBlock FontSize="14"
+                           Text="{Binding Path=LocaleModel.[STRING_GAME_CONTROLS_WINDOW_HEADER], FallbackValue='Game controls', Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+                <TextBlock FontSize="12"
+                           Text="{Binding Path=LocaleModel.[STRING_VIEW_AND_CUSTOMIZE_GAME_CONTROLS], FallbackValue='View and customize game controls', Source={Static common:BlueStacksUIBinding.Instance}}"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              </StackPanel>
+              <common:CustomButton x:Name="mGuideBtn" Grid.Column="1" ImageName="gameguide" Height="28" HorizontalAlignment="Left"
+                                   ButtonColor="Background" FontWeight="Normal" FontSize="12" ImageMargin="0,5,5,5" MinWidth="110"
+                                   Command="{Binding OpenGameGuideCommand}"
+                                   Content="{Binding Path=LocaleModel.[STRING_SHOW_GAME_GUIDE], FallbackValue='Show guide', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            </Grid>
+            <StackPanel Margin="0,0,0,10" Visibility="{Binding PlayInPortraitModeVisibility}"
+                        DataContext="{Binding OtherAppGameSetting}">
+              <common:CustomCheckbox TextFontSize="14" ImageMargin="2" Padding="5,0,5,2" IsChecked="{Binding PlayInPortraitMode}"
+                                     Content="{Binding Path=LocaleModel.[PLAY_PORTRAIT], FallbackValue='Play in portrait mode', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              <TextBlock HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" FontSize="12" Margin="25,-5,0,0"
+                         Padding="5,0,5,0"
+                         Text="{Binding Path=LocaleModel.[STRING_RECOMMENDED_PORTRAIT_MODE], FallbackValue='Enable this setting to always launch the game and its game control in portrait mode', Source={Static common:BlueStacksUIBinding.Instance}}"
+                         Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10" Visibility="{Binding PlayInLandscapeModeVisibility}"
+                        DataContext="{Binding OtherAppGameSetting}">
+              <common:CustomCheckbox TextFontSize="14" ImageMargin="2" Padding="5,0,5,2" IsChecked="{Binding PlayInLandscapeMode}"
+                                     Content="{Binding Path=LocaleModel.[PLAY_LANDSCAPE], FallbackValue='Play in landscape mode', Source={Static common:BlueStacksUIBinding.Instance}}"/>
+              <TextBlock HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" FontSize="12" Margin="25,-5,0,0"
+                         Padding="5,0,5,0"
+                         Text="{Binding Path=LocaleModel.[STRING_RECOMMENDED_LANDSCAPE_MODE], FallbackValue='Enable this setting to always launch the game and its game control in landscape mode', Source={Static common:BlueStacksUIBinding.Instance}}"
+                         Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+            </StackPanel>
+          </StackPanel>
+        </StackPanel>
+      </Grid>
+    </ScrollViewer>
+    <DockPanel Grid.Row="1" Margin="34,10,20,30" LastChildFill="false">
+      <TextBlock FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"
+                 Visibility="{Binding LearnMoreVisibility}"
+                 Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+        <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" x:Name="mKnowMoreLink"
+                   Style="{StaticResource HyperlinkStyle}" NavigateUri="{Binding LearnMoreUri}"/>
+      </TextBlock>
+      <common:CustomButton Width="120" DockPanel.Dock="Right" Height="35" Command="{Binding SaveCommand}"
+                           Content="{Binding Path=LocaleModel.[STRING_SAVE], FallbackValue=Save, Source={Static common:BlueStacksUIBinding.Instance}}"/>
+    </DockPanel>
+  </Grid>
+</UserControl>

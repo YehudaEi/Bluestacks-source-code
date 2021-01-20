@@ -1,0 +1,33 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ImportSchemesWindowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+             Background="Transparent" MaxWidth="320" Width="242" MaxHeight="140"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Common:CustomCheckbox Checked="box_Checked" Unchecked="box_Unchecked" Name="mContent" Grid.Row="0" Height="20"
+                           TextFontSize="14" ImageMargin="2" Margin="0,1"/>
+    <Grid Name="mBlock" Margin="30,0,0,0" Visibility="Collapsed" Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <TextBlock Margin="0, 1" Grid.Row="0" FontSize="12"
+                 Text="{Binding Path=LocaleModel.[STRING_SCHEME_IMPORT_NAME], FallbackValue='Scheme will be imported as'}"
+                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimDimColor]}"/>
+      <Common:CustomTextBox Name="mImportName" Grid.Row="1" Padding="4" HorizontalContentAlignment="Left" Margin="0, 1"/>
+    </Grid>
+    <TextBlock Name="mWarningMsg" Grid.Row="2" FontSize="12" Visibility="Collapsed" Margin="30,1,0,1"
+               Foreground="{Binding Path=ColorModel.[DeleteComboTextForeground]}"
+               Text="{Binding Path=LocaleModel.[STRING_DUPLICATE_SCHEME_NAME_WARNING], FallbackValue='Scheme exists, enter a new name'}"/>
+  </Grid>
+</UserControl>

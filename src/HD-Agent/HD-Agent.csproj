@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files\BlueStacks\HD-Agent.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2AC18B1E-68A9-4FDC-ACE8-4310514E11EA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>HD-Agent</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationVersion>4.250.0.1070</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>BlueStacks</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HD-Common">
+      <HintPath>lib\HD-Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\KeyboardSend.cs" />
+    <Compile Include="Agent\AppUninstaller.cs" />
+    <Compile Include="Agent\ClipboardMgr.cs" />
+    <Compile Include="Agent\AnnouncementMessage.cs" />
+    <Compile Include="Agent\CloudAnnouncement.cs" />
+    <Compile Include="Agent\CustomAlert.cs" />
+    <Compile Include="Agent\DownloadInstallStatus.cs" />
+    <Compile Include="Agent\DownloadInstallApk.cs" />
+    <Compile Include="Agent\ApkDownloadInstallStatus.cs" />
+    <Compile Include="Agent\HDAgent.cs" />
+    <Compile Include="Agent\AndroidNotification.cs" />
+    <Compile Include="Agent\HTTPHandler.cs" />
+    <Compile Include="Agent\VmInstance.cs" />
+    <Compile Include="Agent\VmInfo.cs" />
+    <Compile Include="Agent\ApkInstall.cs" />
+    <Compile Include="Agent\SysTray.cs" />
+    <Compile Include="Agent\TimelineStatsSender.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

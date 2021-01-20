@@ -1,0 +1,200 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.DeviceProfileControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="75"/>
+    </Grid.RowDefinitions>
+    <ScrollViewer x:Name="mScrollBar" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                  Grid.Row="0">
+      <UIElement.OpacityMask>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="Transparent" Offset="0"/>
+          <GradientStop Color="#FF000000" Offset=".15"/>
+          <GradientStop Color="#FF000000" Offset=".8"/>
+          <GradientStop Color="Transparent" Offset="1"/>
+        </LinearGradientBrush>
+      </UIElement.OpacityMask>
+      <Grid Margin="30,25,20,15">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" HorizontalAlignment="Left">
+          <TextBlock FontWeight="Normal" FontSize="16" Padding="0"
+                     Text="{Binding Path=LocaleModel.[STRING_DEVICEPROFILE_SETTING], FallbackValue='Device profile'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+        </Label>
+        <Label HorizontalAlignment="Left" Grid.Row="1" Margin="0,15,0,0">
+          <TextBlock TextWrapping="WrapWithOverflow" Width="500" FontSize="16"
+                     Text="{Binding Path=LocaleModel.[STRING_DEVICEPROFILE_SETTING_DETAIL], FallbackValue='Device profile lets you set up a device provisioning profile for your BlueStacks instance.'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+        </Label>
+        <Label HorizontalAlignment="Left" Grid.Row="2" Margin="0,0,0,10">
+          <TextBlock TextWrapping="WrapWithOverflow" Width="500" FontSize="14"
+                     Text="{Binding Path=LocaleModel.[STRING_DEVICEPROFILE_CHANGE_WARNING], FallbackValue='Changes will delete android framework data.'}"
+                     Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"/>
+        </Label>
+        <Border x:Name="mProfileLoader" Grid.Row="3" BorderThickness="1" Visibility="Visible"
+                VerticalAlignment="Top" CornerRadius="{Binding Path=CornerRadiusModel.[PopupRadius]}"
+                BorderBrush="{Binding Path=ColorModel.[SettingsWindowTabMenuBackground]}"
+                Background="{Binding Path=ColorModel.[ApplicationBackgroundBrush]}">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="60"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox Grid.Column="0" ImageName="img_busy" IsImageToBeRotated="true" Width="50" Height="50"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" FontSize="16" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                       Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"
+                       Text="{Binding Path=LocaleModel.[STRING_CUSTOM_DEVICEPROFILE_LOADING], FallbackValue='Fetching device profiles from cloud'}"/>
+          </Grid>
+        </Border>
+        <Border x:Name="mNoInternetWarning" Grid.Row="3" BorderThickness="1,1,1.2,1" Visibility="Collapsed"
+                VerticalAlignment="Top" CornerRadius="{Binding Path=CornerRadiusModel.[PopupRadius]}"
+                BorderBrush="{Binding Path=ColorModel.[WarningBoxBorderColor]}"
+                Background="{Binding Path=ColorModel.[WarningBoxBackgroundColor]}">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="60"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox Grid.Column="0" ImageName="message_error" Width="40" Height="40" HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" FontSize="14" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Margin="5"
+                       Foreground="{Binding Path=ColorModel.[WarningBoxForegroundColor]}"
+                       Text="{Binding Path=LocaleModel.[STRING_DEVICEPROFILE_INTERNET_WARNING], FallbackValue='There was an error fetching the profiles, make sure your internet connection is working fine.'}"/>
+          </Grid>
+        </Border>
+        <Grid x:Name="mChildGrid" Row="3" Visibility="Collapsed">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Common:CustomRadioButton Checked="Profile_Checked" x:Name="mChooseProfile" GroupName="mProfileRadioButtonGroup" Grid.Row="0"
+                                    HorizontalAlignment="Left"
+                                    Content="{Binding Path=LocaleModel.[STRING_PREDEFINED_DEVICEPROFILE_TEXT]}"/>
+          <Common:CustomComboBox SelectionChanged="mPredefinedProfilesComboBox_SelectionChanged"
+                                 x:Name="mPredefinedProfilesComboBox" Grid.Row="1" MaxDropDownHeight="100" FontSize="15" Width="320"
+                                 HorizontalAlignment="Left" Margin="40,10,0,0"/>
+          <Common:CustomRadioButton Checked="Profile_Checked" x:Name="mCustomProfile" GroupName="mProfileRadioButtonGroup" Grid.Row="3"
+                                    HorizontalAlignment="Left" Content="{Binding Path=LocaleModel.[STRING_CUSTOM_DEVICEPROFILE_TEXT]}"/>
+          <Grid x:Name="mCustomProfileGrid" Row="4" Margin="0,10,0,0" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="40"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="10"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
+                       Text="{Binding Path=LocaleModel.[STRING_MANUFACTURER], FallbackValue=Manufacturer}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor]}"/>
+            <Common:CustomTextBox x:Name="mManufacturerTextBox" Grid.Column="1" Margin="0,0,10,0" HorizontalAlignment="Left"
+                                  Padding="4" Grid.Row="2" IsEnabled="true" MinHeight="28" Width="140"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
+                       Text="{Binding Path=LocaleModel.[STRING_BRAND], FallbackValue=Brand}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor]}"/>
+            <Common:CustomTextBox x:Name="mBrandTextBox" IsEnabled="true" Padding="4" Grid.Column="2" Grid.Row="2"
+                                  HorizontalAlignment="Left" Margin="0,0,10,0" MinHeight="28" Width="140"/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
+                       Text="{Binding Path=LocaleModel.[STRING_MODELNUMBER], FallbackValue='Model Number'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor]}"/>
+            <Common:CustomTextBox x:Name="mModelNumberTextBox" IsEnabled="true" Grid.Column="3" Grid.Row="2" Padding="4"
+                                  HorizontalAlignment="Left" Margin="0,0,10,0" MinHeight="28" Width="140"/>
+          </Grid>
+        </Grid>
+        <Grid x:Name="mTryAgainBtnGrid" Row="4" Margin="0,10,0,0" Visibility="Collapsed"
+              HorizontalAlignment="Left">
+          <Common:CustomButton Click="TryAgainBtn_Click" Height="30" MinWidth="100" FontSize="14"
+                               Content="{Binding Path=LocaleModel.[STRING_POST_OTS_FAILED_BUTTON_MESSAGE], FallbackValue='Try again'}"/>
+        </Grid>
+        <Grid x:Name="mMobileOperatorGrid" Row="4" Visibility="Collapsed" Margin="0,40,0,0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <TextBlock x:Name="mMobileOpertorText" Grid.Row="0" FontWeight="Normal" FontSize="16"
+                     HorizontalAlignment="Left"
+                     Text="{Binding Path=LocaleModel.[STRING_MOBILE_NETWORK_PROVIDER], FallbackValue='Mobile network provider'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+          <TextBlock x:Name="mMobileNetworkSetupText" Grid.Row="1" TextWrapping="WrapWithOverflow" Width="500"
+                     FontSize="16" HorizontalAlignment="Left" Margin="0,15,0,0"
+                     Text="{Binding Path=LocaleModel.[STRING_MOBILE_NETWORK_SETUP], FallbackValue='Setup mobile network name to allow games that require a mobile network to function well'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+          <Common:CustomComboBox SelectionChanged="MobileOperatorsCombobox_SelectionChanged" x:Name="mMobileOperatorsCombobox"
+                                 Grid.Row="2" MaxDropDownHeight="100" FontSize="15" Width="320" HorizontalAlignment="Left"
+                                 Margin="0,10,0,0"/>
+        </Grid>
+        <Grid x:Name="mRootAccessGrid" Row="5" Visibility="Collapsed" Margin="0,30,0,0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Label Grid.Row="0" HorizontalAlignment="Left">
+            <TextBlock FontWeight="Normal" FontSize="16" Padding="0"
+                       Text="{Binding Path=LocaleModel.[STRING_ROOT_ACCESS], FallbackValue='Root access'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+          </Label>
+          <Label HorizontalAlignment="Left" Grid.Row="1" Margin="0,15,0,0">
+            <TextBlock TextWrapping="WrapWithOverflow" Width="500" FontSize="16"
+                       Text="{Binding Path=LocaleModel.[STRING_ROOT_ACCESSS_DETAIL], FallbackValue='Enabling it may cause game compatibility issues, place your data at risk and void Support.'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+          </Label>
+          <Common:CustomCheckbox Click="mEnableRootAccessCheckBox_Click" x:Name="mEnableRootAccessCheckBox" Grid.Row="2"
+                                 Margin="5,10,0,0" HorizontalAlignment="Left" Height="25" TextFontSize="16"
+                                 Content="{Binding Path=LocaleModel.[STRING_ENABLE_ROOT_ACCESS], FallbackValue='Enable root access'}"
+                                 Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+        </Grid>
+      </Grid>
+    </ScrollViewer>
+    <Grid Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="25"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="30"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="20"/>
+      </Grid.ColumnDefinitions>
+      <Grid Row="1" Column="1" Margin="4,0,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox x:Name="mInfoIcon" ImageName="info_icon" MaxHeight="18" VerticalAlignment="Center"
+                                 HorizontalAlignment="Left" Visibility="Collapsed"/>
+        <Label HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Visibility="Collapsed">
+          <TextBlock TextWrapping="WrapWithOverflow" FontSize="14"
+                     Text="{Binding Path=LocaleModel.[STRING_DEVICEPROFILE_CHANGE_WARNING], FallbackValue='Changes will delete framework data'}"
+                     Foreground="{Binding Path=ColorModel.[DeleteComboTextForeground]}"/>
+        </Label>
+        <Common:CustomButton Click="SaveChangesBtn_Click" x:Name="mSaveChangesBtn" Grid.Column="2" Width="120" IsEnabled="false"
+                             Content="{Binding Path=LocaleModel.[STRING_SAVE], FallbackValue=Save}"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

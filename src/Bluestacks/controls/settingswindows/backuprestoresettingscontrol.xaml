@@ -1,0 +1,74 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.BackupRestoreSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common">
+  <Grid Margin="30,25,20,25">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid x:Name="mDiskCleanupGrid" Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Common:CustomPictureBox Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left"
+                               ImageName="disk_cleanup_settings"/>
+      <Grid Column="1" Width="440" Margin="20,0,0,0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="16" FontWeight="Normal"
+                   Text="{Binding Path=LocaleModel.[STRING_DISK_CLEANUP], FallbackValue='Disk cleanup'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+        <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="1" Margin="0,15,0,0" HorizontalAlignment="Left"
+                   FontSize="16"
+                   Text="{Binding Path=LocaleModel.[STRING_DISK_CLEANUP_DESCRIPTION], FallbackValue='Free up space unused by BlueStacks so that other windows app on your PC may use it.'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+        <Common:CustomButton Click="DiskCleanupBtn_Click" x:Name="mDiskCleanupBtn" ButtonColor="Blue" Grid.Row="2"
+                             Margin="0,10,0,0" MinWidth="150" HorizontalAlignment="Right"
+                             Content="{Binding Path=LocaleModel.[STRING_FREE_UP_SPACE], FallbackValue='Free up Space'}"/>
+      </Grid>
+    </Grid>
+    <Line x:Name="mLineSeperator" Grid.Row="1" Margin="0,15,0,15" X1="60" Y1="0" X2="500" Y2="0"
+          StrokeThickness="1" Stroke="{Binding Path=ColorModel.[HorizontalSeparator]}"/>
+    <Grid x:Name="mBackupRestoreGrid" Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Common:CustomPictureBox Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left"
+                               ImageName="backup_restore_settings"/>
+      <Grid Column="1" Width="440" Margin="20,0,0,0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="16" FontWeight="Normal"
+                   Text="{Binding Path=LocaleModel.[STRING_BACKUPRESTORE_SETTING], FallbackValue='Backup and restore'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+        <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="1" Margin="0,15,0,0" HorizontalAlignment="Left"
+                   FontSize="16"
+                   Text="{Binding Path=LocaleModel.[STRING_BACKUP_RESTORE_DESCRIPTION], FallbackValue='Create a backup of installed apps, game controls, user data and settings for all your instances. You can also restore an existing backup.'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+        <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Left"
+                   FontSize="14"
+                   Text="{Binding Path=LocaleModel.[STRING_BACKUP_AND_RESTORE_SETTINGS_WARNING], FallbackValue='Backups can only be successfully restored from the version they were created from.'}"
+                   Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"/>
+        <StackPanel Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
+          <Common:CustomButton Click="RestoreBtn_Click" x:Name="mRestoreBtn" ButtonColor="White" MinWidth="150" Margin="0,0,20,0"
+                               Content="{Binding Path=LocaleModel.[STRING_RESTORE_BACKUP], FallbackValue='Restore backup'}"/>
+          <Common:CustomButton Click="BackupBtn_Click" x:Name="mBackupBtn" ButtonColor="Blue" MinWidth="150"
+                               Content="{Binding Path=LocaleModel.[STRING_CREATE_BACKUP], FallbackValue='Create backup'}"/>
+        </StackPanel>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

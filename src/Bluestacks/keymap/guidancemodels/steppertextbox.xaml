@@ -1,0 +1,177 @@
+<common:XTextBox x:Class="BlueStacks.BlueStacksUI.StepperTextBox"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                 Style="{DynamicResource StepperStyle}" ContextMenu="{Null}">
+  <FrameworkElement.Resources>
+    <common:ArithmeticValueConverter x:Key="ArithmeticValueConverter"/>
+    <DataTemplate x:Key="TextContentTemplate">
+      <TextBlock Name="wrapTextBlock" TextAlignment="Left" TextWrapping="Wrap" Text="{Binding}"
+                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType={Type RepeatButton}}}"/>
+    </DataTemplate>
+    <Style TargetType="{Type RepeatButton}">
+      <Setter Property="Control.BorderThickness" Value="1,0,0,0"/>
+      <Setter Property="RepeatButton.Delay" Value="500"/>
+      <Setter Property="RepeatButton.Interval" Value="100"/>
+      <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Control.Padding" Value="1"/>
+      <Setter Property="Control.Background" Value="Transparent"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type RepeatButton}">
+            <Border x:Name="buttonHoverBorder" SnapsToDevicePixels="true" Visibility="Visible"
+                    BorderBrush="{TemplateBinding Control.BorderBrush}"
+                    BorderThickness="{TemplateBinding Control.BorderThickness}">
+              <Border x:Name="buttonBorder" SnapsToDevicePixels="true" Background="{TemplateBinding Control.Background}"
+                      Margin="-0.45">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="11*"/>
+                    <RowDefinition Height="2*"/>
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding Converter={common:XamlSizeConverter}, ElementName=mButton, Path=ActualHeight, ConverterParameter=0.5}"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="{Binding Converter={common:XamlSizeConverter}, ElementName=mButton, Path=ActualHeight, ConverterParameter=0.5}"/>
+                  </Grid.ColumnDefinitions>
+                  <Grid Row="1" Column="1">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto"/>
+                      <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <common:CustomPictureBox Margin=" 0,0,8,0" Visibility="Collapsed"
+                                             Height="{Binding Converter={common:XamlSizeConverter}, ElementName=Chrome, Path=ActualHeight, ConverterParameter=0.7}"/>
+                    <ContentPresenter x:Name="Chrome" TextBlock.FontWeight="{TemplateBinding Control.FontWeight}" Grid.Column="1"
+                                      HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                      Margin="{TemplateBinding Control.Padding}" RecognizesAccessKey="true"
+                                      SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                                      VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"/>
+                  </Grid>
+                </Grid>
+              </Border>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="UIElement.IsMouseOver" Value="true">
+                <Setter TargetName="buttonHoverBorder" Property="UIElement.Visibility" Value="Visible"/>
+                <Setter TargetName="buttonBorder" Property="UIElement.Visibility" Value="Visible"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style TargetType="{Type Path}">
+      <Setter Property="Shape.Fill"
+              Value="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={Static common:BlueStacksUIBinding.Instance}, FallbackValue=#FFA5A7C2}"/>
+      <Setter Property="Shape.StrokeThickness" Value="0"/>
+    </Style>
+    <Style x:Key="StepperStyle" TargetType="{Type common:XTextBox}">
+      <Setter Property="UIElement.SnapsToDevicePixels" Value="true"/>
+      <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="true"/>
+      <Setter Property="FrameworkElement.FocusVisualStyle" Value="{Null}"/>
+      <Setter Property="UIElement.AllowDrop" Value="true"/>
+      <Setter Property="Control.BorderThickness" Value="1"/>
+      <Setter Property="Control.Padding" Value="2"/>
+      <Setter Property="Control.FontSize" Value="14"/>
+      <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Control.Foreground"
+              Value="{Binding Path=ColorModel.[TextBoxForegroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+      <Setter Property="Control.Background"
+              Value="{Binding Path=ColorModel.[TextBoxBackgroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+      <Setter Property="Control.BorderBrush"
+              Value="{Binding Path=ColorModel.[TextBoxBorderColor], Source={Static common:BlueStacksUIBinding.Instance}}"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type common:XTextBox}">
+            <Border x:Name="Border" BorderThickness="{TemplateBinding Control.BorderThickness}"
+                    BorderBrush="{TemplateBinding Control.BorderBrush}"
+                    Background="{TemplateBinding Control.Background}">
+              <DockPanel LastChildFill="true">
+                <Grid DockPanel.Dock="Right" Width="20">
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                  </Grid.RowDefinitions>
+                  <RepeatButton Grid.Row="0" BorderBrush="{TemplateBinding Control.BorderBrush}">
+                    <Viewbox>
+                      <Grid Margin="6,2">
+                        <Path Data="M 0,6 L 6,0 12,6 " Fill="{TemplateBinding Control.BorderBrush}"/>
+                      </Grid>
+                    </Viewbox>
+                  </RepeatButton>
+                  <RepeatButton Grid.Row="1" BorderBrush="{TemplateBinding Control.BorderBrush}">
+                    <Viewbox>
+                      <Grid Margin="6,2">
+                        <Path Data="M 0,0 L 6,6 12,0 " Fill="{TemplateBinding Control.BorderBrush}"/>
+                      </Grid>
+                    </Viewbox>
+                  </RepeatButton>
+                </Grid>
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden"
+                              VerticalScrollBarVisibility="Hidden"/>
+              </DockPanel>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="UIElement.IsMouseOver" Value="true">
+                <Setter TargetName="Border"
+                        Value="{Binding Path=ColorModel.[TextBoxHoverBorderColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Border.BorderBrush"/>
+              </Trigger>
+              <Trigger Property="UIElement.IsKeyboardFocused" Value="true">
+                <Setter TargetName="Border"
+                        Value="{Binding Path=ColorModel.[TextBoxFocussedBorderColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Border.BorderBrush"/>
+                <Setter TargetName="Border"
+                        Value="{Binding Path=ColorModel.[TextBoxFocussedBackgroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Border.Background"/>
+                <Setter Value="{Binding Path=ColorModel.[TextBoxFocussedBackgroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Control.Background"/>
+                <Setter Value="{Binding Path=ColorModel.[TextBoxFocussedForegroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Control.Foreground"/>
+              </Trigger>
+              <Trigger Property="common:XTextBox.InputTextValidity" Value="Error">
+                <Setter TargetName="Border"
+                        Value="{Binding Path=ColorModel.[TextBoxErrorBorderColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Border.BorderBrush"/>
+                <Setter TargetName="Border"
+                        Value="{Binding Path=ColorModel.[TextBoxErrorBackgroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Border.Background"/>
+                <Setter Value="{Binding Path=ColorModel.[TextBoxErrorBackgroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Control.Background"/>
+              </Trigger>
+              <Trigger Property="common:XTextBox.InputTextValidity" Value="Warning">
+                <Setter TargetName="Border"
+                        Value="{Binding Path=ColorModel.[TextBoxWarningBorderColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Border.BorderBrush"/>
+                <Setter TargetName="Border"
+                        Value="{Binding Path=ColorModel.[TextBoxWarningBackgroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Border.Background"/>
+                <Setter Value="{Binding Path=ColorModel.[TextBoxWarningBackgroundColor], Source={Static common:BlueStacksUIBinding.Instance}}"
+                        Property="Control.Background"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <Trigger Property="TextBoxBase.IsReadOnly" Value="true">
+          <Setter Property="Control.Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{Type TextBox}">
+                <TextBlock x:Name="mTextBlock" Text="{TemplateBinding TextBox.Text}" TextTrimming="CharacterEllipsis"
+                           VerticalAlignment="Center" Width="{TemplateBinding FrameworkElement.Width}"
+                           Foreground="{Binding Path=ColorModel.[TextBoxFocussedForegroundColor]}"
+                           ToolTip="{Binding RelativeSource={RelativeSource self}, Path=Text}"/>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+  </FrameworkElement.Resources>
+</common:XTextBox>

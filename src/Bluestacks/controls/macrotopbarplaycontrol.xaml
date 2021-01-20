@@ -1,0 +1,56 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.MacroTopBarPlayControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI.Controls"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MaxWidth="235" Height="32"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Common:BrushToColorConvertor x:Key="BrushToColorConvertor"/>
+  </FrameworkElement.Resources>
+  <Border BorderThickness="1" SnapsToDevicePixels="true" CornerRadius="4"
+          Background="{Binding Path=ColorModel.[SelectedTabBackgroundColor], FallbackValue=#262C4B}">
+    <Border.BorderBrush>
+      <SolidColorBrush Opacity="0.16"
+                       Color="{Binding Path=ColorModel.[SelectedTabBorderColor], Converter={StaticResource BrushToColorConvertor}, Source={Static Common:BlueStacksUIBinding.Instance}, FallbackValue=#FFCBD6EF}"/>
+    </Border.BorderBrush>
+    <Grid>
+      <UIElement.OpacityMask>
+        <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+      </UIElement.OpacityMask>
+      <Border x:Name="mMaskBorder" CornerRadius="4"
+              Background="{Binding Path=ColorModel.[SelectedTabBackgroundColor], FallbackValue=#262C4B}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Grid Column="0">
+            <Panel.Background>
+              <SolidColorBrush Color="#FF000000" Opacity="0.2"/>
+            </Panel.Background>
+            <Common:CustomPictureBox x:Name="RecordingImage" Grid.Column="0" ImageName="recording_macro_title_play" Height="16"
+                                     Width="16" Margin="7"/>
+          </Grid>
+          <StackPanel x:Name="mDescriptionPanel" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock x:Name="mRunningScript" HorizontalAlignment="Right" VerticalAlignment="Center" Text="PUBG Screen"
+                       FontSize="12" MaxWidth="58" Margin="3,1,0,1" TextTrimming="CharacterEllipsis"
+                       Foreground="{Binding Path=ColorModel.[SelectedTabForegroundColor]}"/>
+            <TextBlock x:Name="mRunningIterations" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"
+                       Text="Running 3rd time" Margin="3,1,0,1" FontSize="12" Visibility="Collapsed"
+                       Foreground="{Binding ColorModel.[GuidanceKeyTextboxSelectedBorder]}"/>
+            <TextBlock x:Name="mTimerDisplay" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"
+                       Text="00:00:00" Visibility="Collapsed" FontSize="12" Margin="8,1,0,1" Width="48"
+                       Foreground="{Binding ColorModel.[GuidanceKeyTextboxSelectedBorder]}"/>
+          </StackPanel>
+          <Common:CustomPictureBox PreviewMouseLeftButtonUp="StopMacro_PreviewMouseLeftButtonUp" x:Name="StopMacroImg" Grid.Column="2"
+                                   ImageName="stop_title_bar" Height="16" Width="16" Margin="0 0 8 0"
+                                   ToolTip="{Binding Path=LocaleModel.[STRING_STOP_PLAYING_MACRO], FallbackValue='Stop playing macro'}"/>
+        </Grid>
+      </Border>
+    </Grid>
+  </Border>
+</UserControl>

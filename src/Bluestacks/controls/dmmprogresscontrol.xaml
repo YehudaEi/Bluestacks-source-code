@@ -1,0 +1,43 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.DMMProgressControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Background="{Binding Path=ColorModel.[HomeAppBackgroundColor]}"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="276*"/>
+      <RowDefinition Height="480*"/>
+      <RowDefinition Height="244*"/>
+      <RowDefinition Height="120*"/>
+      <RowDefinition Height="90*"/>
+    </Grid.RowDefinitions>
+    <Grid Row="1">
+      <Common:CustomPictureBox Grid.Column="1" ImageName="bluestackslogo1" HorizontalAlignment="Center"/>
+    </Grid>
+    <Grid Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="25"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="25"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="5.5*"/>
+        <RowDefinition Height="2*"/>
+        <RowDefinition Height="3*"/>
+        <RowDefinition Height="2*"/>
+        <RowDefinition Height="4.5*"/>
+      </Grid.RowDefinitions>
+      <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontSize="18" FontWeight="SemiBold"
+                 Text="{Binding Path=LocaleModel.[STRING_BOOTING_ENGINE], FallbackValue='Booting the Engine, Please wait'}"
+                 Foreground="{Binding Path=ColorModel.[BootPromotionTextColor]}"/>
+      <TextBlock x:Name="BootText" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Top"
+                 FontSize="12"
+                 Text="{Binding Path=LocaleModel.[STRING_BOOT_TIME], FallbackValue='It may take a few seconds, depending upon your PCs performance'}"
+                 Foreground="{Binding Path=ColorModel.[BootPromotionTextColor]}"/>
+    </Grid>
+  </Grid>
+</UserControl>

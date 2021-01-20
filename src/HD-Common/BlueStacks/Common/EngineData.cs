@@ -1,0 +1,33 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: BlueStacks.Common.EngineData
+// Assembly: HD-Common, Version=4.250.0.1070, Culture=neutral, PublicKeyToken=null
+// MVID: 7033AB66-5028-4A08-B35C-D9B2B424A68A
+// Assembly location: C:\Program Files\BlueStacks\HD-Common.dll
+
+namespace BlueStacks.Common
+{
+  public class EngineData
+  {
+    public GraphicsMode GraphicsMode { get; set; }
+
+    public bool UseAdvancedGraphicEngine { get; set; }
+
+    public bool UseDedicatedGPU { get; set; }
+
+    public ASTCOption ASTCOption { get; set; }
+
+    public int Ram { get; set; }
+
+    public int CpuCores { get; set; }
+
+    public int FrameRate { get; set; }
+
+    public bool EnableHighFrameRates { get; set; }
+
+    public bool EnableVSync { get; set; }
+
+    public bool DisplayFPS { get; set; }
+
+    public ABISetting ABISetting { get; set; }
+  }
+}

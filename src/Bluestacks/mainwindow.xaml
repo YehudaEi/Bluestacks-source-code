@@ -1,0 +1,418 @@
+<Common:CustomWindow x:Class="BlueStacks.BlueStacksUI.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                     xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+                     IsVisibleChanged="MainWindow_IsVisibleChanged" StateChanged="MainWindow_StateChanged"
+                     Activated="MainWindow_Activated" Deactivated="MainWindow_Deactivated"
+                     PreviewMouseMove="MainWindow_PreviewMouseMove" ContentRendered="MainWindow_ContentRendered"
+                     Loaded="MainWindow_Loaded" Closing="MainWindow_Closing"
+                     SourceInitialized="MainWindow_SourceInitialized" x:Name="mMainWindow"
+                     WindowStartupLocation="CenterOwner" Width="830" Height="553" Style="{DynamicResource WindowStyle1}"
+                     MinWidth="200" MinHeight="200"
+                     Title="{Binding Path=LocaleModel.[STRING_BLUESTACKS], FallbackValue='Bluestacks Game Platform'}"
+                     DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Style x:Key="FocusVisual">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Margin="2" SnapsToDevicePixels="true"
+                       Stroke="{DynamicResource {Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1"
+                       StrokeDashArray="1 2"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+    <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+    <Style x:Key="PlainButtonStyle" TargetType="{Type Button}">
+      <Setter Property="FrameworkElement.FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+      <Setter Property="Control.Background" Value="{StaticResource Button.Static.Background}"/>
+      <Setter Property="Control.BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+      <Setter Property="Control.Foreground" Value="{DynamicResource {Static SystemColors.ControlTextBrushKey}}"/>
+      <Setter Property="Control.BorderThickness" Value="1"/>
+      <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Control.Padding" Value="1"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type Button}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding Control.BorderBrush}"
+                    BorderThickness="{TemplateBinding Control.BorderThickness}"
+                    Background="{TemplateBinding Control.Background}" SnapsToDevicePixels="true">
+              <ContentPresenter x:Name="contentPresenter" Focusable="false"
+                                HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                Margin="{TemplateBinding Control.Padding}" RecognizesAccessKey="true"
+                                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                                VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"/>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="CleanButtonStyle" TargetType="{Type Button}">
+      <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="true"/>
+      <Setter Property="FrameworkElement.Margin" Value="5"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type Button}">
+            <Border Name="border" BorderThickness="1" Padding="4,2" BorderBrush="DarkGray" CornerRadius="3"
+                    Background="{TemplateBinding Control.Background}">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Storyboard x:Key="mStoryBoard">
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mFullScreenTopBar"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" Duration="0:0:2">
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="0" KeyTime="Uniform"/>
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mFullscreenSidebarPopupInnerGrid"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" Duration="0:0:2">
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="0" KeyTime="Uniform"/>
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mTopBar" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)"
+                                     Duration="0:0:2">
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="0" KeyTime="Uniform"/>
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mNCTopBar"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" Duration="0:0:2">
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="0" KeyTime="Uniform"/>
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mSidebar" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)"
+                                     Duration="0:0:2">
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="-5" KeyTime="Uniform"/>
+        <LinearDoubleKeyFrame Value="0" KeyTime="Uniform"/>
+      </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+    <Style x:Key="WindowStyle1" TargetType="{Type Window}">
+      <Setter Property="Window.WindowStyle" Value="None"/>
+      <Setter Property="Window.ResizeMode" Value="CanMinimize"/>
+      <Setter Property="Control.BorderThickness" Value="0"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type Window}">
+            <Border BorderThickness="{TemplateBinding Control.BorderThickness}"
+                    BorderBrush="{TemplateBinding Control.BorderBrush}" Background="Transparent">
+              <Grid>
+                <Grid>
+                  <AdornerDecorator>
+                    <ContentPresenter/>
+                  </AdornerDecorator>
+                </Grid>
+                <Grid x:Name="resizeGrid">
+                  <Rectangle x:Name="top" Fill="Transparent" VerticalAlignment="Top" Height="5" Margin="5,0,5,0" Stroke="{Null}"/>
+                  <Rectangle x:Name="bottom" Fill="Transparent" Height="5" VerticalAlignment="Bottom" Margin="5,0,5,0"
+                             Stroke="{Null}"/>
+                  <Rectangle x:Name="left" Fill="Transparent" HorizontalAlignment="Left" Margin="0,5,0,5" Width="5"
+                             Stroke="{Null}"/>
+                  <Rectangle x:Name="right" Fill="Transparent" Margin="0,5,0,5" Width="5" HorizontalAlignment="Right"
+                             Stroke="{Null}"/>
+                  <Rectangle x:Name="bottomLeft" Fill="Transparent" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                             Width="5" Height="5" Stroke="{Null}"/>
+                  <Rectangle x:Name="bottomRight" Fill="Transparent" VerticalAlignment="Bottom" Height="5" Width="5"
+                             HorizontalAlignment="Right" Stroke="{Null}"/>
+                  <Rectangle x:Name="topRight" Fill="Transparent" HorizontalAlignment="Right" Width="5" Height="5"
+                             VerticalAlignment="Top" Stroke="{Null}"/>
+                  <Rectangle x:Name="topLeft" Fill="Transparent" HorizontalAlignment="Left" Width="6" VerticalAlignment="Top"
+                             Height="5" Stroke="{Null}"/>
+                </Grid>
+              </Grid>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Border Name="OuterBorder" BorderThickness="1"
+          BorderBrush="{Binding Path=ColorModel.[ApplicationBorderBrush]}">
+    <Grid Name="MainGrid">
+      <local:CustomPopUp x:Name="pikaPop" AllowsTransparency="true" StaysOpen="true" Placement="Center" VerticalOffset="85"
+                         IsOpen="false" PopupAnimation="None" PlacementTarget="{Binding ElementName=dummyPika}">
+        <Canvas x:Name="pikaCanvas" Width="1" Height="62" Background="Transparent" Margin="0">
+          <local:PikaNotificationControl x:Name="pikaPopControl" CloseClicked="PikaPopControl_CloseClicked" Margin="0"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="toastPopup" AllowsTransparency="true" StaysOpen="true" Placement="Left" IsOpen="false"
+                         PopupAnimation="Fade" PlacementTarget="{Binding ElementName=dummyToast}">
+        <Canvas x:Name="toastCanvas" Width="1" Height="1" Background="Transparent" Margin="0">
+          <Common:CustomToastPopupControl x:Name="toastControl" Margin="0"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mFullScreenToastPopup" AllowsTransparency="true" VerticalOffset="50" StaysOpen="true"
+                         Placement="Center" IsOpen="false" PopupAnimation="Fade"
+                         PlacementTarget="{Binding ElementName=dummyToast}">
+        <Canvas x:Name="mFullScreenToastCanvas" Height="1" Background="Transparent" Margin="0"
+                Width="{Binding ActualWidth, ElementName=mFullScreenToastControl}">
+          <local:FullScreenToastPopupControl x:Name="mFullScreenToastControl" Margin="0"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mUnlockMouseToastPopup" AllowsTransparency="true" VerticalOffset="50" StaysOpen="true"
+                         Placement="Center" IsOpen="false" PopupAnimation="Fade"
+                         PlacementTarget="{Binding ElementName=dummyToast2}">
+        <Canvas x:Name="mUnlockMouseToastCanvas" Height="1" Background="Transparent"
+                Width="{Binding ActualWidth, ElementName=mUnlockMouseToastControl}">
+          <local:UnlockMouseToastPopupControl x:Name="mUnlockMouseToastControl"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mConfigUpdatedPopup" AllowsTransparency="true" StaysOpen="true" Placement="Right"
+                         IsOpen="false" PopupAnimation="Fade">
+        <Canvas x:Name="mConfigUpdatedCanvas" Width="1" Height="1" Background="Transparent" Margin="0">
+          <Common:CustomToastPopupControl x:Name="mConfigUpdatedControl" Margin="0"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mImageUploadedPopup" AllowsTransparency="true" StaysOpen="true" Placement="Center"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" IsOpen="false" PopupAnimation="Fade"
+                         PlacementTarget="{Binding ElementName=dummyToast}">
+        <Canvas x:Name="mImageUploadedCanvas" Height="1" Background="Transparent" Margin="0"
+                Width="{Binding ActualWidth, ElementName=mImageUploadedControl}">
+          <Common:CustomToastPopupControl x:Name="mImageUploadedControl" Margin="0"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mGeneraltoast" AllowsTransparency="true" StaysOpen="true" Placement="Center" IsOpen="false"
+                         PopupAnimation="Fade" PlacementTarget="{Binding ElementName=dummyToast}">
+        <Canvas x:Name="mGeneraltoastCanvas" Height="1" Background="Transparent" Margin="0"
+                Width="{Binding ActualWidth, ElementName=mGeneraltoastControl}">
+          <Common:CustomToastPopupControl x:Name="mGeneraltoastControl" Margin="0"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mShootingModePopup" AllowsTransparency="true" StaysOpen="true" Placement="Left"
+                         IsOpen="false" PopupAnimation="Fade" HorizontalOffset="130" VerticalOffset="-70"
+                         PlacementTarget="{Binding ElementName=dummyTooltip}">
+        <Canvas x:Name="mShootingModePopupCanvas" Width="1" Height="1" Background="Transparent" Margin="0">
+          <local:CustomPersistentToastPopupControl x:Name="mToastControl" Margin="0"/>
+        </Canvas>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mTopBarPopup" Opened="Fullscreentopbar_opened" Closed="Fullscreentopbar_opened"
+                         MouseLeave="TopBarPopup_MouseLeave" Height="40" AllowsTransparency="true" StaysOpen="false"
+                         Placement="Relative" PopupAnimation="Slide" IsOpen="false"
+                         Width="{Binding ActualWidth, ElementName=MainGrid}"
+                         PlacementTarget="{Binding ElementName=MainGrid}">
+        <local:FullScreenTopBar x:Name="mFullScreenTopBar" MouseLeave="TopBarPopup_MouseLeave">
+          <UIElement.RenderTransform>
+            <TranslateTransform/>
+          </UIElement.RenderTransform>
+        </local:FullScreenTopBar>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mFullscreenSidebarPopupButton" Opened="mFullscreenSidebarPopupButton_OpenedClosed"
+                         Closed="mFullscreenSidebarPopupButton_OpenedClosed" Width="10" AllowsTransparency="true"
+                         StaysOpen="true" IsOpen="false" Placement="Center" HorizontalAlignment="Right"
+                         PlacementTarget="{Binding ElementName=MainGrid}">
+        <Grid x:Name="mFullscreenSidebarPopupButtonInnerGrid" Width="10" HorizontalAlignment="Right"
+              VerticalAlignment="Stretch">
+          <Button Click="mFullscreenSidebarButton_Click"
+                  MouseRightButtonDown="mFullscreenSidebarButton_MouseRightButtonDown"
+                  MouseRightButtonUp="mFullscreenSidebarButton_MouseRightButtonUp"
+                  PreviewMouseLeftButtonDown="SidebarButton_PreviewMouseLeftButtonDown"
+                  PreviewMouseMove="SidebarButton_MouseMove"
+                  PreviewMouseLeftButtonUp="SidebarButton_PreviewMouseLeftButtonUp" x:Name="mFullscreenSidebarButton"
+                  Height="125" Width="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+                  HorizontalContentAlignment="Center" BorderThickness="0" Style="{DynamicResource PlainButtonStyle}"
+                  ToolTip="{Binding Path=LocaleModel.[STRING_SHOW_TOOLBAR], FallbackValue='Show Toolbar'}"
+                  Background="{Binding Path=ColorModel.[BlueMouseDownBorderBackground]}">
+            <Path Data="M 5,0 L 0,5 5,10 " Fill="White"/>
+          </Button>
+        </Grid>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mFullscreenSidebarPopup" Width="60" StaysOpen="true" Placement="Center"
+                         HorizontalAlignment="Right" Height="100" PopupAnimation="Slide" IsOpen="false"
+                         PlacementTarget="{Binding ElementName=MainGrid}">
+        <Grid x:Name="mFullscreenSidebarPopupInnerGrid" Height="100" Width="60" HorizontalAlignment="Right">
+          <UIElement.RenderTransform>
+            <TranslateTransform/>
+          </UIElement.RenderTransform>
+        </Grid>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mFullscreenTopbarPopupButton" Height="10" AllowsTransparency="true" StaysOpen="true"
+                         Placement="Center" VerticalAlignment="Top" IsOpen="false"
+                         PlacementTarget="{Binding ElementName=MainGrid}">
+        <Grid x:Name="mFullscreenTopbarPopupButtonInnerGrid" Height="10" HorizontalAlignment="Stretch"
+              VerticalAlignment="Top">
+          <Button Click="mFullscreenTopbarButton_Click"
+                  PreviewMouseLeftButtonDown="TopbarButton_PreviewMouseLeftButtonDown"
+                  PreviewMouseMove="TopbarButton_MouseMove"
+                  PreviewMouseLeftButtonUp="TopbarButton_PreviewMouseLeftButtonUp" x:Name="mFullscreenTopbarButton"
+                  Height="10" Width="125" HorizontalAlignment="Center" BorderThickness="0" VerticalAlignment="Center"
+                  VerticalContentAlignment="Center" Style="{DynamicResource PlainButtonStyle}"
+                  ToolTip="{Binding Path=LocaleModel.[STRING_VIEW_OPTIONS], FallbackValue='View Options'}"
+                  Background="{Binding Path=ColorModel.[BlueMouseDownBorderBackground]}">
+            <Path Data="M 0,0 L 5,5 10,0 " Fill="White"/>
+          </Button>
+        </Grid>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mFullscreenTopbarPopup" Height="80" StaysOpen="true" Placement="Center"
+                         VerticalAlignment="Top" Width="100" IsOpen="false" AllowsTransparency="true"
+                         PlacementTarget="{Binding ElementName=MainGrid}">
+        <Grid x:Name="mFullscreenTopbarPopupInnerGrid" Width="100" Height="80" VerticalAlignment="Top">
+          <UIElement.RenderTransform>
+            <TranslateTransform/>
+          </UIElement.RenderTransform>
+          <local:TopbarOptions x:Name="mTopbarOptions"/>
+        </Grid>
+      </local:CustomPopUp>
+      <Grid x:Name="mMainWindowTopGrid" Visibility="Visible">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <local:TopBar x:Name="mTopBar" MouseDown="TopBar_MouseDown" MouseDoubleClick="TopBar_MouseDoubleClick"
+                      Height="40" Grid.Row="0" Grid.ColumnSpan="2">
+          <UIElement.RenderTransform>
+            <TranslateTransform/>
+          </UIElement.RenderTransform>
+        </local:TopBar>
+        <local:NCSoftTopBar x:Name="mNCTopBar" MouseDown="TopBar_MouseDown" MouseDoubleClick="TopBar_MouseDoubleClick"
+                            Height="40" MaxHeight="40" Grid.Row="0" Grid.ColumnSpan="2" Visibility="Collapsed">
+          <UIElement.RenderTransform>
+            <TranslateTransform/>
+          </UIElement.RenderTransform>
+        </local:NCSoftTopBar>
+        <local:FrontendOTSControl x:Name="mFrontendOTSControl" Grid.Row="1" Panel.ZIndex="1" Visibility="Collapsed"/>
+        <Grid x:Name="dummyPika" Row="0" HorizontalAlignment="Right"/>
+        <Grid Row="1">
+          <Grid x:Name="mContentGrid" ZIndex="1"
+                Background="{Binding Path=ColorModel.[ApplicationBackgroundBrush]}">
+            <Grid IsVisibleChanged="WelcomeTabParentGrid_IsVisibleChanged" x:Name="WelcomeTabParentGrid">
+              <local:WelcomeTab x:Name="mWelcomeTab"/>
+            </Grid>
+            <Grid IsVisibleChanged="FrontendParentGrid_IsVisibleChanged" x:Name="FrontendParentGrid" Margin="1"
+                  Visibility="Collapsed">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <local:DMMProgressControl x:Name="mDmmProgressControl" Visibility="Hidden"/>
+              <Grid IsVisibleChanged="FrontendGrid_IsVisibleChanged" SizeChanged="FrontendGrid_SizeChanged"
+                    x:Name="mFrontendGrid"/>
+              <local:DMMBottomBar x:Name="mDmmBottomBar" MouseDown="BottomBar_MouseDown" Visibility="Collapsed" Height="49"
+                                  Margin="-6, -2, -6, -6" Grid.Row="1">
+                <UIElement.RenderTransform>
+                  <TranslateTransform/>
+                </UIElement.RenderTransform>
+              </local:DMMBottomBar>
+              <Grid x:Name="dummyToast2" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Grid>
+          </Grid>
+        </Grid>
+        <local:Sidebar x:Name="mSidebar" Height="800" Width="60" Grid.Row="1" Grid.Column="1" Visibility="Collapsed"/>
+      </Grid>
+      <Grid x:Name="dummyToast" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+      <Grid x:Name="dummyTooltip" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+      <local:ProgressBar x:Name="mExitProgressGrid" Visibility="Hidden"/>
+      <Grid x:Name="mQuitPopupBrowserLoadGrid" Opacity="1"/>
+    </Grid>
+  </Border>
+</Common:CustomWindow>

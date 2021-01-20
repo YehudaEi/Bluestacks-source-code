@@ -1,0 +1,29 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.Controls.SkinSelectorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI.Controls"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Visibility="Collapsed" DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid Margin="0,0,16,16">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50*"/>
+      <RowDefinition Height="5"/>
+      <RowDefinition Height="50*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Common:CustomPictureBox x:Name="mThemeImage" HorizontalAlignment="Center" MaxWidth="300" VerticalAlignment="Top"
+                             Grid.Row="0" Grid.Column="0"/>
+    <TextBlock x:Name="mThemeName" Grid.Column="0" Margin="3,4,0,0" Grid.Row="2" HorizontalAlignment="Left"
+               VerticalAlignment="Center" FontSize="14" MaxWidth="300" FontWeight="SemiBold" TextAlignment="Left"
+               TextTrimming="CharacterEllipsis" Foreground="White" TextWrapping="NoWrap" Text="ThemName"/>
+    <Common:CustomButton x:Name="mThemeCheckButton" Height="28" FontSize="12" Visibility="Collapsed" Grid.Row="2"
+                         Grid.Column="0" MaxWidth="100" HorizontalAlignment="Right" VerticalAlignment="Top"
+                         ButtonColor="Blue"/>
+    <TextBlock x:Name="mThemeAppliedText" Grid.Row="2" Visibility="Collapsed" Grid.Column="0"
+               HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="14" Foreground="Gray" Text="Applied"/>
+  </Grid>
+</UserControl>

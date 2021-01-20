@@ -1,0 +1,141 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.CanvasElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MouseEnter="MoveIcon_MouseEnter" MouseLeave="MoveIcon_MouseLeave"
+             PreviewMouseRightButtonUp="CanvasElement_PreviewMouseRightButtonUp" x:Name="mCanvasElement"
+             MinWidth="40" MinHeight="40"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Common:XamlSizeConverter x:Key="XamlSizeConverter"/>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid Loaded="Grid_Loaded">
+    <Grid x:Name="mToggleModeGrid" Column="0" ColumnSpan="3" MinHeight="20" Margin="10,30,0,0"
+          Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <TextBlock x:Name="mToggleMode1" Grid.Column="0" Text="Tap" TextWrapping="WrapWithOverflow" Padding="0,0,5,0"
+                 FontSize="12" Foreground="{Binding Path=ColorModel.[GameControlWindowHeaderForegroundColor]}"/>
+      <Common:CustomPictureBox PreviewMouseLeftButtonUp="mToggleImage_PreviewMouseLeftButtonUp" x:Name="mToggleImage"
+                               AllowClickThrough="true" Grid.Column="1" ImageName="right_switch" MaxHeight="16" MaxWidth="22"
+                               Margin="0,-4,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+      <TextBlock x:Name="mToggleMode2" Grid.Column="2" Text="Long press" TextWrapping="WrapWithOverflow"
+                 Padding="5,0,0,0" FontSize="12"
+                 Foreground="{Binding Path=ColorModel.[GameControlWindowHeaderForegroundColor]}"/>
+    </Grid>
+    <Grid IsSharedSizeScope="true">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+      </Grid.ColumnDefinitions>
+      <Grid x:Name="mXSensitivityGrid" Column="0" VerticalAlignment="Center" Margin="0,0,5,0"
+            Visibility="Collapsed">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Foreground="White" FontSize="10" Margin="0,0,4,0"
+                   Text="{Binding Path=LocaleModel.[IMAP_STRING_PAN_X], FallbackValue=X}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="XSensitivity_PreviewMouseLeftButtonUp" Grid.Row="0" Grid.Column="1"
+                                 ImageName="tap_repeat_up_arrow" Height="20" Width="20"/>
+        <TextBlock x:Name="mXSensitivity" Width="31" Grid.Row="1" Grid.Column="1" Text="5" TextAlignment="Right"
+                   HorizontalAlignment="Center" FontSize="12" Foreground="White" FontWeight="Bold"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="XSensitivity_PreviewMouseLeftButtonDown" Grid.Row="2" Grid.Column="1"
+                                 ImageName="tap_repeat_down_arrow" Height="20" Width="20"/>
+      </Grid>
+      <Grid x:Name="mKeyRepeatGrid" Column="0" Height="56" Margin="10,0,0,0" VerticalAlignment="Center"
+            Visibility="Collapsed">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="UpArrow_PreviewMouseDown" Grid.Row="0" ImageName="tap_repeat_up_arrow"
+                                 Height="20" Width="20"/>
+        <TextBlock x:Name="mCountText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="5"
+                   FontSize="12" Foreground="White" FontWeight="Bold"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="DownArrow_PreviewMouseDown" Grid.Row="2"
+                                 ImageName="tap_repeat_down_arrow" Height="20" Width="20"/>
+      </Grid>
+      <Grid x:Name="mCanvasGrid" Column="1" Visibility="Visible" HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        <Common:CustomPictureBox x:Name="mActionIcon" AllowClickThrough="true"/>
+        <Common:CustomPictureBox x:Name="mActionIcon2" AllowClickThrough="true" IsAlwaysHalfSize="true"/>
+        <Common:CustomPictureBox PreviewMouseDown="DeleteIcon_PreviewMouseDown" x:Name="mCloseIcon" AllowClickThrough="true"
+                                 Margin="-1" Visibility="Hidden" ImageName="delete_canvas" HorizontalAlignment="Right"
+                                 VerticalAlignment="Top" IsAlwaysHalfSize="true" Height="16" Width="16"/>
+        <Common:CustomPictureBox MouseEnter="ResizeIcon_MouseEnter" MouseLeave="ResizeIcon_MouseLeave" x:Name="mResizeIcon"
+                                 AllowClickThrough="true" Visibility="Hidden" ImageName="resize_icon" HorizontalAlignment="Right"
+                                 VerticalAlignment="Bottom" IsAlwaysHalfSize="true"/>
+        <Common:CustomPictureBox MouseLeftButtonUp="MSkillImage_MouseLeftButtonUp" MouseEnter="MSkillImage_MouseEnter"
+                                 MouseLeave="MSkillImage_MouseLeave" x:Name="mSkillImage" Margin="-3" Visibility="Collapsed"
+                                 ImageName="control_settings" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="20"
+                                 Width="20"/>
+        <Common:CustomPictureBox MouseLeftButtonUp="SettingsIcon_MouseLeftButtonUp" MouseEnter="MSkillImage_MouseEnter"
+                                 MouseLeave="MSkillImage_MouseLeave" x:Name="mSettingsIcon" Margin="-3" Visibility="Hidden"
+                                 ImageName="control_settings" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="20"
+                                 Width="20"/>
+      </Grid>
+      <Grid x:Name="mGrid" Column="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition x:Name="mColumn0" Width="1*"/>
+          <ColumnDefinition x:Name="mColumn1" Width="Auto"/>
+          <ColumnDefinition x:Name="mColumn2" Width="3*"/>
+          <ColumnDefinition x:Name="mColumn3" Width="Auto"/>
+          <ColumnDefinition x:Name="mColumn4" Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition x:Name="mRow0" Height="1*"/>
+          <RowDefinition x:Name="mRow1" Height="Auto"/>
+          <RowDefinition x:Name="mRow2" Height="3*"/>
+          <RowDefinition x:Name="mRow3" Height="Auto"/>
+          <RowDefinition x:Name="mRow4" Height="1*"/>
+        </Grid.RowDefinitions>
+      </Grid>
+      <Grid x:Name="mYSensitivityGrid" Column="2" VerticalAlignment="Center" Margin="5,0,0,0"
+            Visibility="Collapsed">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="YSensitivity_PreviewMouseLeftButtonUp" Grid.Row="0" Grid.Column="0"
+                                 ImageName="tap_repeat_up_arrow" Height="20" Width="20"/>
+        <TextBlock x:Name="mYSensitivity" Width="31" Grid.Row="1" Grid.Column="0" Text="5" TextAlignment="Left"
+                   HorizontalAlignment="Center" FontSize="12" Foreground="White" FontWeight="Bold"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="YSensitivity_PreviewMouseLeftButtonDown" Grid.Row="2" Grid.Column="0"
+                                 ImageName="tap_repeat_down_arrow" Height="20" Width="20"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Foreground="White" FontSize="10" Margin="4,0,0,0"
+                   Text="{Binding Path=LocaleModel.[IMAP_STRING_PAN_Y], FallbackValue=Y}"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

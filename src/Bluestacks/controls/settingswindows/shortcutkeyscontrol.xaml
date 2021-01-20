@@ -1,0 +1,52 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ShortcutKeysControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="75"/>
+    </Grid.RowDefinitions>
+    <ScrollViewer x:Name="mShortcutKeyScrollBar" HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto" Grid.Row="0">
+      <UIElement.OpacityMask>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="Transparent" Offset="0"/>
+          <GradientStop Color="#FF000000" Offset=".15"/>
+          <GradientStop Color="#FF000000" Offset=".8"/>
+          <GradientStop Color="Transparent" Offset="1"/>
+        </LinearGradientBrush>
+      </UIElement.OpacityMask>
+      <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="30,25,20,15"/>
+    </ScrollViewer>
+    <Grid Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="15"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="15"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="30"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="25"/>
+      </Grid.ColumnDefinitions>
+      <Grid Row="1" Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="10"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomButton Click="RevertBtnClick" x:Name="mRevertBtn" Grid.Column="0" ButtonColor="Background"
+                             HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="false"
+                             Content="{Binding Path=LocaleModel.[STRING_RESTORE_DEFAULTS], FallbackValue='Restore defaults'}"/>
+        <Common:CustomButton Click="SaveBtnClick" x:Name="mSaveBtn" Width="120" Grid.Column="2" ButtonColor="Blue"
+                             HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="false"
+                             Content="{Binding Path=LocaleModel.[STRING_SAVE], FallbackValue=Save}"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

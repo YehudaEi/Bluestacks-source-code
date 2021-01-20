@@ -1,0 +1,13 @@
+<UserControl x:Class="BlueStacks.Player.WpfTextBoxControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.Player"
+             Background="#00000000">
+  <Grid>
+    <TextBox CommandManager.PreviewExecuted="WpfTextBox_PreviewExecuted" x:Name="mWpfTextBox"
+             AcceptsReturn="true" AcceptsTab="true" Foreground="#00000000" BorderBrush="#00000000"
+             Background="#00000000" ContextMenu="{x:Null}"/>
+  </Grid>
+</UserControl>

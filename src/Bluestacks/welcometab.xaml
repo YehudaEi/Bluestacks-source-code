@@ -1,0 +1,23 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.WelcomeTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid Background="{Binding Path=ColorModel.[HomeAppBackgroundColor]}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid x:Name="mContentGrid" Row="1" ClipToBounds="true">
+      <Common:CustomPictureBox x:Name="mBackground" Visibility="Hidden" Stretch="UniformToFill"/>
+      <local:FrontendPopupControl x:Name="mFrontendPopupControl" Panel.ZIndex="1" Visibility="Collapsed"/>
+    </Grid>
+    <Grid x:Name="mPromotionGrid" Row="0" RowSpan="2" ZIndex="5">
+      <local:PromotionControl x:Name="mPromotionControl"/>
+    </Grid>
+  </Grid>
+</UserControl>

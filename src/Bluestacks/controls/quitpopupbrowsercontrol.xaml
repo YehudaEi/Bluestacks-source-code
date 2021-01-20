@@ -1,0 +1,20 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.QuitPopupBrowserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}"
+             Background="{Binding Path=ColorModel.[GenericBrushLight]}">
+  <Grid x:Name="mGrid">
+    <Border>
+      <Grid x:Name="mBrowserGrid" Opacity="1"/>
+    </Border>
+    <Grid MouseLeftButtonUp="CloseButtonGrid_MouseLeftButtonUp" x:Name="mCloseButtonGrid" Margin="0,25,30,0"
+          Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible"
+          Cursor="Hand">
+      <Common:CustomPictureBox x:Name="mCloseButton" Height="32" Width="32" ImageName="exitpopup_close"/>
+    </Grid>
+  </Grid>
+</UserControl>

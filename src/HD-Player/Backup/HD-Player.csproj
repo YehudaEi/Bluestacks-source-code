@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files\BlueStacks\HD-Player.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C625683B-81BC-450C-B3A5-6780ED9A399B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>HD-Player</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationVersion>4.250.0.1070</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>BlueStacks.Player</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BstkTypeLib">
+      <HintPath>lib\BstkTypeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="HD-Common">
+      <HintPath>lib\HD-Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BlueStacks\Common\HyperV.cs" />
+    <Compile Include="AndroidBootUp.cs" />
+    <Compile Include="AppHandler.cs" />
+    <Compile Include="BstCursor.cs" />
+    <Compile Include="FileImporter.cs" />
+    <Compile Include="FullScreenToast.cs" />
+    <Compile Include="GPSManager.cs" />
+    <Compile Include="GpsHelper.cs" />
+    <Compile Include="HttpHandlerSetup.cs" />
+    <Compile Include="Id.cs" />
+    <Compile Include="InputMapperForm.cs" />
+    <Compile Include="Animate.cs" />
+    <Compile Include="CommonError.cs" />
+    <Compile Include="IGraphics.cs" />
+    <Compile Include="SysPGA.cs" />
+    <Compile Include="SysGGA.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="Monitor.cs" />
+    <Compile Include="MouseHWheel.cs" />
+    <Compile Include="GlWindowAction.cs" />
+    <Compile Include="Opengl.cs" />
+    <Compile Include="Video.cs" />
+    <Compile Include="VMCommand.cs" />
+    <Compile Include="Keyboard.cs" />
+    <Compile Include="KeyEventExts.cs" />
+    <Compile Include="LoadingScreen.cs" />
+    <Compile Include="MacroForm.cs" />
+    <Compile Include="Macro.cs" />
+    <Compile Include="MacroAction.cs" />
+    <Compile Include="MacroData.cs" />
+    <Compile Include="MacroManager.cs" />
+    <Compile Include="MediaManager.cs" />
+    <Compile Include="HDPlusModule.cs" />
+    <Compile Include="VmMonitor.cs" />
+    <Compile Include="Mouse.cs" />
+    <Compile Include="MsiVibration.cs" />
+    <Compile Include="Opt.cs" />
+    <Compile Include="OperationsSyncManager.cs" />
+    <Compile Include="SensorDevice.cs" />
+    <Compile Include="InputManagerProxy.cs" />
+    <Compile Include="AndroidService.cs" />
+    <Compile Include="StateMachine.cs" />
+    <Compile Include="VBoxBridgeBase.cs" />
+    <Compile Include="VBoxBridgeService.cs" />
+    <Compile Include="TimelineStatsSender.cs" />
+    <Compile Include="Toast.cs" />
+    <Compile Include="CameraManager.cs" />
+    <Compile Include="CameraError.cs" />
+    <Compile Include="ErrorHandler.cs" />
+    <Compile Include="SupportedColorFormat.cs" />
+    <Compile Include="DeviceEnumerator.cs" />
+    <Compile Include="ColorFormatNotSupported.cs" />
+    <Compile Include="CaptureGraph.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="GamePadController.cs" />
+    <Compile Include="Guids.cs" />
+    <Compile Include="IErrorLog.cs" />
+    <Compile Include="IPropertyBag.cs" />
+    <Compile Include="ICreateDevEnum.cs" />
+    <Compile Include="CreateDevEnum.cs" />
+    <Compile Include="IMediaSample.cs" />
+    <Compile Include="ISampleGrabber.cs" />
+    <Compile Include="ISampleGrabberCB.cs" />
+    <Compile Include="FilterGraph.cs" />
+    <Compile Include="CaptureGraphBuilder2.cs" />
+    <Compile Include="IPersist.cs" />
+    <Compile Include="IReferenceClock.cs" />
+    <Compile Include="PinInfo.cs" />
+    <Compile Include="FilterInfo.cs" />
+    <Compile Include="IEnumFilters.cs" />
+    <Compile Include="IFilterGraph.cs" />
+    <Compile Include="IMediaFilter.cs" />
+    <Compile Include="IEnumMediaTypes.cs" />
+    <Compile Include="IPin.cs" />
+    <Compile Include="IEnumPins.cs" />
+    <Compile Include="IBaseFilter.cs" />
+    <Compile Include="IFileSinkFilter.cs" />
+    <Compile Include="IAMCopyCaptureFileProgress.cs" />
+    <Compile Include="IGraphBuilder.cs" />
+    <Compile Include="ICaptureGraphBuilder2.cs" />
+    <Compile Include="IFilterGraph2.cs" />
+    <Compile Include="IMediaControl.cs" />
+    <Compile Include="SampleGrabber.cs" />
+    <Compile Include="IAMStreamConfig.cs" />
+    <Compile Include="BitmapInfoHeader.cs" />
+    <Compile Include="VideoInfoHeader.cs" />
+    <Compile Include="AMMediaType.cs" />
+    <Compile Include="PinDirection.cs" />
+    <Compile Include="FilterState.cs" />
+    <Compile Include="HTTPHandler.cs" />
+    <Compile Include="InputMapper.cs" />
+    <Compile Include="LayoutManager.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="VMWindow.cs" />
+    <Compile Include="WMTouchForm.cs" />
+    <Compile Include="_3DViewerControls\Data\PeHeaderReader.cs" />
+    <Compile Include="WpfTextBoxControl.xaml.cs">
+      <DependentUpon>wpftextboxcontrol.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="wpftextboxcontrol.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,23 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ProgressBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             x:Name="mProgressBar" DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="40.5*"/>
+      <RowDefinition Height="13*"/>
+      <RowDefinition Height="2*"/>
+      <RowDefinition Height="4*"/>
+      <RowDefinition Height="40.5*"/>
+    </Grid.RowDefinitions>
+    <Grid Row="0" RowSpan="10" Opacity=".6" Background="{Binding Path=ColorModel.[DimOverlayColor]}"/>
+    <Common:CustomPictureBox x:Name="mLoadingImage" ImageName="img_busy.png" Grid.Row="1" IsImageToBeRotated="true"/>
+    <Viewbox Grid.Row="3">
+      <TextBlock x:Name="mLabel" Foreground="{Binding Path=ColorModel.[DimOverlayForegroundColor]}"/>
+    </Viewbox>
+  </Grid>
+</UserControl>

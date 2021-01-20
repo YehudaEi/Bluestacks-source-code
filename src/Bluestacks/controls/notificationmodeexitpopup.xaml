@@ -1,0 +1,166 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.NotificationModeExitPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI.Controls"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             ClipToBounds="true" Background="Transparent" BorderBrush="#4CFFFFFF" Height="628" Width="420"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}"
+             Clip="{Binding ElementName=mBackground}">
+  <Border BorderBrush="#4CFFFFFF" CornerRadius="12" Background="#FF000000">
+    <Border Name="mBackground" CornerRadius="12">
+      <Grid x:Name="mMainGrid">
+        <Panel.Background>
+          <LinearGradientBrush EndPoint="0,1.5" StartPoint="0,-0.2">
+            <GradientStop Color="#00000000" Offset="0"/>
+            <GradientStop Color="#FF000000" Offset="0.45"/>
+          </LinearGradientBrush>
+        </Panel.Background>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="40"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border x:Name="mMaskBorder"/>
+        <Common:CustomPictureBox MouseLeftButtonUp="mClosebtn_MouseLeftButtonUp" Name="mClosebtn" Grid.Row="0"
+                                 HorizontalAlignment="Right" Margin="0, 16, 16, 4" Width="15" Height="15" ImageName="close_cc"/>
+        <Grid Row="1" Margin="40, 0" HorizontalAlignment="Center">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="128"/>
+            <RowDefinition Height="41"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Border Name="mIconBorder" Grid.Row="0" BorderThickness="1" BorderBrush="Transparent" Width="128"
+                  Height="128" CornerRadius="8"/>
+          <Separator Grid.Row="1" Background="#33FFFFFF" Height="1" Opacity="0.5"
+                     Style="{StaticResource {Static ToolBar.SeparatorStyleKey}}" Margin="0, 20"/>
+          <TextBlock Grid.Row="2" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="#FFFFFF"
+                     Text="{Binding Path=LocaleModel.[STRING_NOTIFICATION], FallbackValue=Notifications}"/>
+          <TextBlock Grid.Row="3" FontSize="18" TextAlignment="Center" TextWrapping="Wrap" Margin="0, 8, 0, 20"
+                     Foreground="#FFFFFF" Opacity="0.7"
+                     Text="{Binding Path=LocaleModel.[STRING_NOTIFICATION_EXIT_POPUP_INFO], FallbackValue='Dont miss out on special offers, updates and event notifications'}"/>
+          <Grid Row="4">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="Auto" MaxWidth="360"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1" CornerRadius="8" BorderThickness="1" BorderBrush="#33FFFFFF" Padding="16, 12">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontSize="14" FontWeight="Bold" TextAlignment="Center"
+                           TextTrimming="CharacterEllipsis" Foreground="#FFFFFF"
+                           Text="{Binding Path=LocaleModel.[STRING_ENABLE_NOTIFICATION_MODE_TO], FallbackValue='Enable notification mode to'}"/>
+                <Separator Grid.Row="1" Background="#33FFFFFF" Height="1" Opacity="0.5"
+                           Style="{StaticResource {Static ToolBar.SeparatorStyleKey}}" Margin="0, 8"/>
+                <Grid Row="2">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="26"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <Common:CustomPictureBox Grid.Column="0" ImageName="lowPower" Width="24" Height="24"/>
+                  <TextBlock Grid.Column="1" Margin="8, 0, 0, 0" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"
+                             TextTrimming="CharacterEllipsis" Foreground="#FFFFFF" Opacity="0.7"
+                             Text="{Binding Path=LocaleModel.[STRING_SWITCH_LOW_POWER], FallbackValue='Switch to low power mode'}"/>
+                </Grid>
+                <Separator Grid.Row="3" Background="#33FFFFFF" Height="1" Opacity="0.5"
+                           Style="{StaticResource {Static ToolBar.SeparatorStyleKey}}" Margin="0, 8"/>
+                <Grid Row="4">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="26"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <Common:CustomPictureBox Grid.Column="0" ImageName="realtimeNotif" Width="24" Height="24"/>
+                  <TextBlock Grid.Column="1" FontSize="14" Margin="8, 0, 0, 0" TextAlignment="Center" VerticalAlignment="Center"
+                             TextTrimming="CharacterEllipsis" Foreground="#FFFFFF" Opacity="0.7"
+                             Text="{Binding Path=LocaleModel.[STRING_LIVE_NOTIFICATIONS], FallbackValue='Get real-time notifications'}"/>
+                </Grid>
+              </Grid>
+            </Border>
+          </Grid>
+          <Grid Row="5" Margin="0, 24, 0, 16">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Click="mYesBtn_Click" MouseEnter="mYesBtn_MouseEnter" MouseLeave="mYesBtn_MouseLeave"
+                    Name="mYesBtn" Grid.Row="0" Grid.Column="1" Background="Transparent" FontSize="20"
+                    FontWeight="Bold" Height="44" MinWidth="144" Padding="5,0"
+                    Foreground="{Binding Path=ColorModel.[BlueMouseOutForeGround], FallbackValue=#FFFFFFFF}"
+                    Content="{Binding Path=LocaleModel.[STRING_NOTIFICATION_MODE_YES], FallbackValue=Yes}">
+              <FrameworkElement.Resources>
+                <Style TargetType="{Type Button}">
+                  <Setter Property="Control.Template">
+                    <Setter.Value>
+                      <ControlTemplate TargetType="{Type Button}">
+                        <Border CornerRadius="22" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Padding="{TemplateBinding Control.Padding}"
+                                Background="{Binding Path=ColorModel.[BlueMouseOutGridBackGround], FallbackValue=#FF008BEF}">
+                          <Grid>
+                            <Grid.RowDefinitions>
+                              <RowDefinition Height="*"/>
+                              <RowDefinition Height="Auto"/>
+                              <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="*"/>
+                              <ColumnDefinition Width="Auto"/>
+                              <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Grid.Column="1" Grid.Row="1"/>
+                          </Grid>
+                        </Border>
+                      </ControlTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </Style>
+              </FrameworkElement.Resources>
+            </Button>
+            <Grid Row="1" Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Border Grid.Column="1" BorderThickness="0, 0, 0, 1" Padding="2, 0, 2, 2">
+                <Border.BorderBrush>
+                  <VisualBrush>
+                    <VisualBrush.Visual>
+                      <Rectangle StrokeDashArray="4" Stroke="#FFFFFF" StrokeThickness="1"
+                                 Width="{Binding RelativeSource={RelativeSource AncestorType={Type Border}}, Path=ActualWidth}"
+                                 Height="{Binding RelativeSource={RelativeSource AncestorType={Type Border}}, Path=ActualHeight}"/>
+                    </VisualBrush.Visual>
+                  </VisualBrush>
+                </Border.BorderBrush>
+                <TextBlock MouseLeftButtonUp="mCloseBluestacks_MouseLeftButtonUp" Name="mCloseBluestacks" Margin="0, 16, 0, 0"
+                           TextAlignment="Center" TextTrimming="CharacterEllipsis" FontSize="16" Foreground="#FFFFFF"
+                           Cursor="Hand"
+                           Text="{Binding Path=LocaleModel.[STRING_CHOOSE_CLOSE_BS], FallbackValue='No, close BlueStacks'}"/>
+              </Border>
+            </Grid>
+            <Grid Row="2" Column="1">
+              <Common:CustomCheckbox Checked="mPreferenceCheckBox_Checked" Name="mPreferenceCheckBox" Margin="0, 24, 0, 0"
+                                     VerticalAlignment="Center" TextFontSize="14" Foreground="#FFFFFF" Cursor="Hand"
+                                     Content="{Binding Path=LocaleModel.[STRING_REMEMBER_PREFERENCE], FallbackValue='Remember my preference'}"/>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Border>
+  </Border>
+</UserControl>

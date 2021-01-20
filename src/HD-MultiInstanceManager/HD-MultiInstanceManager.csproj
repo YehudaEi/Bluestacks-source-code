@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files\BlueStacks\HD-MultiInstanceManager.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2EBD2579-F870-4F78-AFA8-5023AA8DE7B3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>HD-MultiInstanceManager</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationVersion>4.250.0.1070</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>MultiInstanceManagerMVVM</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BlueStacks.Core">
+      <HintPath>lib\BlueStacks.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>lib\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>lib\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="HD-Common">
+      <HintPath>lib\HD-Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BlueStacks\ViewModel\Classes\Settings\EngineSettingViewModel.cs" />
+    <Compile Include="Properties\Settings.cs" />
+    <Compile Include="ViewModel\Classes\EngineUpdateViewModel.cs" />
+    <Compile Include="ViewModel\Classes\UpdateViewModel.cs" />
+    <Compile Include="ViewModel\Classes\InstanceViewModel.cs" />
+    <Compile Include="ViewModel\Classes\MultiInstanceViewModel.cs" />
+    <Compile Include="ViewModel\Classes\Settings\OptimizationSettingsViewModel.cs" />
+    <Compile Include="ViewModel\Classes\CreateInstance\NewEngineSelectorViewModel.cs" />
+    <Compile Include="ViewModel\Classes\CreateInstance\NewInstanceSelectorViewModel.cs" />
+    <Compile Include="ViewModel\Classes\CreateInstance\CreateNewInstanceViewModel.cs" />
+    <Compile Include="View\Classes\Update\EngineUpdateView.cs" />
+    <Compile Include="View\Classes\Update\UpdateView.cs" />
+    <Compile Include="View\Classes\Settings\SettingsView.cs" />
+    <Compile Include="View\Classes\Settings\OptimizationSettingsView.cs" />
+    <Compile Include="View\Classes\MultiInstance\BlueProgressBar.cs" />
+    <Compile Include="View\Classes\MultiInstance\ProgressBarControl.cs" />
+    <Compile Include="View\Classes\MultiInstance\InstanceView.cs" />
+    <Compile Include="View\Classes\MultiInstance\MultiInstanceView.cs" />
+    <Compile Include="View\Classes\MultiInstance\Settings\InstanceDisplaySettings.cs" />
+    <Compile Include="View\Classes\MultiInstance\Settings\SettingsWindow.cs" />
+    <Compile Include="View\Classes\CreateInstance\NewEngineSelectorView.cs" />
+    <Compile Include="View\Classes\CreateInstance\NewInstanceSelectorView.cs" />
+    <Compile Include="View\Classes\CreateInstance\CreateNewInstanceView.cs" />
+    <Compile Include="Model\Classes\AppPlayerUpdateModel.cs" />
+    <Compile Include="Model\Classes\InstanceSortOptionModel.cs" />
+    <Compile Include="Model\Classes\MimStatsModel.cs" />
+    <Compile Include="Model\Classes\RamModel.cs" />
+    <Compile Include="Model\Classes\CpuModel.cs" />
+    <Compile Include="MessageModel\Classes\CancelInstallerMessage.cs" />
+    <Compile Include="MessageModel\Classes\InstanceCreationMessage.cs" />
+    <Compile Include="MessageModel\Classes\InstanceCreationOemMessage.cs" />
+    <Compile Include="MessageModel\Classes\ToastPopupMessage.cs" />
+    <Compile Include="MessageModel\Classes\ToggleFarmModeMessage.cs" />
+    <Compile Include="MessageModel\Classes\ControlVisibilityMessage.cs" />
+    <Compile Include="MessageModel\Classes\InstanceOperationMessage.cs" />
+    <Compile Include="MessageModel\Classes\InstanceModelMessage.cs" />
+    <Compile Include="MessageModel\Classes\NewInstanceMessage.cs" />
+    <Compile Include="HTTPHandlers\HttpHandler.cs" />
+    <Compile Include="HTTPHandlers\HttpHandlerSetup.cs" />
+    <Compile Include="HTTPHandlers\HttpHelper.cs" />
+    <Compile Include="Helper\MultiInstanceConstants.cs" />
+    <Compile Include="Helper\Opt.cs" />
+    <Compile Include="Helper\Operation.cs" />
+    <Compile Include="Helper\InstanceState.cs" />
+    <Compile Include="Helper\ViewModelLocator.cs" />
+    <Compile Include="Helper\Converters\NewInstanceTypeToTextMultiConverter.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>app.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="app.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\createinstance\createnewinstanceview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\createinstance\newengineselectorview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\createinstance\newinstanceselectorview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\multiinstance\blueprogressbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\multiinstance\instanceview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\multiinstance\multiinstanceview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\multiinstance\progressbarcontrol.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\settings\optimizationsettingsview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\settings\settingsview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\update\engineupdateview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view.classes\update\updateview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

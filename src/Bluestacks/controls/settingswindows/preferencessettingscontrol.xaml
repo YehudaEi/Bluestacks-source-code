@@ -1,0 +1,315 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.PreferencesSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:bluestacksCore="clr-namespace:BlueStacks.Core;assembly=BlueStacks.Core">
+  <FrameworkElement.Resources>
+    <local:SideBarImageNameToLocalizedTooltipMultiConverter x:Key="SideBarImageNameToLocalizedTooltipMultiConverter"/>
+    <Style x:Key="ReorderListBoxItemStyle" TargetType="{Type ListBoxItem}">
+      <Setter Property="bluestacksCore:ArrangePanel.Order" Value="{Binding Path=Order, Mode=TwoWay}"/>
+      <Setter Property="UIElement.SnapsToDevicePixels" Value="true"/>
+      <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="true"/>
+      <Setter Property="FrameworkElement.FocusVisualStyle" Value="{Null}"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type ListBoxItem}">
+            <Border BorderThickness="0" Margin="9"
+                    Background="{Binding Path=ColorModel.[SettingsWindowTitleBarBackground], Source={Static Common:BlueStacksUIBinding.Instance}}">
+              <FrameworkElement.ToolTip>
+                <MultiBinding Converter="{StaticResource SideBarImageNameToLocalizedTooltipMultiConverter}">
+                  <Binding Path="ImageName"/>
+                  <Binding Path="LocaleModel" Source="{Static Common:BlueStacksUIBinding.Instance}"/>
+                </MultiBinding>
+              </FrameworkElement.ToolTip>
+              <Common:CustomPictureBox Width="16" Height="16" Margin="8" ImageName="{Binding Path=ImageName, StringFormat={0}_hover}"/>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="RearrangeListBoxStyle" TargetType="{Type ListBox}">
+      <Setter Property="Control.Background" Value="Transparent"/>
+      <Setter Property="Control.BorderThickness" Value="0.5"/>
+      <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="true"/>
+      <Setter Property="ItemsControl.ItemContainerStyle" Value="{StaticResource ReorderListBoxItemStyle}"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type ListBox}">
+            <ItemsPresenter Margin="9"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Common:BooleanToVisibilityConverter2 x:Key="BooleanToVisibilityConverter"/>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <ScrollViewer x:Name="mScrollBar" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+      <UIElement.OpacityMask>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="Transparent" Offset="0"/>
+          <GradientStop Color="#FF000000" Offset=".15"/>
+          <GradientStop Color="#FF000000" Offset=".8"/>
+          <GradientStop Color="Transparent" Offset="1"/>
+        </LinearGradientBrush>
+      </UIElement.OpacityMask>
+      <Grid x:Name="mMainGrid" Margin="30,25,20,15">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="mLanguageSettingsGrid" Row="0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Label Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,15">
+            <TextBlock FontWeight="Normal" FontSize="16" Padding="0"
+                       Text="{Binding Path=LocaleModel.[STRING_LANGUAGE_SETTING], FallbackValue='Language settings'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+          </Label>
+          <Common:CustomComboBox SelectionChanged="mLanguageCombobox_SelectionChanged" x:Name="mLanguageCombobox" Grid.Row="1"
+                                 MaxDropDownHeight="150" Width="190" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="15"/>
+        </Grid>
+        <Grid x:Name="mLanguagePreferencePaddingGrid" Row="1" Height="30"/>
+        <Grid x:Name="mPerformancePreference" Row="2">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Label x:Name="mPerformanceSettingsLabel" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,15">
+            <TextBlock FontSize="16" Padding="0"
+                       Text="{Binding Path=LocaleModel.[STRING_PERFORMANCE_SETTINGS], FallbackValue='Performance settings'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+          </Label>
+          <Common:CustomCheckbox Click="mSwitchToHome_Click" x:Name="mSwitchToHome" Grid.Row="1" HorizontalAlignment="Left"
+                                 Height="30" FontSize="12" Margin="5,0,0,10"
+                                 Content="{Binding Path=LocaleModel.[STRING_SWITCH_HOME], FallbackValue='Switch to android home'}"/>
+          <Common:CustomCheckbox Click="SwitchKillWebTab_Click" x:Name="mSwitchKillWebTab" Grid.Row="2" HorizontalAlignment="Left"
+                                 Margin="5,0,0,10" Height="30" FontSize="12"
+                                 Content="{Binding Path=LocaleModel.[STRING_KILL_WEBTAB], FallbackValue='Kill webpages when running game'}"/>
+          <Common:CustomCheckbox Click="EnableMemoryTrim_Click" x:Name="mEnableMemoryTrim" Grid.Row="3" HorizontalAlignment="Left"
+                                 Margin="5,0,0,3" Height="25" FontSize="12"
+                                 Content="{Binding Path=LocaleModel.[STRING_ENABLE_MEMORY_TRIM], FallbackValue='Enable periodic memory trimming'}"/>
+          <TextBlock x:Name="mEnableMemoryTrimWarning" Grid.Row="4" Margin="35,0,0,0" FontSize="14"
+                     TextWrapping="WrapWithOverflow" Width="450" HorizontalAlignment="Left"
+                     Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"
+                     Text="{Binding Path=LocaleModel.[STRING_ENABLE_MEMORY_TRIM_WARNING], FallbackValue='May slow down gameplay or FPS.'}"/>
+        </Grid>
+        <Grid x:Name="mGameControlPreferencePaddingGrid" Row="3" Height="30"/>
+        <Grid x:Name="mGameControlsSettingsGrid" Row="4">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Label x:Name="mGameControlSettingsLabel" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,15">
+            <TextBlock FontSize="16" Padding="0"
+                       Text="{Binding Path=LocaleModel.[STRING_GAME_CONTROLS_SETTINGS], FallbackValue='Game control settings'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+          </Label>
+          <StackPanel x:Name="mGameControlsStackPanel" Grid.Row="1" Orientation="Vertical">
+            <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mEnableGamePadCheckbox" HorizontalAlignment="Left" Margin="5,0,0,10"
+                                   Height="30" FontSize="16"
+                                   Content="{Binding Path=LocaleModel.[STRING_ENABLE_GAMEPAD], FallbackValue='Enable gamepad detection'}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,-5,0,0"
+                        IsEnabled="{Binding ElementName=mEnableGamePadCheckbox, Path=IsChecked}">
+              <Common:CustomTextBlock HorizontalAlignment="Left" Margin="35,0,0,0" Height="30" FontSize="16" MaxWidth="410"
+                                      Text="{Binding Path=LocaleModel.[STRING_USE_NATIVE_GAMEPAD]}"/>
+              <Common:CustomPictureBox PreviewMouseLeftButtonUp="HelpIconPreviewMouseLeftButtonUp" x:Name="mHelpIcon" Margin="5,0,5,5"
+                                       ImageName="menu_help" Height="18" Width="18" Cursor="Hand"
+                                       ToolTip="{Binding Path=LocaleModel.[STRING_HELP_AND_SUPPORT], FallbackValue=Help}">
+                <FrameworkElement.Style>
+                  <Style TargetType="{Type Common:CustomPictureBox}">
+                    <Style.Triggers>
+                      <Trigger Property="UIElement.IsEnabled" Value="false">
+                        <Setter Property="UIElement.Opacity" Value="0.5"/>
+                      </Trigger>
+                    </Style.Triggers>
+                  </Style>
+                </FrameworkElement.Style>
+              </Common:CustomPictureBox>
+            </StackPanel>
+            <Grid x:Name="mEnableNativeGamepad" Margin="35,0,0,0"
+                  IsEnabled="{Binding ElementName=mEnableGamePadCheckbox, Path=IsChecked}">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomRadioButton Click="NativeGamepadMode_Click" x:Name="mForcedOnMode" Height="20" FontSize="14"
+                                        GroupName="NativeGamepadValue" Grid.Column="0" HorizontalAlignment="Left" Margin="0"
+                                        Content="{Binding Path=LocaleModel.[STRING_FORCE_ON], FallbackValue='Force on'}"/>
+              <Common:CustomRadioButton Click="NativeGamepadMode_Click" x:Name="mForcedOffMode" Height="20" FontSize="14"
+                                        GroupName="NativeGamepadValue" Grid.Column="1" HorizontalAlignment="Left" Margin="0"
+                                        Content="{Binding Path=LocaleModel.[STRING_FORCE_OFF], FallbackValue='Force off'}"/>
+              <Common:CustomRadioButton Click="NativeGamepadMode_Click" x:Name="mAutoMode" Height="20" FontSize="14"
+                                        GroupName="NativeGamepadValue" Grid.Column="2" HorizontalAlignment="Left" Margin="0"
+                                        IsChecked="True" Content="{Binding Path=LocaleModel.[STRING_AUTO], FallbackValue=Auto}"/>
+            </Grid>
+            <TextBlock Margin="61,0,0,10" FontSize="14" TextWrapping="WrapWithOverflow" Width="420"
+                       HorizontalAlignment="Left"
+                       Visibility="{Binding ElementName=mForcedOnMode, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       Text="{Binding Path=LocaleModel.[STRING_NATIVE_GAMEPAD_INFO]}"
+                       Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"/>
+            <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mShowSchemeDeleteWarning" HorizontalAlignment="Left"
+                                   Margin="5,10,0,0" Height="30" FontSize="16"
+                                   Content="{Binding Path=LocaleModel.[STRING_WARN_BEFORE_DELETING_SCHEME], FallbackValue='Warn before deleting a control scheme'}"/>
+          </StackPanel>
+        </Grid>
+        <Grid x:Name="mPerformancePreferencePaddingGrid" Row="5" Height="30"/>
+        <Grid Row="6">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Label Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,15">
+            <TextBlock FontSize="16" Padding="0"
+                       Text="{Binding Path=LocaleModel.[STRING_PLATFORM_SETTINGS], FallbackValue='Platform settings'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+          </Label>
+          <Grid Row="1" Margin="0,0,0,20">
+            <StackPanel x:Name="mPlatformStackPanel" Orientation="Vertical" HorizontalAlignment="Left">
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mAddDesktopShortcuts" HorizontalAlignment="Left" Margin="5,0,0,10"
+                                     Height="30" FontSize="12"
+                                     Content="{Binding Path=LocaleModel.[STRING_ADD_ICONS], FallbackValue='Add desktop icons for installed apps'}"/>
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mShowGamingSummary" HorizontalAlignment="Left" Margin="5,0,0,10"
+                                     Height="30" FontSize="12"
+                                     Content="{Binding Path=LocaleModel.[STRING_SHOW_GAMING], FallbackValue='Show gaming summary on close'}"/>
+              <StackPanel Orientation="Horizontal">
+                <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mEnableTouchSound" HorizontalAlignment="Left" Margin="5,0,0,10"
+                                       Height="30" FontSize="12"
+                                       Content="{Binding Path=LocaleModel.[STRING_ENABLE_TOUCH_SOUND], FallbackValue='Enable sound while tapping'}"/>
+                <Common:CustomPictureBox PreviewMouseLeftButtonUp="TouchSoundHelpIconHelpIconPreviewMouseLeftButtonUp"
+                                         x:Name="mTouchSoundHelpIcon" Margin="5,4,5,10" ImageName="menu_help" Height="18" Width="18"
+                                         VerticalAlignment="Top" Cursor="Hand"
+                                         Visibility="{Binding ElementName=mEnableTouchSound, Path=IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                         ToolTip="{Binding Path=LocaleModel.[STRING_HELP_AND_SUPPORT], FallbackValue=Help}"/>
+              </StackPanel>
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mShowBlueHighlighter" HorizontalAlignment="Left" Margin="5,0,0,10"
+                                     Height="30" FontSize="12" IsChecked="True"
+                                     Content="{Binding Path=LocaleModel.[STRING_SHOW_BLUE_HIGHLIGHTER], FallbackValue='Show blue highlighter in full screen'}"/>
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mShowMacroDeleteWarning" HorizontalAlignment="Left"
+                                     Margin="5,0,0,10" Height="30" FontSize="16"
+                                     Content="{Binding Path=LocaleModel.[STRING_WARN_BEFORE_DELETING_MACRO], FallbackValue='Warn before deleting a macro script'}"/>
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mDiscordCheckBox" HorizontalAlignment="Left" Margin="5,0,0,10"
+                                     Height="30" FontSize="16"
+                                     Content="{Binding Path=LocaleModel.[STRING_CONNECT_DISCORD_BST], FallbackValue='Allow BlueStacks to connect with Discord'}"/>
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mEnableAdbCheckBox" HorizontalAlignment="Left" Margin="5,0,0,3"
+                                     Height="25" FontSize="16" Visibility="Collapsed"
+                                     Content="{Binding Path=LocaleModel.[STRING_ENABLE_ADB], FallbackValue='Enable Android Debug Bridge'}"/>
+              <TextBlock x:Name="mEnableAdbWarning" Margin="35,0,0,10" FontSize="14" TextWrapping="WrapWithOverflow"
+                         Width="450" HorizontalAlignment="Left" Visibility="Collapsed"
+                         Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"
+                         Text="{Binding Path=LocaleModel.[STRING_ENABLE_ADB_WARNING], FallbackValue='BlueStacks may not be fully protected with this setting turned on. You may consider turning it off afterwards'}"/>
+            </StackPanel>
+          </Grid>
+          <Grid x:Name="mInputGrid" Row="2" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="auto"/>
+              <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,10">
+              <TextBlock FontSize="16" Padding="0"
+                         Text="{Binding Path=LocaleModel.[STRING_INPUT_DEBUGGING], FallbackValue='Input debugging'}"
+                         Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+            </Label>
+            <StackPanel Grid.Row="1" Margin="0,0,0,20" Orientation="Vertical" HorizontalAlignment="Left">
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mEnableTouchPointsCheckBox" HorizontalAlignment="Left"
+                                     Margin="5,0,0,10" Height="25" FontSize="16"
+                                     Content="{Binding Path=LocaleModel.[STRING_SHOW_VISUAL_FEEDBACK_FOR_TAPS], FallbackValue='Show visual feedback for taps'}"/>
+              <Common:CustomCheckbox Click="CheckBox_Click" x:Name="mEnableTouchCoordinatesCheckbox" HorizontalAlignment="Left"
+                                     Margin="5,0,0,3" Height="25" FontSize="16"
+                                     Content="{Binding Path=LocaleModel.[STRING_SHOW_POINTER_LOCATION_FOR_TOUCH_DATA], FallbackValue='Show pointer location with current touch data'}"/>
+              <TextBlock x:Name="mEnableDevSettingsWarning" Margin="35,0,0,10" FontSize="14" TextWrapping="WrapWithOverflow"
+                         Width="450" HorizontalAlignment="Left"
+                         Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"
+                         Text="{Binding Path=LocaleModel.[STRING_ENABLE_ANDROID_DEBUG_WARNING], FallbackValue='Enabling this setting may have an adverse impact on gameplay. You may consider turning it off later.'}"/>
+            </StackPanel>
+          </Grid>
+          <Grid x:Name="mQuitOptionsGrid" Row="3">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,15">
+              <TextBlock FontSize="16" Padding="0"
+                         Text="{Binding Path=LocaleModel.[STRING_EXIT_OPTIONS], FallbackValue='Exit options'}"
+                         Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+            </Label>
+            <Common:CustomComboBox SelectionChanged="MQuitOptionsComboBox_SelectionChanged" x:Name="mQuitOptionsComboBox"
+                                   MaxDropDownHeight="150" Grid.Row="1" Width="390" FontSize="15" Margin="5,0,0,0"
+                                   HorizontalAlignment="Left"/>
+            <Common:CustomCheckbox Click="MShowOnExitCheckbox_Click" x:Name="mShowOnExitCheckbox" Grid.Row="2"
+                                   HorizontalAlignment="Left" Margin="5,10,0,0" Height="30" FontSize="12"
+                                   Content="{Binding Path=LocaleModel.[STRING_ASK_ON_CLOSING], FallbackValue='Ask on closing'}"/>
+          </Grid>
+          <StackPanel x:Name="mScreenshotGrid" Grid.Row="4">
+            <TextBlock FontSize="16" Padding="0" Margin="0,0,0,15"
+                       Text="{Binding Path=LocaleModel.[STRING_MEDIA_FOLDER], FallbackValue='Media Folder'}"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+            <DockPanel LastChildFill="false">
+              <TextBlock x:Name="mScreenShotPathLable" Grid.Column="0" Margin="5,0,0,0" TextWrapping="WrapWithOverflow"
+                         MaxWidth="300" FontSize="16" Padding="0"
+                         Text="{Binding Path=LocaleModel.[STRING_MEDIA_FOLDER], FallbackValue='Media Folder'}"
+                         Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+              <Common:CustomButton Click="mChangePathBtn_Click" x:Name="mChangePathBtn" DockPanel.Dock="Right" MinWidth="150"
+                                   Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" ButtonColor="Background"
+                                   Content="{Binding Path=LocaleModel.[STRING_CHANGE_PATH], FallbackValue='Change Path'}"/>
+            </DockPanel>
+            <Common:CustomCheckbox Checked="AccessWidowsFolderCheckbox_Changed" Unchecked="AccessWidowsFolderCheckbox_Changed"
+                                   x:Name="mAccessWidowsFolderCheckbox" Grid.Row="2" HorizontalAlignment="Left" MinHeight="30"
+                                   FontSize="12" Margin="5,0,0,15" TextWrapping="WrapWithOverflow" TextTrimming="None"
+                                   Content="{Binding Path=LocaleModel.[STRING_ACCESS_WINDOWS_FOLDER], FallbackValue='Enable BlueStacks to access Windows Pictures and Documents folders'}"/>
+          </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="7">
+          <TextBlock FontSize="16" Padding="0" Margin="0,0,0,10"
+                     Text="{Binding Path=LocaleModel.[STRING_REORDER_SIDETOOLBAR], FallbackValue='Arrange icons on your side toolbar'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+          <TextBlock Margin="0,0,0,10" TextWrapping="WrapWithOverflow" FontSize="14" Padding="0"
+                     HorizontalAlignment="Left"
+                     Text="{Binding Path=LocaleModel.[STRING_REORDER_SIDETOOLBAR_MESSAGE], FallbackValue='Drag the icons to rearrange them as per your preference'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+          <Border Margin="0,0,0,10" BorderThickness="1"
+                  BorderBrush="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}">
+            <ListBox x:Name="mRearrangeListBox" Style="{StaticResource RearrangeListBoxStyle}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <bluestacksCore:ArrangePanel/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ListBox>
+          </Border>
+          <Common:CustomButton Click="ResetOrder_Click" x:Name="mResetOrder" Margin="0,0,0,0" HorizontalAlignment="Left"
+                               FontSize="12" Width="120" Height="24" IsEnabled="false"
+                               Content="{Binding Path=LocaleModel.[STRING_RESET_ORDER], FallbackValue='Reset order', Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+        </StackPanel>
+      </Grid>
+    </ScrollViewer>
+    <DockPanel Grid.Row="1" Margin="25,10,20,30" LastChildFill="false">
+      <Common:CustomButton Click="SaveBtnClick" x:Name="nSaveBtn" Width="120" Height="35" IsEnabled="false"
+                           DockPanel.Dock="Right"
+                           Content="{Binding Path=LocaleModel.[STRING_SAVE], FallbackValue=Save, Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+    </DockPanel>
+  </Grid>
+</UserControl>

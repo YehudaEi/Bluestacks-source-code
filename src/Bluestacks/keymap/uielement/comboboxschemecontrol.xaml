@@ -1,0 +1,40 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ComboBoxSchemeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MouseDown="ComboBoxItem_MouseDown" MouseEnter="ComboBoxItem_MouseEnter"
+             MouseLeave="ComboBoxItem_MouseLeave" LostFocus="ComboBoxItem_LostFocus" Width="295"
+             IsEnabled="true" HorizontalAlignment="Stretch"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid Name="mSchemeControl" Width="256" Height="36" VerticalAlignment="Center" Margin="6,0,21,0">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="0"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="6"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <Common:CustomPictureBox MouseDown="Bookmark_img_MouseDown" Name="mBookmarkImg" Grid.Column="1" ImageName="bookmark"
+                             Height="16" Width="16"
+                             ToolTip="{Binding Path=LocaleModel.[STRING_BOOKMARK], FallbackValue=Bookmark}"/>
+    <Common:CustomTextBox KeyUp="MSchemeName_KeyUp" Name="mSchemeName" Grid.Column="3" HorizontalContentAlignment="Left"
+                          Width="Auto" IsReadOnly="true" Height="24" Focusable="false"/>
+    <Common:CustomPictureBox MouseDown="EditImg_MouseDown" Name="mEditImg" Grid.Column="4" ImageName="edit_icon" Height="14"
+                             Width="14" HorizontalAlignment="Right" Margin="10,0"
+                             ToolTip="{Binding Path=LocaleModel.[STRING_EDIT_KEYS], FallbackValue=Edit}"/>
+    <Common:CustomPictureBox MouseDown="SaveImg_MouseDown" Name="mSaveImg" Grid.Column="4" ImageName="save"
+                             Visibility="Collapsed" Height="14" Width="14" HorizontalAlignment="Right" Margin="10,0"
+                             ToolTip="{Binding Path=LocaleModel.[STRING_SAVE_KEYS], FallbackValue=Save}"/>
+    <Common:CustomPictureBox MouseDown="CopyImg_MouseDown" Name="mCopyImg" Grid.Column="5" ImageName="duplicate" Height="14"
+                             Width="14" HorizontalAlignment="Right" Margin="10,0"
+                             ToolTip="{Binding Path=LocaleModel.[STRING_COPY_KEYS], FallbackValue=Copy}"/>
+    <Common:CustomPictureBox MouseDown="DeleteImg_MouseDown" Name="mDeleteImg" Grid.Column="6" ImageName="delete" Height="14"
+                             Width="14" HorizontalAlignment="Right" Margin="10,0"
+                             ToolTip="{Binding Path=LocaleModel.[STRING_DELETE], FallbackValue=Delete}"/>
+  </Grid>
+</UserControl>

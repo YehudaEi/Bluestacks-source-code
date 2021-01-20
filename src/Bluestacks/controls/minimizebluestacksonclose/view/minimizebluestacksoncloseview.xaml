@@ -1,0 +1,105 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.MinimizeBlueStacksOnCloseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI.Controls"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:command="http://www.galasoft.ch/mvvmlight"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             Width="490" Height="Auto">
+  <FrameworkElement.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid x:Name="mTitleGrid" Margin="20 0 20 20">
+      <Common:CustomPictureBox x:Name="mCrossButtonPictureBox" Margin="0,15,0,0" Visibility="Visible" HorizontalAlignment="Right"
+                               VerticalAlignment="Top" ImageName="exit_close" Height="20" Width="20"
+                               ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+            <command:EventToCommand Command="{Binding CloseControlCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={Type UserControl}}}"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+      </Common:CustomPictureBox>
+      <StackPanel>
+        <TextBlock x:Name="mTitleText" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   FontSize="20" Margin="0 15 0 5"
+                   Text="{Binding Path=LocaleModel.[STRING_CLOSE_BLUESTACKS], FallbackValue='Close BlueStacks'}"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        <TextBlock x:Name="mHeaderText" FontWeight="Normal" TextWrapping="Wrap" HorizontalAlignment="Left"
+                   VerticalAlignment="Center" FontSize="16" Margin="0 0 0 5"
+                   Text="{Binding Path=LocaleModel.[STRING_CHOOSE_OPTION_MESSAGE], FallbackValue='Choose what you would like to do'}"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+      </StackPanel>
+    </Grid>
+    <Grid Row="1" MinHeight="40" Margin="20 0 10 20">
+      <StackPanel Orientation="Vertical">
+        <Common:CustomRadioButton x:Name="mMinimizeRadioBtn" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  FontSize="16" GroupName="notifications" Margin="0 0 0 2.5"
+                                  Content="{Binding Path=LocaleModel.[STRING_MINIMIZE_TO_SYSTEM_TRAY], FallbackValue='Minimize to system tray'}"
+                                  Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                                  IsChecked="{Binding IsMinimizeBlueStacksRadioBtnChecked}"/>
+        <TextBlock x:Name="mMinimizeBtnBodyText" FontWeight="Normal" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" FontSize="14" TextWrapping="Wrap" Margin="32 0 0 0"
+                   Text="{Binding Path=LocaleModel.[STRING_KEEP_RECEIVING_NOTIFICATION], FallbackValue='You will keep receiving game notifications'}"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+      </StackPanel>
+    </Grid>
+    <Grid Row="2" MinHeight="40" Margin="20 0 10 20" Width="Auto">
+      <StackPanel Orientation="Vertical">
+        <Common:CustomRadioButton x:Name="mQuitRadioBtn" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  FontSize="16" GroupName="notifications" Margin="0 0 0 2.5"
+                                  Content="{Binding Path=LocaleModel.[STRING_QUIT_BLUESTACKS_MESSAGE], FallbackValue='Quit BlueStacks'}"
+                                  Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                                  IsChecked="{Binding IsQuitBluestacksChecked}"/>
+        <TextBlock x:Name="mQuitBtnBodyText" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   FontSize="14" TextWrapping="Wrap" Margin="32 0 0 0"
+                   Text="{Binding Path=LocaleModel.[STRING_BLUESTACKS_WILL_CLOSE_COMPLETELY], FallbackValue='BlueStacks will close completely'}"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+      </StackPanel>
+    </Grid>
+    <Grid Row="3" Margin="20 0 20 10">
+      <StackPanel Orientation="Vertical">
+        <Common:CustomCheckbox x:Name="mDoNotShowChkBox" Height="20" TextFontSize="14" MinWidth="50"
+                               Content="{Binding Path=LocaleModel.[STRING_DONT_SHOW_AGAIN], FallbackValue='Do not show this again'}"
+                               Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"
+                               IsChecked="{Binding IsDoNotShowAgainChkBoxChecked}"/>
+        <TextBlock FontSize="10" HorizontalAlignment="Left" Margin="30 0 0 0"
+                   Text="{Binding Path=LocaleModel.[STRING_CHANGE_SETTINGS_LATER], FallbackValue='You can change this in settings later'}"
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor]}"/>
+      </StackPanel>
+    </Grid>
+    <Grid Row="4" Margin="20 10 20 20">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Grid Column="1">
+        <StackPanel x:Name="mBtnActionPanel" Orientation="Horizontal" HorizontalAlignment="Right">
+          <Common:CustomButton x:Name="mCancelBtn" ButtonColor="White" Margin="0 0 15 0" MinWidth="100" MaxWidth="200"
+                               Content="{Binding Path=LocaleModel.[STRING_CANCEL], FallbackValue=Cancel}"
+                               Command="{Binding CloseControlCommand}"
+                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={Type UserControl}}}"/>
+          <Common:CustomButton x:Name="mMinimizeBtn" ButtonColor="Blue" MinWidth="100" MaxWidth="200" Margin="0 0 0 0"
+                               Content="{Binding Path=LocaleModel.[STRING_MINIMIZE_TOOLTIP], FallbackValue=Minimize}"
+                               Command="{Binding MinimizeCommand}"
+                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={Type UserControl}}}"
+                               Visibility="{Binding IsMinimizeBlueStacksRadioBtnChecked, Converter={StaticResource BoolToVis}}"/>
+          <Common:CustomButton x:Name="mQuitBtn" ButtonColor="Red" MinWidth="100" MaxWidth="200" Margin="0 0 0 0"
+                               Content="{Binding Path=LocaleModel.[STRING_QUIT_TEXT], FallbackValue=Quit}"
+                               Command="{Binding QuitCommand}"
+                               Visibility="{Binding IsQuitBluestacksChecked, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

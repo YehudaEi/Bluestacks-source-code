@@ -1,0 +1,24 @@
+<Common:CustomWindow x:Class="BlueStacks.BlueStacksUI.KeymapCanvasWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+                     xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                     Closing="KeymapCanvasWindow_Closing" Closed="CustomWindow_Closed" Loaded="Window_Loaded"
+                     LocationChanged="CustomWindow_LocationChanged" MouseLeftButtonDown="CustomWindow_MouseDown"
+                     SizeChanged="CustomWindow_SizeChanged" AllowsTransparency="true" ShowInTaskbar="false"
+                     WindowStyle="None" ResizeMode="NoResize" Background="#60000000">
+  <Grid>
+    <Grid MouseLeftButtonDown="Canvas_MouseDown">
+      <Canvas MouseEnter="Canvas_MouseEnter" PreviewMouseUp="Canvas_MouseUp" MouseDown="CustomWindow_MouseDown"
+              x:Name="mCanvas" Background="#40000000" Margin="7,47,7,47"/>
+      <Common:CustomPictureBox Name="mCanvasImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    </Grid>
+    <Grid x:Name="mGrid" Visibility="Visible">
+      <Canvas x:Name="mCanvas2">
+        <local:OnboardingOverlayControl x:Name="mOnboardingControl" Visibility="Collapsed"/>
+      </Canvas>
+    </Grid>
+  </Grid>
+</Common:CustomWindow>

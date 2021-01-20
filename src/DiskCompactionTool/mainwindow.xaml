@@ -1,0 +1,107 @@
+<Common:CustomWindow x:Class="BlueStacks.DiskCompactionTool.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:local="clr-namespace:BlueStacks.DiskCompactionTool"
+                     xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                     Loaded="MainWindow_Loaded" Title="Disk cleanup" ResizeMode="CanMinimize"
+                     WindowStartupLocation="CenterScreen" WindowStyle="None" SizeToContent="WidthAndHeight"
+                     Height="Auto" Width="Auto"
+                     DataContext="{Binding Source={x:Static Common:BlueStacksUIBinding.Instance}}"
+                     FocusVisualStyle="{x:Null}">
+  <FrameworkElement.Resources>
+    <Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}">
+      <Setter Property="Control.Foreground" Value="Red"/>
+      <Setter Property="Control.Background" Value="Blue"/>
+      <Setter Property="Control.BorderThickness" Value="0"/>
+      <Setter Property="FrameworkElement.Height" Value="5"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ProgressBar}">
+            <Border BorderThickness="0" Background="#33ffffff" CornerRadius="0" Padding="0">
+              <Grid x:Name="PART_Track">
+                <Rectangle x:Name="PART_Indicator" HorizontalAlignment="Left" Fill="#008bef"/>
+              </Grid>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Border BorderThickness="2" BorderBrush="{Binding Path=ColorModel.[PopupBorderBrush]}">
+    <UIElement.Effect>
+      <DropShadowEffect Direction="270" Opacity="1" ShadowDepth="0" BlurRadius="15"
+                        Color="{Binding Path=ColorModel.[PopupBorderBrush]}"/>
+    </UIElement.Effect>
+    <Grid VerticalAlignment="Top" Background="{Binding Path=ColorModel.[SettingsWindowBackground]}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid Row="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid Row="0" Margin="15,15,15,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="20"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mTitleIcon" Grid.Column="0" Width="20" Height="20" VerticalAlignment="Top"
+                                   HorizontalAlignment="Center" ImageName="disk_cleanup_popup_window"/>
+          <TextBlock MouseDown="TitleBar_MouseDown" x:Name="mTitle" TextTrimming="CharacterEllipsis" Grid.Column="1"
+                     FontSize="16" MaxWidth="280" MinHeight="30" MaxHeight="40" FontWeight="Bold" Margin="10,0,10,0"
+                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                     Text="{Binding Path=LocaleModel.[STRING_DISK_CLEANUP], FallbackValue='Disk cleanup'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+          <Common:CustomPictureBox PreviewMouseLeftButtonUp="MinimizeButton_MouseLeftButtonUp" x:Name="mMinimizeButton"
+                                   DockPanel.Dock="Left" Grid.Column="2" ImageName="minimize_progress" Margin="0,0,10,0" Height="20"
+                                   Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
+          <Common:CustomPictureBox MouseLeftButtonUp="CloseButton_MouseLeftButtonUp" x:Name="mCrossButton" DockPanel.Dock="Left"
+                                   Grid.Column="3" ImageName="close" Height="20" Width="20" VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+        </Grid>
+        <StackPanel x:Name="mBodyPanel" Grid.Row="1" Margin="15,10,15,0">
+          <TextBlock x:Name="mBodyText" TextWrapping="Wrap" FontSize="16" MaxWidth="380" MinHeight="50" MinWidth="380"
+                     Text="{Binding Path=LocaleModel.[STRING_PLEASE_DO_NOT_LAUNCH], FallbackValue='Please do not launch BlueStacks till the process is complete.'}"
+                     Foreground="{Binding Path=ColorModel.[SettingsWindowTitleBarForeGround]}"/>
+        </StackPanel>
+        <Grid x:Name="mProgressGrid" Row="2" Visibility="Collapsed" Margin="15,10,15,0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid Row="0" Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="10*"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="mProgressStatus" Grid.Column="0" TextWrapping="Wrap" Visibility="Collapsed" FontSize="14"
+                       MaxWidth="380" MinHeight="40" MaxHeight="40" FontWeight="SemiBold" Foreground="White"
+                       Text="{Binding Path=LocaleModel.[STRING_STARTING], FallbackValue=Starting}"/>
+            <TextBlock x:Name="mProgressPercent" Grid.Column="1" Text="20" FontSize="16" MaxWidth="100" MinHeight="20"
+                       MinWidth="35" MaxHeight="30" FontWeight="Normal" HorizontalAlignment="Right"
+                       Foreground="{Binding Path=ColorModel.[SettingsWindowTitleBarForeGround]}"/>
+          </Grid>
+          <Grid Row="2">
+            <Common:BlueProgressBar x:Name="mProgressBar" Grid.Column="1" Grid.Row="1" Height="10" Value="20"/>
+          </Grid>
+        </Grid>
+        <Grid x:Name="mButtonGrid" Row="2" Margin="15,10,15,0" Visibility="Visible">
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Common:CustomButton Click="Btn_Click" x:Name="mCancelBtn" MaxWidth="200" MinWidth="136" HorizontalAlignment="Right"
+                                 ButtonColor="White" Content="{Binding Path=LocaleModel.[STRING_CANCEL], FallbackValue=Cancel}"/>
+            <Common:CustomButton Click="Launch_Click" x:Name="mBtn" MaxWidth="200" MinWidth="136" HorizontalAlignment="Right"
+                                 Margin="20,0,0,0" Content="{Binding Path=LocaleModel.[STRING_CONTINUE], FallbackValue=Continue}"/>
+          </StackPanel>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Border>
+</Common:CustomWindow>

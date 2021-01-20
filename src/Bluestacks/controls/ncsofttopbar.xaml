@@ -1,0 +1,312 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.NCSoftTopBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Loaded="NCSoftTopBar_Loaded" SizeChanged="NCSoftTopBar_SizeChanged"
+             Background="{Binding Path=ColorModel.[TopBarColor]}"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Common:BrushToColorConvertor x:Key="BrushToColorConvertor"/>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid x:Name="mMainGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Common:CustomPictureBox x:Name="mTitleIcon" Grid.Column="0" Width="26" Height="26" VerticalAlignment="Center"
+                             HorizontalAlignment="Center" ImageName="ProductLogo" Margin="10,7,8,7"/>
+    <StackPanel x:Name="mWindowHeaderGrid" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1"
+                Margin="0,7,0,7" VerticalAlignment="Center">
+      <TextBlock x:Name="mAppName" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Margin="0,0,6,0"
+                 FontSize="14" MaxWidth="100" Foreground="{Binding Path=ColorModel.[BluestacksTitleColor]}"/>
+      <Line x:Name="mGamenameSeparator" X1="0" Y1="3" X2="0" Y2="18" StrokeThickness="1" Opacity="0.4"
+            Visibility="Collapsed" Stroke="{Binding Path=ColorModel.[BluestacksTitleColor]}"/>
+      <TextBlock x:Name="mCharacterName" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                 Margin="6,0,6,0" FontSize="13" MaxWidth="100" Opacity="0.6"
+                 Foreground="{Binding Path=ColorModel.[BluestacksTitleColor]}"/>
+      <Grid x:Name="mStreamingTopbarGrid" Visibility="Collapsed" VerticalAlignment="Center">
+        <Border x:Name="mBorder" BorderThickness="0" SnapsToDevicePixels="true" CornerRadius="10"
+                Background="#4c07b7">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox Grid.Column="0" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     ImageName="sidebar_stream_video" Margin="10,1,5,1"/>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,1,10,1"
+                       FontSize="11" Text="{Binding Path=LocaleModel.[STRING_LIVE], FallbackValue=LIVE}"
+                       Foreground="{Binding Path=ColorModel.[BluestacksTitleColor]}"/>
+          </Grid>
+        </Border>
+      </Grid>
+    </StackPanel>
+    <Grid x:Name="mNcTopBarControlGrid" Column="1" HorizontalAlignment="Right">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Grid Column="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="5"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="5"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="mMacroRecordGrid" Column="0" Background="Transparent" Height="32" MaxWidth="154"
+              Visibility="Collapsed" HorizontalAlignment="Right">
+          <local:MacroTopBarRecordControl x:Name="mMacroRecordControl"/>
+        </Grid>
+        <Grid x:Name="mMacroPlayGrid" Column="0" Height="32" MaxWidth="235" Visibility="Collapsed"
+              HorizontalAlignment="Right">
+          <local:MacroTopBarPlayControl x:Name="mMacroPlayControl"/>
+        </Grid>
+        <Grid x:Name="mVideoRecordingStatusGrid" Column="2" Height="32" MaxWidth="235" Visibility="Collapsed"
+              HorizontalAlignment="Right">
+          <local:VideoRecordingStatus x:Name="mVideoRecordStatusControl"/>
+        </Grid>
+        <Grid MouseEnter="OperationsSyncGrid_MouseEnter" MouseLeave="OperationsSyncGrid_MouseLeave"
+              x:Name="mOperationsSyncGrid" Column="4" Height="32" Visibility="Collapsed"
+              HorizontalAlignment="Right">
+          <Border BorderThickness="1" SnapsToDevicePixels="true" CornerRadius="4"
+                  Background="{Binding Path=ColorModel.[SettingsWindowBackground], FallbackValue=#262C4B}">
+            <Border.BorderBrush>
+              <SolidColorBrush Opacity="0.16"
+                               Color="{Binding Path=ColorModel.[MacroPlayRecorderControlBorder], Converter={StaticResource BrushToColorConvertor}, Source={Static Common:BlueStacksUIBinding.Instance}, FallbackValue=#FFCBD6EF}"/>
+            </Border.BorderBrush>
+            <Grid>
+              <UIElement.OpacityMask>
+                <VisualBrush Stretch="None" Visual="{Binding ElementName=mSyncMaskBorder}"/>
+              </UIElement.OpacityMask>
+              <Border x:Name="mSyncMaskBorder" Margin="5,2,5,2" CornerRadius="4"
+                      Background="{Binding Path=ColorModel.[SettingsWindowBackground], FallbackValue=#262C4B}">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+                  <Common:CustomPictureBox Grid.Column="0" Margin="2,0,2,0" Width="16" Height="16" ImageName="syncing_instance_title_bar"/>
+                  <Common:CustomPictureBox PreviewMouseLeftButtonUp="StopSyncButton_PreviewMouseLeftButtonUp" x:Name="mStopSyncButton"
+                                           Grid.Column="2" Margin="2,0,2,0" Width="16" Height="16" ImageName="stop_title_bar"
+                                           Visibility="Collapsed"/>
+                </Grid>
+              </Border>
+            </Grid>
+          </Border>
+        </Grid>
+      </Grid>
+      <StackPanel x:Name="mControlBtnPanel" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"
+                  Margin="5,0,0,0">
+        <Grid PreviewMouseLeftButtonUp="SettingsButton_MouseLeftButtonUp" x:Name="mSettingsButton"
+              Background="Transparent" Height="40" Width="40" HorizontalAlignment="Stretch">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mSettingsButtonImage" ImageName="cfgmenu" Width="40" Height="40"
+                                   ToolTip="{Binding Path=LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"/>
+          <TextBlock x:Name="mSettingsButtonText" Grid.Column="1" Visibility="Collapsed" FontSize="16"
+                     VerticalAlignment="Center" Margin="3,0,0,0"
+                     Text="{Binding Path=LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"
+                     Foreground="{Binding Path=ColorModel.[FullScreenTopBarForegroundColor]}"/>
+        </Grid>
+        <Grid PreviewMouseLeftButtonUp="MinimizeButton_MouseLeftButtonUp" x:Name="mMinimizeButton"
+              Background="Transparent" Height="40" Width="40">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mMinimizeButtonImage" ImageName="minimize" Width="40" Height="40"
+                                   ToolTip="{Binding Path=LocaleModel.[STRING_MINIMIZE_TOOLTIP], FallbackValue=Minimize}"/>
+          <TextBlock x:Name="mMinimizeButtonText" Grid.Column="1" Visibility="Collapsed" FontSize="16"
+                     VerticalAlignment="Center" Margin="3,0,0,0"
+                     Text="{Binding Path=LocaleModel.[STRING_MINIMIZE_TOOLTIP], FallbackValue=Minimize}"
+                     Foreground="{Binding Path=ColorModel.[FullScreenTopBarForegroundColor]}"/>
+        </Grid>
+        <Grid PreviewMouseLeftButtonUp="MaxmizeButton_MouseLeftButtonUp" x:Name="mMaximizeButton"
+              Background="Transparent" Height="40" Width="40">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mMaximizeButtonImage" ImageName="maximize" Width="40" Height="40"
+                                   ToolTip="{Binding Path=LocaleModel.[STRING_MAXIMIZE_TOOLTIP], FallbackValue=Maximize}"/>
+          <TextBlock x:Name="mMaximizeButtonText" Grid.Column="1" Visibility="Collapsed" FontSize="16"
+                     VerticalAlignment="Center" Margin="3,0,0,0"
+                     Text="{Binding Path=LocaleModel.[STRING_MAXIMIZE_TOOLTIP], FallbackValue=Maximize}"
+                     Foreground="{Binding Path=ColorModel.[FullScreenTopBarForegroundColor]}"/>
+        </Grid>
+        <Grid PreviewMouseLeftButtonUp="CloseButton_MouseLeftButtonUp" x:Name="mCloseButton"
+              Background="Transparent" Height="40" Width="40">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mCloseButtonImage" ImageName="closewindow" Width="40" Height="40"
+                                   ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"/>
+          <TextBlock x:Name="mCloseButtonText" Grid.Column="1" Visibility="Collapsed" FontSize="16"
+                     VerticalAlignment="Center" Margin="3,0,0,0"
+                     Text="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"
+                     Foreground="{Binding Path=ColorModel.[FullScreenTopBarForegroundColor]}"/>
+        </Grid>
+        <Grid PreviewMouseLeftButtonUp="MSidebarButton_MouseLeftButtonUp" x:Name="mSidebarButton"
+              Background="Transparent" Height="40" Width="60" HorizontalAlignment="Center">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mSidebarButtonImage" ImageName="sidebar_hide" Width="60" Height="40"
+                                   ToolTip="{Binding Path=LocaleModel.[STRING_OPEN_SIDEBAR]}"/>
+          <TextBlock x:Name="mSidebarButtonText" Grid.Column="1" Visibility="Collapsed" FontSize="16"
+                     VerticalAlignment="Center" Margin="3,0,0,0"
+                     Text="{Binding Path=LocaleModel.[STRING_OPEN_SIDEBAR], FallbackValue='Open Sidebar'}"
+                     Foreground="{Binding Path=ColorModel.[FullScreenTopBarForegroundColor]}"/>
+        </Grid>
+      </StackPanel>
+    </Grid>
+    <Common:CustomPopUp x:Name="mMacroRecorderToolTipPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false"
+                        Placement="Bottom" PopupAnimation="None" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                        PlacementTarget="{Binding ElementName=mMacroRecordControl}">
+      <Grid x:Name="dummyGrid">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="12"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border CornerRadius="3" Grid.Row="1" BorderThickness="1"
+                BorderBrush="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}">
+          <UIElement.Effect>
+            <DropShadowEffect Direction="270" Opacity="1" ShadowDepth="0" BlurRadius="15"
+                              Color="{Binding Path=ColorModel.[PopupBorderBrush], Converter={Common:BrushToColorConvertor}}"/>
+          </UIElement.Effect>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="mMacroRecordingTooltip" FontSize="9" Grid.Column="0" Margin="10,5,10,5" MaxWidth="90"
+                       TextWrapping="WrapWithOverflow"
+                       Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                       Text="{Binding Path=LocaleModel.[STRING_PAUSE_RECORDING_TOOLTIP], FallbackValue='Recording macro, click here to pause or stop.'}"/>
+          </Grid>
+        </Border>
+        <Grid Row="0">
+          <Path x:Name="mUpArrow" Margin="0,0,0,-13.2" Data="M 0,0 L 5,-5 10,0 " HorizontalAlignment="Center"
+                Height="12" VerticalAlignment="Bottom" Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+        </Grid>
+      </Grid>
+    </Common:CustomPopUp>
+    <Common:CustomPopUp x:Name="mMacroRunningToolTipPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false"
+                        Placement="Bottom" PopupAnimation="None" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                        PlacementTarget="{Binding ElementName=mMacroPlayControl}">
+      <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="12"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border CornerRadius="3" Grid.Row="1" BorderThickness="1"
+                BorderBrush="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}">
+          <UIElement.Effect>
+            <DropShadowEffect Direction="270" Opacity="1" ShadowDepth="0" BlurRadius="15"
+                              Color="{Binding Path=ColorModel.[PopupBorderBrush], Converter={Common:BrushToColorConvertor}}"/>
+          </UIElement.Effect>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="mMacroRunningTooltip" FontSize="9" Grid.Column="0" Margin="10,5,10,5" MaxWidth="90"
+                       TextWrapping="WrapWithOverflow"
+                       Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                       Text="{Binding Path=LocaleModel.[STRING_EXECUTING_MACRO], FallbackValue='Executing macro, click here to stop.'}"/>
+          </Grid>
+        </Border>
+        <Grid Row="0">
+          <Path Margin="0,0,0,-13.2" Data="M 0,0 L 5,-5 10,0 " HorizontalAlignment="Center" Height="12"
+                VerticalAlignment="Bottom" Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+        </Grid>
+      </Grid>
+    </Common:CustomPopUp>
+    <Common:CustomPopUp Opened="SettingsPopup_Opened" Closed="SettingsPopup_Closed" x:Name="mSettingsDropdownPopup"
+                        PopupAnimation="None" AllowsTransparency="true" StaysOpen="false" Placement="Bottom"
+                        Style="{StaticResource CenteredHorizontalOffsetStyle}" RenderOptions.EdgeMode="Aliased"
+                        HorizontalOffset="-130" VerticalOffset="4" PlacementTarget="{Binding ElementName=mSettingsButton}">
+      <Border x:Name="mSettingsDropdownBorder" BorderThickness="1" Margin="30" SnapsToDevicePixels="true"
+              RenderOptions.EdgeMode="Aliased" Background="{Binding Path=ColorModel.[PopupBorderBrush]}"
+              BorderBrush="{Binding Path=ColorModel.[PopupBorderBrush]}"
+              CornerRadius="{Binding Path=CornerRadiusModel.[PreferenceDropDownRadius]}">
+        <UIElement.Effect>
+          <DropShadowEffect Direction="270" ShadowDepth="0" BlurRadius="15" Opacity="0.7"
+                            Color="{Binding Path=ColorModel.[PopupShadowColor], Converter={Common:BrushToColorConvertor}}"/>
+        </UIElement.Effect>
+        <Grid x:Name="mGrid">
+          <UIElement.OpacityMask>
+            <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+          </UIElement.OpacityMask>
+          <Border x:Name="mMaskBorder" SnapsToDevicePixels="true" RenderOptions.EdgeMode="Aliased"
+                  Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"
+                  CornerRadius="{Binding Path=CornerRadiusModel.[PreferenceDropDownRadius]}"/>
+          <local:SettingsWindowDropdown x:Name="mSettingsDropDownControl"
+                                        PreviewMouseDoubleClick="SettingsDropDownControl_MouseDoubleClick"/>
+        </Grid>
+      </Border>
+    </Common:CustomPopUp>
+    <local:CustomPopUp x:Name="mSyncInstancesToolTipPopup" MouseLeave="SyncInstancesToolTip_MouseLeave"
+                       AllowsTransparency="true" Placement="Bottom" PopupAnimation="Slide"
+                       Style="{StaticResource CenteredHorizontalOffsetStyle}" VerticalOffset="-10"
+                       PlacementTarget="{Binding ElementName=mOperationsSyncGrid}">
+      <Grid x:Name="mDummyGrid" Background="#01000000">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="12"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border CornerRadius="3" Grid.Row="1" BorderThickness="1"
+                BorderBrush="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}">
+          <UIElement.Effect>
+            <DropShadowEffect Direction="270" Opacity="1" ShadowDepth="0" BlurRadius="10"
+                              Color="{Binding Path=ColorModel.[PopupBorderBrush], Converter={Common:BrushToColorConvertor}}"/>
+          </UIElement.Effect>
+          <Grid Margin="7,5,7,7">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="4"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="12" MaxWidth="150" HorizontalAlignment="Left"
+                       FontWeight="Bold" TextWrapping="WrapWithOverflow"
+                       Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                       Text="{Binding Path=LocaleModel.[STRING_SYNC_OPERATION_ON], FallbackValue='Sync operations is on'}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="12" MaxWidth="150" TextWrapping="WrapWithOverflow"
+                       Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                       Text="{Binding Path=LocaleModel.[STRING_SYNC_PERFORM_ACTIONS], FallbackValue='Actions you perform on this instance will be performed on other instances as well.'}"/>
+          </Grid>
+        </Border>
+        <Grid Row="0">
+          <Path x:Name="mUpwardArrow" Margin="0,0,0,-13.2" Data="M 0,0 L 5,-5 10,0 " HorizontalAlignment="Center"
+                Height="12" VerticalAlignment="Bottom" Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+        </Grid>
+      </Grid>
+    </local:CustomPopUp>
+  </Grid>
+</UserControl>

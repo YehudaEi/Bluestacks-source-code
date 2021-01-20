@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files\BlueStacks\DiscordRPC.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3431B181-D780-44BF-BDA8-89200B5B54E1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>DiscordRPC</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>DiscordRPC</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration.cs" />
+    <Compile Include="DiscordRpcClient.cs" />
+    <Compile Include="EventType.cs" />
+    <Compile Include="RichPresence.cs" />
+    <Compile Include="Secrets.cs" />
+    <Compile Include="Assets.cs" />
+    <Compile Include="Timestamps.cs" />
+    <Compile Include="Party.cs" />
+    <Compile Include="RichPresenceResponse.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Web\WebRPC.cs" />
+    <Compile Include="Web\WebRequest.cs" />
+    <Compile Include="RPC\RpcConnection.cs" />
+    <Compile Include="RPC\RpcState.cs" />
+    <Compile Include="RPC\Payload\ClosePayload.cs" />
+    <Compile Include="RPC\Payload\Command.cs" />
+    <Compile Include="RPC\Payload\ArgumentPayload.cs" />
+    <Compile Include="RPC\Payload\IPayload.cs" />
+    <Compile Include="RPC\Payload\EventPayload.cs" />
+    <Compile Include="RPC\Payload\ServerEvent.cs" />
+    <Compile Include="RPC\Commands\ICommand.cs" />
+    <Compile Include="RPC\Commands\CloseCommand.cs" />
+    <Compile Include="RPC\Commands\RespondCommand.cs" />
+    <Compile Include="RPC\Commands\PresenceCommand.cs" />
+    <Compile Include="RPC\Commands\SubscribeCommand.cs" />
+    <Compile Include="Registry\UriScheme.cs" />
+    <Compile Include="Message\ConnectionFailedMessage.cs" />
+    <Compile Include="Message\ConnectionEstablishedMessage.cs" />
+    <Compile Include="Message\PresenceMessage.cs" />
+    <Compile Include="Message\CloseMessage.cs" />
+    <Compile Include="Message\JoinMessage.cs" />
+    <Compile Include="Message\JoinRequestMessage.cs" />
+    <Compile Include="Message\SpectateMessage.cs" />
+    <Compile Include="Message\UnsubscribeMessage.cs" />
+    <Compile Include="Message\SubscribeMessage.cs" />
+    <Compile Include="Message\ReadyMessage.cs" />
+    <Compile Include="Message\IMessage.cs" />
+    <Compile Include="Message\MessageType.cs" />
+    <Compile Include="Message\ErrorMessage.cs" />
+    <Compile Include="Message\ErrorCode.cs" />
+    <Compile Include="Logging\FileLogger.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
+    <Compile Include="IO\Handshake.cs" />
+    <Compile Include="IO\InvalidPipeException.cs" />
+    <Compile Include="IO\NativeNamedPipeClient.cs" />
+    <Compile Include="IO\NativePipe.cs" />
+    <Compile Include="IO\INamedPipeClient.cs" />
+    <Compile Include="IO\ManagedNamedPipeClient.cs" />
+    <Compile Include="IO\Opcode.cs" />
+    <Compile Include="IO\PipeFrame.cs" />
+    <Compile Include="Helper\BackoffDelay.cs" />
+    <Compile Include="Helper\StringTools.cs" />
+    <Compile Include="Exceptions\BadPresenceException.cs" />
+    <Compile Include="Exceptions\InvalidConfigurationException.cs" />
+    <Compile Include="Exceptions\StringOutOfRangeException.cs" />
+    <Compile Include="Events\OnReadyEvent.cs" />
+    <Compile Include="Events\OnCloseEvent.cs" />
+    <Compile Include="Events\OnErrorEvent.cs" />
+    <Compile Include="Events\OnPresenceUpdateEvent.cs" />
+    <Compile Include="Events\OnSubscribeEvent.cs" />
+    <Compile Include="Events\OnUnsubscribeEvent.cs" />
+    <Compile Include="Events\OnJoinEvent.cs" />
+    <Compile Include="Events\OnSpectateEvent.cs" />
+    <Compile Include="Events\OnJoinRequestedEvent.cs" />
+    <Compile Include="Events\OnConnectionEstablishedEvent.cs" />
+    <Compile Include="Events\OnConnectionFailedEvent.cs" />
+    <Compile Include="Converters\EnumSnakeCaseConverter.cs" />
+    <Compile Include="Converters\EnumValueAttribute.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

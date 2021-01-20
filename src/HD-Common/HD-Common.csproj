@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files\BlueStacks\HD-Common.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C724711C-E14A-4569-937D-A983BC50D31C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>HD-Common</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationVersion>4.250.0.1070</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Range.cs" />
+    <Compile Include="PayloadInfo.cs" />
+    <Compile Include="LegacyDownloader.cs" />
+    <Compile Include="WorkerException.cs" />
+    <Compile Include="IMAPKeys.cs" />
+    <Compile Include="ShortcutKeys.cs" />
+    <Compile Include="SplitDownloader.cs" />
+    <Compile Include="FilePart.cs" />
+    <Compile Include="Manifest.cs" />
+    <Compile Include="CheckFailedException.cs" />
+    <Compile Include="SplitFile.cs" />
+    <Compile Include="System\Windows\Interop\WindowInteropHelperExtensions.cs" />
+    <Compile Include="BlueStacks\Common\BlueStacksUtils.cs" />
+    <Compile Include="BlueStacks\Common\ErrorStrings.cs" />
+    <Compile Include="BlueStacks\Common\Assets.cs" />
+    <Compile Include="BlueStacks\Common\GetProcessExecutionPath.cs" />
+    <Compile Include="BlueStacks\Common\PayloadInfo.cs" />
+    <Compile Include="BlueStacks\Common\Downloader.cs" />
+    <Compile Include="BlueStacks\Common\RepeatBehaviour.cs" />
+    <Compile Include="BlueStacks\Common\EngineState.cs" />
+    <Compile Include="BlueStacks\Common\ActionType.cs" />
+    <Compile Include="BlueStacks\Common\GenericAction.cs" />
+    <Compile Include="BlueStacks\Common\NotificationPayloadType.cs" />
+    <Compile Include="BlueStacks\Common\ApplicationState.cs" />
+    <Compile Include="BlueStacks\Common\EnumHelper.cs" />
+    <Compile Include="BlueStacks\Common\PerformanceState.cs" />
+    <Compile Include="BlueStacks\Common\GamePadEventType.cs" />
+    <Compile Include="BlueStacks\Common\GamePad.cs" />
+    <Compile Include="BlueStacks\Common\InstanceType.cs" />
+    <Compile Include="BlueStacks\Common\ButtonColors.cs" />
+    <Compile Include="BlueStacks\Common\ButtonStates.cs" />
+    <Compile Include="BlueStacks\Common\SubItem.cs" />
+    <Compile Include="BlueStacks\Common\WebTabs.cs" />
+    <Compile Include="BlueStacks\Common\PlayStoreAction.cs" />
+    <Compile Include="BlueStacks\Common\NotificationPriority.cs" />
+    <Compile Include="BlueStacks\Common\InstallationTypes.cs" />
+    <Compile Include="BlueStacks\Common\SpecialUpgradeCases.cs" />
+    <Compile Include="BlueStacks\Common\OperationsLoopType.cs" />
+    <Compile Include="BlueStacks\Common\RecordingTypes.cs" />
+    <Compile Include="BlueStacks\Common\OperationPlayAccelaration.cs" />
+    <Compile Include="BlueStacks\Common\RichPopupStyles.cs" />
+    <Compile Include="BlueStacks\Common\ClientHotKeys.cs" />
+    <Compile Include="BlueStacks\Common\PerformanceSetting.cs" />
+    <Compile Include="BlueStacks\Common\PerformanceProperty.cs" />
+    <Compile Include="BlueStacks\Common\ABISetting.cs" />
+    <Compile Include="BlueStacks\Common\SidebarGroup.cs" />
+    <Compile Include="BlueStacks\Common\SidePanelVisibility.cs" />
+    <Compile Include="BlueStacks\Common\TextValidityOptions.cs" />
+    <Compile Include="BlueStacks\Common\ASTCOption.cs" />
+    <Compile Include="BlueStacks\Common\GuidanceVideoType.cs" />
+    <Compile Include="BlueStacks\Common\EngineStatsEvent.cs" />
+    <Compile Include="BlueStacks\Common\ImportExitcodes.cs" />
+    <Compile Include="BlueStacks\Common\ButtonColorType.cs" />
+    <Compile Include="BlueStacks\Common\ButtonImageOrder.cs" />
+    <Compile Include="BlueStacks\Common\ButtonImageState.cs" />
+    <Compile Include="BlueStacks\Common\AppLaunchState.cs" />
+    <Compile Include="BlueStacks\Common\DPadControls.cs" />
+    <Compile Include="BlueStacks\Common\BrowserControlTags.cs" />
+    <Compile Include="BlueStacks\Common\OrientationType.cs" />
+    <Compile Include="BlueStacks\Common\NewInstanceType.cs" />
+    <Compile Include="BlueStacks\Common\AlignmentType.cs" />
+    <Compile Include="BlueStacks\Common\PopupArrowAlignment.cs" />
+    <Compile Include="BlueStacks\Common\ScreenMode.cs" />
+    <Compile Include="BlueStacks\Common\AppIconLocation.cs" />
+    <Compile Include="BlueStacks\Common\AppIconDownloadingPhases.cs" />
+    <Compile Include="BlueStacks\Common\AppIncompatType.cs" />
+    <Compile Include="BlueStacks\Common\OnboardingBlurbTags.cs" />
+    <Compile Include="BlueStacks\Common\NativeGamepadState.cs" />
+    <Compile Include="BlueStacks\Common\OpenExternalBrowserLinks.cs" />
+    <Compile Include="BlueStacks\Common\InstanceSortOption.cs" />
+    <Compile Include="BlueStacks\Common\GlMode.cs" />
+    <Compile Include="BlueStacks\Common\1GLMode.cs" />
+    <Compile Include="BlueStacks\Common\GuestOS.cs" />
+    <Compile Include="BlueStacks\Common\BuildPlatform.cs" />
+    <Compile Include="BlueStacks\Common\DownloadBuildType.cs" />
+    <Compile Include="BlueStacks\Common\ErrorCodes.cs" />
+    <Compile Include="BlueStacks\Common\NonResumableStreamException.cs" />
+    <Compile Include="BlueStacks\Common\UnexpectedHttpStatusCodeException.cs" />
+    <Compile Include="BlueStacks\Common\ReceiveFailureException.cs" />
+    <Compile Include="BlueStacks\Common\NoResponseStreamException.cs" />
+    <Compile Include="BlueStacks\Common\UnknownErrorException.cs" />
+    <Compile Include="BlueStacks\Common\TimeoutException.cs" />
+    <Compile Include="BlueStacks\Common\ConnectFailureException.cs" />
+    <Compile Include="BlueStacks\Common\FeatureBitHelper.cs" />
+    <Compile Include="BlueStacks\Common\GLRenderer.cs" />
+    <Compile Include="BlueStacks\Common\GlProperty.cs" />
+    <Compile Include="BlueStacks\Common\BlueStacksGL.cs" />
+    <Compile Include="BlueStacks\Common\ImageUtils.cs" />
+    <Compile Include="BlueStacks\Common\GuidUtils.cs" />
+    <Compile Include="BlueStacks\Common\InteropUtils.cs" />
+    <Compile Include="BlueStacks\Common\IOUtils.cs" />
+    <Compile Include="BlueStacks\Common\HTTP.cs" />
+    <Compile Include="BlueStacks\Common\FormFile.cs" />
+    <Compile Include="BlueStacks\Common\HTTPRoutes.cs" />
+    <Compile Include="BlueStacks\Common\GetOpt.cs" />
+    <Compile Include="BlueStacks\Common\ArgAttribute.cs" />
+    <Compile Include="BlueStacks\Common\Globalization.cs" />
+    <Compile Include="BlueStacks\Common\ProcessDetails.cs" />
+    <Compile Include="BlueStacks\Common\ProcessUtils.cs" />
+    <Compile Include="BlueStacks\Common\RegSAM.cs" />
+    <Compile Include="BlueStacks\Common\RegistryKeyKind.cs" />
+    <Compile Include="BlueStacks\Common\RegistryUtils.cs" />
+    <Compile Include="BlueStacks\Common\SerializableDictionary`2.cs" />
+    <Compile Include="BlueStacks\Common\InstallerArchitectures.cs" />
+    <Compile Include="BlueStacks\Common\SystemUtils.cs" />
+    <Compile Include="BlueStacks\Common\StringUtils.cs" />
+    <Compile Include="BlueStacks\Common\ServiceManager.cs" />
+    <Compile Include="BlueStacks\Common\Logger.cs" />
+    <Compile Include="BlueStacks\Common\Writer.cs" />
+    <Compile Include="BlueStacks\Common\BrushToColorConvertor.cs" />
+    <Compile Include="BlueStacks\Common\CornerRadiusToThicknessConvertor.cs" />
+    <Compile Include="BlueStacks\Common\CornerRadiusToDoubleConvertor.cs" />
+    <Compile Include="BlueStacks\Common\ColorUtils.cs" />
+    <Compile Include="BlueStacks\Common\CustomWindow.cs" />
+    <Compile Include="BlueStacks\Common\WpfUtils.cs" />
+    <Compile Include="BlueStacks\Common\RenderHelper.cs" />
+    <Compile Include="BlueStacks\Common\Strings.cs" />
+    <Compile Include="BlueStacks\Common\MD5InitializerConstant.cs" />
+    <Compile Include="BlueStacks\Common\Digest.cs" />
+    <Compile Include="BlueStacks\Common\_MD5.cs" />
+    <Compile Include="BlueStacks\Common\InstallerStatsEvent.cs" />
+    <Compile Include="BlueStacks\Common\Countdown.cs" />
+    <Compile Include="BlueStacks\Common\ReturnCodes.cs" />
+    <Compile Include="BlueStacks\Common\GuestApkInstallFailCodes.cs" />
+    <Compile Include="BlueStacks\Common\InstallerCodes.cs" />
+    <Compile Include="BlueStacks\Common\ReturnCodesUInt.cs" />
+    <Compile Include="BlueStacks\Common\MultiInstanceErrorCodesEnum.cs" />
+    <Compile Include="BlueStacks\Common\MultiInstanceManagerCodes.cs" />
+    <Compile Include="BlueStacks\Common\InstallerWrapperCodes.cs" />
+    <Compile Include="BlueStacks\Common\PlayerErrorCodes.cs" />
+    <Compile Include="BlueStacks\Common\DataManagerCodes.cs" />
+    <Compile Include="BlueStacks\Common\DiskCompactionToolCodes.cs" />
+    <Compile Include="BlueStacks\Common\ComRegistrarCodes.cs" />
+    <Compile Include="BlueStacks\Common\COMPOSITIONFORM.cs" />
+    <Compile Include="BlueStacks\Common\RECT.cs" />
+    <Compile Include="BlueStacks\Common\COPYDATASTRUCT.cs" />
+    <Compile Include="BlueStacks\Common\COPYGAMEPADDATASTRUCT.cs" />
+    <Compile Include="BlueStacks\Common\GetAncestorFlags.cs" />
+    <Compile Include="BlueStacks\Common\IconInfo.cs" />
+    <Compile Include="BlueStacks\Common\InteropWindow.cs" />
+    <Compile Include="BlueStacks\Common\Tuple`1.cs" />
+    <Compile Include="BlueStacks\Common\Tuple`2.cs" />
+    <Compile Include="BlueStacks\Common\Tuple`3.cs" />
+    <Compile Include="BlueStacks\Common\Tuple`4.cs" />
+    <Compile Include="BlueStacks\Common\Tuple.cs" />
+    <Compile Include="BlueStacks\Common\ShortcutHelper.cs" />
+    <Compile Include="BlueStacks\Common\XamlSizeConverter.cs" />
+    <Compile Include="BlueStacks\Common\Version.cs" />
+    <Compile Include="BlueStacks\Common\AdbCommandRunner.cs" />
+    <Compile Include="BlueStacks\Common\AppConfigurationManager.cs" />
+    <Compile Include="BlueStacks\Common\AppSettings.cs" />
+    <Compile Include="BlueStacks\Common\AppPlayerModel.cs" />
+    <Compile Include="BlueStacks\Common\BooleansToInverseVisibilityConverter2.cs" />
+    <Compile Include="BlueStacks\Common\BooleanToLocalizedStringConverter.cs" />
+    <Compile Include="BlueStacks\Common\BooleanToImageNameConverter.cs" />
+    <Compile Include="BlueStacks\Common\BooleanToVisibilityConverter2.cs" />
+    <Compile Include="BlueStacks\Common\BooleanToVisibilityConverter3.cs" />
+    <Compile Include="BlueStacks\Common\CallerMemberNameAttribute.cs" />
+    <Compile Include="BlueStacks\Common\ConfigConverter.cs" />
+    <Compile Include="BlueStacks\Common\DpiRadioButtonContentConverter.cs" />
+    <Compile Include="BlueStacks\Common\EnumToBoolConverter2.cs" />
+    <Compile Include="BlueStacks\Common\EnumToVisibilityConverter2.cs" />
+    <Compile Include="BlueStacks\Common\InverseVisibilityConverter2.cs" />
+    <Compile Include="BlueStacks\Common\JsonFormattingConverter.cs" />
+    <Compile Include="BlueStacks\Common\BindingProxy.cs" />
+    <Compile Include="BlueStacks\Common\Wrapper.cs" />
+    <Compile Include="BlueStacks\Common\MinMaxRangeValidationRule2.cs" />
+    <Compile Include="BlueStacks\Common\NumericBehavior.cs" />
+    <Compile Include="BlueStacks\Common\RelayCommand2.cs" />
+    <Compile Include="BlueStacks\Common\ResolutionRadioButtonContentConverter.cs" />
+    <Compile Include="BlueStacks\Common\DynamicOverlayConfig.cs" />
+    <Compile Include="BlueStacks\Common\DynamicOverlayConfigControls.cs" />
+    <Compile Include="BlueStacks\Common\InstalledOem.cs" />
+    <Compile Include="BlueStacks\Common\InstallerErrorHandling.cs" />
+    <Compile Include="BlueStacks\Common\AppPackageListObject.cs" />
+    <Compile Include="BlueStacks\Common\AppPackageObject.cs" />
+    <Compile Include="BlueStacks\Common\GenericNotificationDesignItem.cs" />
+    <Compile Include="BlueStacks\Common\GenericNotificationItem.cs" />
+    <Compile Include="BlueStacks\Common\BrowserEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\BootCompleteEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\GoogleSignInCompleteEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\AppPlayerClosingEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\TabClosingEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\TabSwitchedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\AppInstalledEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\AppUninstalledEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\GrmAppListUpdateEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ApkDownloadStartedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ApkDownloadFailedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ApkDownloadCompletedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ApkDownloadCurrentProgressEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ApkInstallStartedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ApkInstallFailedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ApkInstallCompletedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\GetVmInfoEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\UserInfoUpdatedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ThemeChangeEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\OemDownloadStartedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\OemDownloadFailedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\OemDownloadCompletedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\OemDownloadCurrentProgressEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\OemInstallStartedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\OemInstallFailedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\OemInstallCompletedEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ShowFlePopupEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\CurrentlyRunningAppsEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\HandleFleEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\GetVolumeLevelEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ToggleMicrophoneMuteStateEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\EventAggregator.cs" />
+    <Compile Include="BlueStacks\Common\Publisher.cs" />
+    <Compile Include="BlueStacks\Common\ISubscriber.cs" />
+    <Compile Include="BlueStacks\Common\Subscription`1.cs" />
+    <Compile Include="BlueStacks\Common\DisplaySettingsBaseModel.cs" />
+    <Compile Include="BlueStacks\Common\ResolutionModel.cs" />
+    <Compile Include="BlueStacks\Common\DisplaySettingsBase.cs" />
+    <Compile Include="BlueStacks\Common\ArithmeticValueConverter.cs" />
+    <Compile Include="BlueStacks\Common\EnumToVisibilityConverter.cs" />
+    <Compile Include="BlueStacks\Common\GraphicsMode.cs" />
+    <Compile Include="BlueStacks\Common\ASTCTexture.cs" />
+    <Compile Include="BlueStacks\Common\Status.cs" />
+    <Compile Include="BlueStacks\Common\EngineSettingBaseViewModel.cs" />
+    <Compile Include="BlueStacks\Common\EngineData.cs" />
+    <Compile Include="BlueStacks\Common\EngineSettingModel.cs" />
+    <Compile Include="BlueStacks\Common\EngineSettingBase.cs" />
+    <Compile Include="BlueStacks\Common\IndexToBackgroundConverter.cs" />
+    <Compile Include="BlueStacks\Common\InverseEnumToVisibilityConverter.cs" />
+    <Compile Include="BlueStacks\Common\ListToStringConverter.cs" />
+    <Compile Include="BlueStacks\Common\LocalizedStringMultiConverter.cs" />
+    <Compile Include="BlueStacks\Common\TextInputValidityToVisibilityConverter.cs" />
+    <Compile Include="BlueStacks\Common\CustomTextBlock.cs" />
+    <Compile Include="BlueStacks\Common\CustomRadioButton.cs" />
+    <Compile Include="BlueStacks\Common\CustomToggleButtonWithState.cs" />
+    <Compile Include="BlueStacks\Common\XTextBox.cs" />
+    <Compile Include="BlueStacks\Common\FilePathToFileNameConverter.cs" />
+    <Compile Include="BlueStacks\Common\ButtonColorMultiConverter.cs" />
+    <Compile Include="BlueStacks\Common\ButtonCornerRadiusMultiConverter.cs" />
+    <Compile Include="BlueStacks\Common\ButtonImageNameToVisibilityConverter.cs" />
+    <Compile Include="BlueStacks\Common\ButtonImageStateConverter.cs" />
+    <Compile Include="BlueStacks\Common\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="BlueStacks\Common\BiDirectionalGraph`1.cs" />
+    <Compile Include="BlueStacks\Common\BiDirectionalVertex`1.cs" />
+    <Compile Include="BlueStacks\Common\DataModificationTracker.cs" />
+    <Compile Include="BlueStacks\Common\ExtendedWebClient.cs" />
+    <Compile Include="BlueStacks\Common\DictionaryExtensions.cs" />
+    <Compile Include="BlueStacks\Common\ListExtensions.cs" />
+    <Compile Include="BlueStacks\Common\StringExtensions.cs" />
+    <Compile Include="BlueStacks\Common\ForceDedicatedGPU.cs" />
+    <Compile Include="BlueStacks\Common\HTTPServer.cs" />
+    <Compile Include="BlueStacks\Common\ENoPortAvailableException.cs" />
+    <Compile Include="BlueStacks\Common\ComRegistration.cs" />
+    <Compile Include="BlueStacks\Common\JSonTemplates.cs" />
+    <Compile Include="BlueStacks\Common\JSONUtils.cs" />
+    <Compile Include="BlueStacks\Common\MemoryManager.cs" />
+    <Compile Include="BlueStacks\Common\GameConfig.cs" />
+    <Compile Include="BlueStacks\Common\MemoryMappedFile.cs" />
+    <Compile Include="BlueStacks\Common\MultiInstanceStrings.cs" />
+    <Compile Include="BlueStacks\Common\CpuHvmState.cs" />
+    <Compile Include="BlueStacks\Common\BiosHvmState.cs" />
+    <Compile Include="BlueStacks\Common\MultiInstanceUtils.cs" />
+    <Compile Include="BlueStacks\Common\NotificationPopup.cs" />
+    <Compile Include="BlueStacks\Common\NotificationWindow.cs" />
+    <Compile Include="BlueStacks\Common\MuteState.cs" />
+    <Compile Include="BlueStacks\Common\NotificationItem.cs" />
+    <Compile Include="BlueStacks\Common\NotificationManager.cs" />
+    <Compile Include="BlueStacks\Common\MacroRecording.cs" />
+    <Compile Include="BlueStacks\Common\MergedMacroConfiguration.cs" />
+    <Compile Include="BlueStacks\Common\MacroEvents.cs" />
+    <Compile Include="BlueStacks\Common\ServiceInstaller.cs" />
+    <Compile Include="BlueStacks\Common\ShortcutConfig.cs" />
+    <Compile Include="BlueStacks\Common\SSDCheck.cs" />
+    <Compile Include="BlueStacks\Common\LocaleStrings.cs" />
+    <Compile Include="BlueStacks\Common\LocaleStringsConstants.cs" />
+    <Compile Include="BlueStacks\Common\PackageActivityNames.cs" />
+    <Compile Include="BlueStacks\Common\RegistryStrings.cs" />
+    <Compile Include="BlueStacks\Common\Tasks.cs" />
+    <Compile Include="BlueStacks\Common\TaskScheduler.cs" />
+    <Compile Include="BlueStacks\Common\InverseBooleanConverter.cs" />
+    <Compile Include="BlueStacks\Common\MacroExceutionSpeedToIndexConverter.cs" />
+    <Compile Include="BlueStacks\Common\MergeMacroFirstItemToMarginConverter.cs" />
+    <Compile Include="BlueStacks\Common\BlueProgressBar.cs" />
+    <Compile Include="BlueStacks\Common\BlueStacksUIBinding.cs" />
+    <Compile Include="BlueStacks\Common\BluestacksUIColor.cs" />
+    <Compile Include="BlueStacks\Common\BlueStacksUIColorManager.cs" />
+    <Compile Include="BlueStacks\Common\CenterToolTipConverter.cs" />
+    <Compile Include="BlueStacks\Common\Constants.cs" />
+    <Compile Include="BlueStacks\Common\PUBGSettings.cs" />
+    <Compile Include="BlueStacks\Common\CODSettings.cs" />
+    <Compile Include="BlueStacks\Common\AGC_Formats.cs" />
+    <Compile Include="BlueStacks\Common\MacroRecordingConstants.cs" />
+    <Compile Include="BlueStacks\Common\DisplaySettingConstants.cs" />
+    <Compile Include="BlueStacks\Common\CloudNotificationItem.cs" />
+    <Compile Include="BlueStacks\Common\CommonInstallUtils.cs" />
+    <Compile Include="BlueStacks\Common\CtrlType.cs" />
+    <Compile Include="BlueStacks\Common\ConsoleControl.cs" />
+    <Compile Include="BlueStacks\Common\CustomButton.cs" />
+    <Compile Include="BlueStacks\Common\CustomCheckbox.cs" />
+    <Compile Include="BlueStacks\Common\CustomComboBox.cs" />
+    <Compile Include="BlueStacks\Common\FrontendOrientationEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\ChangeOrientationEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\StringEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\CustomVolumeEventArgs.cs" />
+    <Compile Include="BlueStacks\Common\CustomMessageWindow.cs" />
+    <Compile Include="BlueStacks\Common\CustomPopUp.cs" />
+    <Compile Include="BlueStacks\Common\CustomSettingsButton.cs" />
+    <Compile Include="BlueStacks\Common\CustomTextBox.cs" />
+    <Compile Include="BlueStacks\Common\CustomToastPopupControl.cs" />
+    <Compile Include="BlueStacks\Common\FeatureManager.cs" />
+    <Compile Include="BlueStacks\Common\Features.cs" />
+    <Compile Include="BlueStacks\Common\InstanceRegistry.cs" />
+    <Compile Include="BlueStacks\Common\BstHttpClient.cs" />
+    <Compile Include="BlueStacks\Common\HTTPUtils.cs" />
+    <Compile Include="BlueStacks\Common\RequestData.cs" />
+    <Compile Include="BlueStacks\Common\IconHelper.cs" />
+    <Compile Include="BlueStacks\Common\JsonExtensions.cs" />
+    <Compile Include="BlueStacks\Common\JsonParser.cs" />
+    <Compile Include="BlueStacks\Common\AppInfo.cs" />
+    <Compile Include="BlueStacks\Common\MarginSetter.cs" />
+    <Compile Include="BlueStacks\Common\MonitorLocator.cs" />
+    <Compile Include="BlueStacks\Common\Oem.cs" />
+    <Compile Include="BlueStacks\Common\RegistryManager.cs" />
+    <Compile Include="BlueStacks\Common\RegistrySymlinkUtils.cs" />
+    <Compile Include="BlueStacks\Common\RunCommand.cs" />
+    <Compile Include="BlueStacks\Common\CmdRes.cs" />
+    <Compile Include="BlueStacks\Common\SerializableKeyValuePair`2.cs" />
+    <Compile Include="BlueStacks\Common\SerialWorkQueue.cs" />
+    <Compile Include="BlueStacks\Common\ServiceHelper.cs" />
+    <Compile Include="BlueStacks\Common\WIN32_FIND_DATAW.cs" />
+    <Compile Include="BlueStacks\Common\ShellLink.cs" />
+    <Compile Include="BlueStacks\Common\IShellLink.cs" />
+    <Compile Include="BlueStacks\Common\Stats.cs" />
+    <Compile Include="BlueStacks\Common\CustomPictureBox.cs" />
+    <Compile Include="BlueStacks\Common\SettingsWindowBase.cs" />
+    <Compile Include="BlueStacks\Common\CheckBoxType.cs" />
+    <Compile Include="BlueStacks\Common\TextWrapCustomCheckBox.cs" />
+    <Compile Include="BlueStacks\Common\UIHelper.cs" />
+    <Compile Include="BlueStacks\Common\UsefulExtensionMethod.cs" />
+    <Compile Include="BlueStacks\Common\MacroGraph.cs" />
+    <Compile Include="BlueStacks\Common\SP_DEVINFO_DATA.cs" />
+    <Compile Include="BlueStacks\Common\DATA_BUFFER.cs" />
+    <Compile Include="BlueStacks\Common\ClassDevsFlags.cs" />
+    <Compile Include="BlueStacks\Common\SP_DEVICE_INTERFACE_DATA.cs" />
+    <Compile Include="BlueStacks\Common\PSP_DEVICE_INTERFACE_DETAIL_DATA.cs" />
+    <Compile Include="BlueStacks\Common\OldWindow.cs" />
+    <Compile Include="BlueStacks\Common\RegPropertyType.cs" />
+    <Compile Include="BlueStacks\Common\Utils.cs" />
+    <Compile Include="BlueStacks\Common\ViewModelBase.cs" />
+    <Compile Include="BlueStacks\Common\VmCmdHandler.cs" />
+    <Compile Include="BlueStacks\Common\WebHelper.cs" />
+    <Compile Include="BlueStacks\Common\POINT.cs" />
+    <Compile Include="BlueStacks\Common\WINDOWPLACEMENT.cs" />
+    <Compile Include="BlueStacks\Common\1WindowPlacement.cs" />
+    <Compile Include="BlueStacks\Common\MONITORINFO.cs" />
+    <Compile Include="BlueStacks\Common\RichNotificationPopup.cs" />
+    <Compile Include="BlueStacks\Common\AnimationCache.cs" />
+    <Compile Include="BlueStacks\Common\ImageAnimationController.cs" />
+    <Compile Include="BlueStacks\Common\ImageBehavior.cs" />
+    <Compile Include="BlueStacks\Common\Profile.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifApplicationExtension.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifBlock.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifBlockKind.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifColor.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifCommentExtension.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifDecoderException.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifExtension.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifFile.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifFrame.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifGraphicControlExtension.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifHeader.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifHelpers.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifImageData.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifImageDescriptor.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifLogicalScreenDescriptor.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifPlainTextExtension.cs" />
+    <Compile Include="BlueStacks\Common\Decoding\GifTrailer.cs" />
+    <Compile Include="BlueStacks\Common\Interop\UUID.cs" />
+    <Compile Include="BlueStacks\Common\Interop\EUUIDException.cs" />
+    <Compile Include="BlueStacks\Common\Interop\EUUIDLocalOnlyException.cs" />
+    <Compile Include="BlueStacks\Common\Interop\EUUIDNoAddressException.cs" />
+    <Compile Include="BlueStacks\Common\Interop\UUIDTYPE.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\HardDisk.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\HardDisks.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\MediaRegistry.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\ExtraDataItem.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\ExtraData.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\PAE.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\LongMode.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\HardwareVirtExLargePages.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\CPU.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Memory.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\HID.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\HPET.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Order.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Boot.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Display.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\RemoteDisplay.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\IOAPIC.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Logo.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\BootMenu.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\BIOS.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Controller.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Controllers.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\USB.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\InternalNetwork.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\NATNetwork.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\DisabledModes.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Adapter.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Network.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Port.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\LPT.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\AudioAdapter.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\RTC.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\SharedFolder.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\SharedFolders.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Hardware.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Image.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\AttachedDevice.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\StorageController.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\StorageControllers.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\Machine.cs" />
+    <Compile Include="BlueStacks\VBoxUtils\VirtualBox.cs" />
+    <Compile Include="XamlGeneratedNamespace\GeneratedInternalTypeHelper.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="notificationpopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="notificationwindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="resources\buttonresource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="settings\displaysettingbase\displaysettingsbase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="settings\enginesettingbase\enginesettingbase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="settings\settingswindowbase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\blueprogressbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customborderstyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\custombutton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customcheckbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customcombobox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customhyperlinkstyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\custommessagewindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customradiobutton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customscrollbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customsettingsbutton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customslider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customtextblock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customtextbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customtoastpopupcontrol.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customtogglebuttonwithstate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customtoggleswitch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\customtooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="uielements\textwrapcustomcheckbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="wpf\richnotificationpopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,97 @@
+<CheckBox x:Class="BlueStacks.Common.CustomCheckbox"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          xmlns:local="clr-namespace:BlueStacks.Common"
+          MouseEnter="CheckBox_MouseEnter" MouseLeave="CheckBox_MouseLeave" Checked="CheckBox_Checked"
+          Unchecked="CheckBox_Unchecked" Indeterminate="CheckBox_Indeterminate" Loaded="CheckBox_Loaded"
+          Content="" Style="{DynamicResource CheckBoxStyle1}">
+  <FrameworkElement.Resources>
+    <Style x:Key="EmptyCheckBoxFocusVisual">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Margin="1" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="CheckRadioFocusVisual">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1"
+                       StrokeDashArray="1 2"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="CheckBoxStyle1" TargetType="{x:Type CheckBox}">
+      <Setter Property="Control.Foreground"
+              Value="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor], Source={x:Static local:BlueStacksUIBinding.Instance}}"/>
+      <Setter Property="Control.BorderThickness" Value="1"/>
+      <Setter Property="FrameworkElement.FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+      <Setter Property="FrameworkElement.ToolTip"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=Content}"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type local:CustomCheckbox}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition x:Name="colDefMargin" Width="10"/>
+                <ColumnDefinition x:Name="colDefHorizontalLabel" Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="18*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="11*"/>
+              </Grid.RowDefinitions>
+              <local:CustomPictureBox x:Name="mImage" x:FieldModifier="private" Grid.Column="0" Grid.RowSpan="3" ImageName="check_box"
+                                      HorizontalAlignment="Center" VerticalAlignment="Top"
+                                      Margin="{TemplateBinding local:CustomCheckbox.ImageMargin}"/>
+              <ContentPresenter Grid.Column="2" Grid.RowSpan="3" VerticalAlignment="Top"
+                                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" HorizontalAlignment="Left"
+                                TextBlock.FontSize="{TemplateBinding local:CustomCheckbox.TextFontSize}" RecognizesAccessKey="true">
+                <ContentPresenter.ContentTemplate>
+                  <DataTemplate>
+                    <TextBlock x:Name="HorizontalTextBlock" VerticalAlignment="Top" Text="{Binding}"
+                               TextTrimming="{Binding Path=TextTrimming, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CustomCheckbox}}}"
+                               TextWrapping="{Binding Path=TextWrapping, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CustomCheckbox}}}"/>
+                  </DataTemplate>
+                </ContentPresenter.ContentTemplate>
+              </ContentPresenter>
+              <ContentPresenter Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3"
+                                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" Visibility="Hidden"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                TextBlock.FontSize="{TemplateBinding local:CustomCheckbox.TextFontSize}" RecognizesAccessKey="true">
+                <ContentPresenter.ContentTemplate>
+                  <DataTemplate>
+                    <TextBlock x:Name="VerticalTextBlock" TextTrimming="CharacterEllipsis" Text="{Binding}" ToolTip="{Binding}"/>
+                  </DataTemplate>
+                </ContentPresenter.ContentTemplate>
+              </ContentPresenter>
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="ContentControl.HasContent" Value="true">
+                <Setter Value="{StaticResource CheckRadioFocusVisual}" Property="FrameworkElement.FocusVisualStyle"/>
+                <Setter Property="Control.Padding" Value="4,0,0,0"/>
+              </Trigger>
+              <Trigger Property="UIElement.IsEnabled" Value="false">
+                <Setter Value="{Binding Path=ColorModel.[SettingsWindowForegroundDimDimColor], Source={x:Static local:BlueStacksUIBinding.Instance}}"
+                        Property="Control.Foreground"/>
+              </Trigger>
+              <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter TargetName="mImage" Property="local:CustomPictureBox.ImageName" Value="check_box_checked"/>
+              </Trigger>
+              <Trigger Property="ToggleButton.IsChecked" Value="False">
+                <Setter TargetName="mImage" Property="local:CustomPictureBox.ImageName" Value="check_box"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+</CheckBox>

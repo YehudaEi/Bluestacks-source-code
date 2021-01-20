@@ -1,0 +1,32 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.AppTabButtons"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <StackPanel Orientation="Horizontal">
+      <StackPanel x:Name="mPanel" Orientation="Horizontal"/>
+      <local:AppTabButton x:Name="mMoreTabButton" Click="MoreTabButton_Click" IsMoreTabsButton="true" Visibility="Hidden"/>
+    </StackPanel>
+    <local:CustomPopUp x:Name="mPopup" Opened="NotificationPopup_Opened" Closed="NotificationPopup_Closed"
+                       PreviewMouseLeftButtonUp="NotificaitonPopup_PreviewMouseLeftButtonUp" Visibility="Hidden"
+                       PopupAnimation="Fade" AllowsTransparency="true" StaysOpen="false" Placement="MousePoint">
+      <Border Style="{StaticResource ShadowBorder}">
+        <Grid>
+          <Border Style="{StaticResource OuterBorder}">
+            <Grid>
+              <UIElement.OpacityMask>
+                <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+              </UIElement.OpacityMask>
+              <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+              <StackPanel x:Name="mHiddenButtons"/>
+            </Grid>
+          </Border>
+        </Grid>
+      </Border>
+    </local:CustomPopUp>
+  </Grid>
+</UserControl>

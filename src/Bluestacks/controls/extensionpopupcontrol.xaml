@@ -1,0 +1,64 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ExtensionPopupControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             BorderThickness="1" BorderBrush="{Binding Path=ColorModel.[ApplicationBorderBrush]}"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1.2*"/>
+      <RowDefinition Height="7.8*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="10.4*"/>
+      <ColumnDefinition Width="5.6*"/>
+    </Grid.ColumnDefinitions>
+    <Grid Row="0" Column="0" ColumnSpan="2"
+          Background="{Binding Path=ColorModel.[ApplicationBackgroundBrush]}"/>
+    <Grid Row="1" Column="0" ColumnSpan="2" Background="{Binding Path=ColorModel.[SettingsWindowBackground]}"/>
+    <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+      <Label Name="mTitle" Content="Extension Name" FontSize="16" Padding="15,10,10,0" FontWeight="Bold"
+             Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+      <Label Name="mSubTitle" Content="Not Installed" FontSize="14" Padding="15,0,0,10"
+             Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+    </StackPanel>
+    <Common:CustomButton Click="mDownloadButton_Click" x:Name="mDownloadButton" Margin="10,13,50,13" MinWidth="120"
+                         ButtonColor="Blue" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Height="45"
+                         Content="{Binding Path=LocaleModel.[STRING_DOWNLOAD_NOW], FallbackValue='Download Now'}"/>
+    <Common:CustomPictureBox MouseLeftButtonUp="CloseBtn_MouseLeftButtonUp" x:Name="mCloseBtn" Grid.Row="0" Grid.Column="1"
+                             Height="15" Width="15" Margin="0,0,12,0" HorizontalAlignment="Right" ImageName="exit_close"/>
+    <ScrollViewer Grid.Column="1" Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+      <StackPanel Grid.Row="1" Grid.Column="1" Margin="12,10,12,10">
+        <TextBlock Initialized="TagLine_Initialized"
+                   Text="Play &amp; Stream very long text in this line will get trimmed" FontSize="16"
+                   TextWrapping="Wrap" MaxHeight="50" TextTrimming="WordEllipsis" FontWeight="SemiBold"
+                   Margin="0,0,0,10" Padding="0"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        <TextBlock Initialized="Description_Initialized" FontSize="14" Margin="0" TextWrapping="WrapWithOverflow"
+                   TextTrimming="WordEllipsis"
+                   Text="Bluestacks TV lets you watch existing streams and stream yours to twitch &amp; facebook live. Set your own stage and enjoy."
+                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+        <StackPanel Initialized="FeaturesStack_Initialized" Margin="0,10,0,10">
+          <TextBlock Initialized="FeaturesText_Initialized" HorizontalAlignment="Left" FontSize="14"
+                     FontWeight="SemiBold" MaxWidth="300" Margin="0,5,0,5" Text="FEATURES"
+                     Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        </StackPanel>
+        <StackPanel Initialized="DetailsStack_Initialized" Margin="0,10,0,10">
+          <TextBlock Initialized="DetailsText_Initialized" HorizontalAlignment="Left" FontSize="14"
+                     FontWeight="SemiBold" MaxWidth="300" Margin="0,0,0,5" Text="EXTENSION DETAILS"
+                     Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
+    <Grid Row="1" Column="0" ClipToBounds="true">
+      <local:SlideShowControl x:Name="slideShow" Grid.Row="1" Grid.Column="0" IsAutoPlay="true" IsArrowVisible="true"
+                              SlideDelay="5" TransitionType="Slide" TextVerticalAlignment="Top" TextHorizontalAlignment="Center"
+                              Background="{Binding Path=ColorModel.[SettingsWindowBackground]}"/>
+    </Grid>
+  </Grid>
+</UserControl>

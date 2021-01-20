@@ -1,0 +1,132 @@
+<bluestacksCore:UiWindowBase x:Class="MultiInstanceManagerMVVM.View.Classes.CreateInstance.NewInstanceSelectorView"
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                             xmlns:bluestacksCore="clr-namespace:BlueStacks.Core;assembly=BlueStacks.Core"
+                             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+                             xmlns:helper="clr-namespace:MultiInstanceManagerMVVM.Helper"
+                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                             xmlns:command="http://www.galasoft.ch/mvvmlight"
+                             xmlns:view="clr-namespace:MultiInstanceManagerMVVM.View.Classes.CreateInstance"
+                             WindowStyle="None" ShowInTaskbar="false" WindowState="Normal" AllowsTransparency="true"
+                             Background="Transparent" SizeToContent="Height" Height="Auto" Width="480"
+                             FocusVisualStyle="{x:Null}"
+                             DataContext="{Binding NewInstanceSelectorViewModel, Source={StaticResource ViewModelLocator}}">
+  <Border Style="{StaticResource OuterBorder}">
+    <Grid Margin="16,0,16,0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Margin="0,6,0,9" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold"
+                   Text="{Binding Path=LocaleModel.[STRING_NEW_INSTANCE], FallbackValue='New Instance'}"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        <Common:CustomPictureBox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" ImageName="exit_close"
+                                 Height="16" Width="16" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}">
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonUp">
+              <command:EventToCommand Command="{Binding CloseWindowCommand}"/>
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+        </Common:CustomPictureBox>
+      </Grid>
+      <Border BorderThickness="0,1,0,0" Grid.Row="1"
+              BorderBrush="{Binding Path=ColorModel.[HorizontalSeparator]}">
+        <StackPanel>
+          <Border BorderThickness="1" Margin="0,16,0,8" Padding="16"
+                  BorderBrush="{Binding Path=ColorModel.[HorizontalSeparator]}">
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="MouseLeftButtonUp">
+                <command:EventToCommand CommandParameter="{x:Static Common:NewInstanceType.Fresh}"
+                                        Command="{Binding CreateInstanceCommand}"/>
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <FrameworkElement.Style>
+              <Style TargetType="{x:Type Border}">
+                <Setter Property="Border.Background" Value="Transparent"/>
+                <Style.Triggers>
+                  <Trigger Property="UIElement.IsMouseOver" Value="true">
+                    <Setter Property="Border.Background"
+                            Value="{Binding Path=ColorModel.[ContextMenuItemBackgroundHoverColor]}"/>
+                    <Setter Property="FrameworkElement.Cursor" Value="Hand"/>
+                  </Trigger>
+                </Style.Triggers>
+              </Style>
+            </FrameworkElement.Style>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomPictureBox Grid.Column="0" VerticalAlignment="Center" ImageName="fresh_instance" Height="32" Width="36"/>
+              <Grid Column="1" Margin="16,0,16,0" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*"/>
+                  <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"
+                           Text="{Binding Path=LocaleModel.[STRING_NEW_FRESH_INSTANCE], FallbackValue='Fresh Instance'}"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                <TextBlock Grid.Row="1" FontSize="12" MaxWidth="336" TextWrapping="WrapWithOverflow"
+                           VerticalAlignment="Center" HorizontalAlignment="Left"
+                           Text="{Binding Path=LocaleModel.[STRING_NEW_FRESH_INSTANCE_MESSAGE], FallbackValue='You will need to install everything.'}"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimDimColor]}"/>
+              </Grid>
+              <Common:CustomPictureBox Grid.Column="2" VerticalAlignment="Center" ImageName="vector_arrow" Height="16" Width="18"/>
+            </Grid>
+          </Border>
+          <Border BorderThickness="1" Margin="0,8,0,16" Padding="16"
+                  BorderBrush="{Binding Path=ColorModel.[HorizontalSeparator]}">
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="MouseLeftButtonUp">
+                <command:EventToCommand CommandParameter="{x:Static Common:NewInstanceType.Clone}"
+                                        Command="{Binding CreateInstanceCommand}"/>
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <FrameworkElement.Style>
+              <Style TargetType="{x:Type Border}">
+                <Setter Property="Border.Background" Value="Transparent"/>
+                <Style.Triggers>
+                  <Trigger Property="UIElement.IsMouseOver" Value="true">
+                    <Setter Property="Border.Background"
+                            Value="{Binding Path=ColorModel.[ContextMenuItemBackgroundHoverColor]}"/>
+                    <Setter Property="FrameworkElement.Cursor" Value="Hand"/>
+                  </Trigger>
+                </Style.Triggers>
+              </Style>
+            </FrameworkElement.Style>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Common:CustomPictureBox Grid.Column="0" VerticalAlignment="Center" ImageName="cloned_instance" Height="32" Width="36"/>
+              <Grid Column="1" Margin="16,0,16,0" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*"/>
+                  <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"
+                           Text="{Binding Path=LocaleModel.[STRING_CLONE_SAME_ACCOUNT], FallbackValue='Clone Instance'}"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                <TextBlock Grid.Row="1" FontSize="12" MaxWidth="336" TextWrapping="WrapWithOverflow"
+                           VerticalAlignment="Center" HorizontalAlignment="Left"
+                           Text="{Binding Path=LocaleModel.[STRING_CLONE_INSTANCE_MESSAGE], FallbackValue='All data and settings from the chosen instance will be copied'}"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimDimColor]}"/>
+              </Grid>
+              <Common:CustomPictureBox Grid.Column="2" VerticalAlignment="Center" ImageName="vector_arrow" Height="16" Width="18"/>
+            </Grid>
+          </Border>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </Border>
+</bluestacksCore:UiWindowBase>

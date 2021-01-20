@@ -1,0 +1,55 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.DualTextBlockControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}"
+             Background="{Binding Path=ColorModel.[DualTextblockControlOuterBackground]}">
+  <Grid Margin=".5">
+    <FrameworkElement.Resources>
+      <Style TargetType="{Type TextBox}">
+        <Setter Property="Control.Foreground" Value="{Binding Path=ColorModel.[GuidanceTextColorForeground]}"/>
+        <Setter Property="Control.FontSize" Value="12"/>
+        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="FrameworkElement.VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Control.Background" Value="{Binding Path=ColorModel.[DualTextblockControlBackground]}"/>
+        <Setter Property="Control.Padding" Value="8,7,9,7"/>
+      </Style>
+    </FrameworkElement.Resources>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition x:Name="mValueColumn" Width="Auto"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <TextBox TextChanged="KeyPropertyNameTextBox_TextChanged"
+             IsVisibleChanged="KeyPropertyNameTextBox_IsVisibleChanged" x:Name="mKeyPropertyName"
+             IsEnabled="false" Grid.Column="0" MinWidth="130" MaxWidth="130" MaxLength="30" Margin=".5"
+             BorderThickness="0">
+      <FrameworkElement.ContextMenu>
+        <ContextMenu Visibility="Collapsed"/>
+      </FrameworkElement.ContextMenu>
+    </TextBox>
+    <TextBox PreviewMouseDown="KeyTextBox_MouseDown"
+             PreviewMouseLeftButtonDown="mKeyTextBox_PreviewMouseLeftButtonDown"
+             TextChanged="KeyTextBox_TextChanged" PreviewKeyDown="KeyTextBox_KeyDown" KeyUp="KeyTextBox_KeyUp"
+             LostFocus="KeyTextBox_LostFocus" PreviewMouseWheel="KeyTextBoxPreviewMouseWheel"
+             x:Name="mKeyTextBox" Grid.Column="1" HorizontalContentAlignment="Center" Margin=".5"
+             BorderThickness="0" MinWidth="60" MaxWidth="80">
+      <FrameworkElement.ContextMenu>
+        <ContextMenu Visibility="Collapsed"/>
+      </FrameworkElement.ContextMenu>
+    </TextBox>
+    <TextBox GotFocus="KeyPropertyNameTextBox_GotFocus" LostFocus="KeyPropertyNameTextBox_LostFocus"
+             TextChanged="KeyPropertyNameTextBox_TextChanged"
+             IsVisibleChanged="KeyPropertyNameTextBox_IsVisibleChanged" x:Name="mKeyPropertyNameTextBox"
+             Grid.Column="2" IsEnabled="false" MinWidth="132" MaxWidth="132" MaxLength="30" Margin=".5"
+             BorderThickness="0">
+      <FrameworkElement.ContextMenu>
+        <ContextMenu Visibility="Collapsed"/>
+      </FrameworkElement.ContextMenu>
+    </TextBox>
+  </Grid>
+</UserControl>

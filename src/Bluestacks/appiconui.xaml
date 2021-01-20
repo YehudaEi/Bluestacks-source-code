@@ -1,0 +1,174 @@
+<Button x:Class="BlueStacks.BlueStacksUI.AppIconUI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+        xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+        Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+        Loaded="Button_Loaded" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown"
+        PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp" Margin="0,10,0,0"
+        Style="{DynamicResource ButtonStyle1}" ToolTip="{Binding AppNameTooltip}"
+        Visibility="{Binding AppIconVisibility}">
+  <FrameworkElement.Resources>
+    <Style x:Key="ButtonStyle1" TargetType="{Type Button}">
+      <Setter Property="FrameworkElement.FocusVisualStyle" Value="{Null}"/>
+      <Setter Property="Control.Background" Value="Transparent"/>
+      <Setter Property="Control.BorderThickness" Value="1"/>
+      <Setter Property="Control.Foreground" Value="{DynamicResource {Static SystemColors.ControlTextBrushKey}}"/>
+      <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Control.Padding" Value="1"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type Button}">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                              Margin="{TemplateBinding Control.Padding}" RecognizesAccessKey="true"
+                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                              VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Popup.VerticalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Common:BooleanToVisibilityConverter3 x:Key="BooleanToVisibilityConverter3"/>
+    <Common:ButtonImageNameToVisibilityConverter x:Key="ButtonImageNameToVisibilityConverter"/>
+    <Common:BooleanToImageNameConverter x:Key="BooleanToImageNameConverter"/>
+    <Common:EnumToVisibilityConverter2 x:Key="EnumToVisibilityConverter2"/>
+  </FrameworkElement.Resources>
+  <Grid x:Name="mMainGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="20"/>
+      <RowDefinition Height="68"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="5"/>
+      <RowDefinition Height="29"/>
+      <RowDefinition Height="12"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="5"/>
+      <ColumnDefinition Width="19"/>
+      <ColumnDefinition Width="68"/>
+      <ColumnDefinition Width="0"/>
+      <ColumnDefinition Width="19"/>
+      <ColumnDefinition Width="5"/>
+    </Grid.ColumnDefinitions>
+    <Grid x:Name="mImageGrid" Row="1" RowSpan="2" Column="2" ColumnSpan="2" Background="Transparent"
+          HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Border Name="mAppImageBorder">
+        <UIElement.Effect>
+          <DropShadowEffect Direction="270" Opacity=".3" Color="Black" ShadowDepth="1" BlurRadius="6"/>
+        </UIElement.Effect>
+        <Common:CustomPictureBox x:Name="mAppImage" IsFullImagePath="true"
+                                 Clip="{Binding Path=GeometryModel.[AppIconRectangleGeometry], Source={Static Common:BlueStacksUIBinding.Instance}}"
+                                 ImageName="{Binding ImageName}"/>
+      </Border>
+      <Grid x:Name="mProgressGrid" Visibility="Hidden">
+        <Grid Background="Black" Opacity=".5"
+              Clip="{Binding Path=GeometryModel.[AppIconRectangleGeometry], Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+        <Border Height="12" Width="76" ClipToBounds="true">
+          <Common:BlueProgressBar x:Name="CustomProgressBar" Value="{Binding DownloadPercentage}"/>
+        </Border>
+      </Grid>
+      <Grid x:Name="mBusyGrid" Visibility="Hidden">
+        <Grid Background="Black" Opacity=".5"
+              Clip="{Binding Path=GeometryModel.[AppIconRectangleGeometry], Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+        <Common:CustomPictureBox x:Name="mBusyImage" ImageName="img_busy" IsImageToBeRotated="true"/>
+      </Grid>
+      <Grid x:Name="mErrorGrid" Visibility="Hidden">
+        <Grid Background="Black" Opacity=".5"
+              Clip="{Binding Path=GeometryModel.[AppIconRectangleGeometry], Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+        <Common:CustomPictureBox ImageName="error"/>
+      </Grid>
+      <Grid x:Name="mRetryGrid" Visibility="Hidden">
+        <Grid Background="Black" Opacity=".5"
+              Clip="{Binding Path=GeometryModel.[AppIconRectangleGeometry], Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+        <Common:CustomPictureBox ImageName="retry"/>
+      </Grid>
+    </Grid>
+    <Common:CustomPictureBox x:Name="mSuggestedAppPromotionImage" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1"
+                             Grid.ColumnSpan="4" Margin="0,0,0,9"
+                             Visibility="{Binding ApplyImageBorder, Converter={StaticResource ButtonImageNameToVisibilityConverter}}"
+                             ImageName="{Binding ApplyImageBorder}"/>
+    <Common:CustomPictureBox x:Name="mUnInstallTabButton" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="2"
+                             HorizontalAlignment="Right" Width="15" Height="15" VerticalAlignment="Bottom" ImageName="tabclose"
+                             Visibility="Hidden"/>
+    <Common:CustomPictureBox x:Name="mGl3ErrorIcon" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="4"
+                             HorizontalAlignment="Right" Width="21" Height="18" VerticalAlignment="Top" Margin="12"
+                             ImageName="error_appicon"
+                             Visibility="{Binding AppIncompatType, Converter={StaticResource EnumToVisibilityConverter2}, ConverterParameter={Static Common:AppIncompatType.Error}}"/>
+    <Common:CustomPictureBox x:Name="mGl3InfoIcon" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="4"
+                             HorizontalAlignment="Right" Width="21" Height="18" VerticalAlignment="Top" Margin="12"
+                             ImageName="info_appicon"
+                             Visibility="{Binding AppIncompatType, Converter={StaticResource EnumToVisibilityConverter2}, ConverterParameter={Static Common:AppIncompatType.Info}}"/>
+    <Common:CustomPictureBox x:Name="mRedDotNotifIcon" ImageName="red_dot_icon" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2"
+                             Grid.ColumnSpan="2" Margin="0,-5,-5,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                             Width="10" Height="10"
+                             Visibility="{Binding IsRedDotVisible, Converter={StaticResource BooleanToVisibilityConverter3}}"/>
+    <TextBlock x:Name="AppNameTextBox" Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4"
+               Margin="0,15,0,7" TextAlignment="Center" FontSize="14" VerticalAlignment="Top"
+               local:FadeTrimming.IsVerticalFadingEnabled="false" local:FadeTrimming.IsEnabled="true"
+               Foreground="{Binding Path=ColorModel.[AppIconTextColor], Source={Static Common:BlueStacksUIBinding.Instance}}"
+               TextWrapping="{Binding AppNameTextWrapping}" TextTrimming="{Binding AppNameTextTrimming}"
+               Text="{Binding AppName}">
+      <UIElement.Effect>
+        <DropShadowEffect Direction="270" Opacity=".8" Color="Black" ShadowDepth="1" BlurRadius="3"/>
+      </UIElement.Effect>
+    </TextBlock>
+    <Grid x:Name="mGamePadGrid" Row="5" RowSpan="3" Column="1" ColumnSpan="4" HorizontalAlignment="Center"
+          VerticalAlignment="Top"
+          Visibility="{Binding IsGamepadCompatible, Converter={StaticResource BooleanToVisibilityConverter3}}">
+      <Common:CustomPictureBox MouseEnter="GamepadIcon_MouseEnter" MouseLeave="GamepadIcon_MouseLeave" x:Name="mGamepadIcon"
+                               Width="26" Height="18"
+                               ImageName="{Binding IsGamepadConnected, Converter={StaticResource BooleanToImageNameConverter}, ConverterParameter=apps_connected_icon|apps_disconnected_icon}"/>
+    </Grid>
+    <local:CustomPopUp x:Name="mGamePadToolTipPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false"
+                       Placement="Bottom" PopupAnimation="Fade" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                       VerticalOffset="1" PlacementTarget="{Binding ElementName=mGamepadIcon}">
+      <Border Style="{StaticResource ShadowBorderForPopup}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Border Grid.Row="1" Style="{StaticResource OuterBorder}">
+            <Grid>
+              <UIElement.OpacityMask>
+                <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+              </UIElement.OpacityMask>
+              <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+              <Grid Margin="14,5,14,5">
+                <TextBlock x:Name="mIconText" Grid.Column="0" Text="Gamepad disconnected"
+                           Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor], Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+              </Grid>
+            </Grid>
+          </Border>
+          <Grid Row="0">
+            <Path x:Name="mUpArrow" Grid.Column="5" Data="M 0,0 L 8,-10 16,0 " Margin="0,0,0,-1.5"
+                  HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                  Stroke="{Binding Path=ColorModel.[PopupBorderBrush], Source={Static Common:BlueStacksUIBinding.Instance}}"
+                  Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor], Source={Static Common:BlueStacksUIBinding.Instance}}"/>
+          </Grid>
+        </Grid>
+      </Border>
+    </local:CustomPopUp>
+  </Grid>
+</Button>

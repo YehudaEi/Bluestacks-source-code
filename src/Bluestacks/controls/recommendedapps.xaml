@@ -1,0 +1,47 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.RecommendedApps"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Height="50" Width="280" Margin="0,20,0,0"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
+        PreviewMouseLeftButtonUp="Recommendation_Click" x:Name="mMainGrid" Background="Transparent"
+        Margin="0,-10,0,-10">
+    <Grid Margin="20,10,20,10">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="50"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Common:CustomPictureBox x:Name="recomIcon" Grid.Column="0" Stretch="UniformToFill" VerticalAlignment="Center"
+                               HorizontalAlignment="Center">
+        <UIElement.Clip>
+          <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0,0,50,50"/>
+        </UIElement.Clip>
+      </Common:CustomPictureBox>
+      <Grid Column="1" Margin="12,4,0,0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="appNameTextBlock" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" TextAlignment="Center" MaxWidth="180"
+                   FontSize="13" FontWeight="SemiBold" Foreground="{Binding Path=ColorModel.[AppIconTextColor]}"/>
+        <Grid Row="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock x:Name="appGenreTextBlock" VerticalAlignment="Center" HorizontalAlignment="Left"
+                     TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" TextAlignment="Center" MaxWidth="105"
+                     Opacity="0.6" FontSize="12" Foreground="{Binding Path=ColorModel.[AppIconTextColor]}"/>
+          <Common:CustomButton x:Name="installButton" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                               MinWidth="68" Height="24" FontSize="12" ButtonColor="BackgroundBlueBorder"
+                               Content="{Binding Path=LocaleModel.[STRING_INSTALL], FallbackValue=Install}"/>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

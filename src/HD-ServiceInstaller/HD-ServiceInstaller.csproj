@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files\BlueStacks\HD-ServiceInstaller.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BC8BDDFA-3F3F-4042-B44C-ECA418B06511}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>HD-ServiceInstaller</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationVersion>4.250.0.1070</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>BlueStacks</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Range.cs" />
+    <Compile Include="PayloadInfo.cs" />
+    <Compile Include="LegacyDownloader.cs" />
+    <Compile Include="WorkerException.cs" />
+    <Compile Include="Common\BlueStacksUtils.cs" />
+    <Compile Include="Common\ErrorStrings.cs" />
+    <Compile Include="Common\Assets.cs" />
+    <Compile Include="Common\GetProcessExecutionPath.cs" />
+    <Compile Include="Common\PayloadInfo.cs" />
+    <Compile Include="Common\Downloader.cs" />
+    <Compile Include="Common\RepeatBehaviour.cs" />
+    <Compile Include="Common\EngineState.cs" />
+    <Compile Include="Common\ActionType.cs" />
+    <Compile Include="Common\GenericAction.cs" />
+    <Compile Include="Common\NotificationPayloadType.cs" />
+    <Compile Include="Common\ApplicationState.cs" />
+    <Compile Include="Common\EnumHelper.cs" />
+    <Compile Include="Common\PerformanceState.cs" />
+    <Compile Include="Common\GamePadEventType.cs" />
+    <Compile Include="Common\GamePad.cs" />
+    <Compile Include="Common\InstanceType.cs" />
+    <Compile Include="Common\ButtonColors.cs" />
+    <Compile Include="Common\ButtonStates.cs" />
+    <Compile Include="Common\SubItem.cs" />
+    <Compile Include="Common\WebTabs.cs" />
+    <Compile Include="Common\PlayStoreAction.cs" />
+    <Compile Include="Common\NotificationPriority.cs" />
+    <Compile Include="Common\InstallationTypes.cs" />
+    <Compile Include="Common\SpecialUpgradeCases.cs" />
+    <Compile Include="Common\OperationsLoopType.cs" />
+    <Compile Include="Common\RecordingTypes.cs" />
+    <Compile Include="Common\OperationPlayAccelaration.cs" />
+    <Compile Include="Common\RichPopupStyles.cs" />
+    <Compile Include="Common\ClientHotKeys.cs" />
+    <Compile Include="Common\PerformanceSetting.cs" />
+    <Compile Include="Common\PerformanceProperty.cs" />
+    <Compile Include="Common\ABISetting.cs" />
+    <Compile Include="Common\SidebarGroup.cs" />
+    <Compile Include="Common\SidePanelVisibility.cs" />
+    <Compile Include="Common\TextValidityOptions.cs" />
+    <Compile Include="Common\ASTCOption.cs" />
+    <Compile Include="Common\GuidanceVideoType.cs" />
+    <Compile Include="Common\EngineStatsEvent.cs" />
+    <Compile Include="Common\ImportExitcodes.cs" />
+    <Compile Include="Common\ButtonColorType.cs" />
+    <Compile Include="Common\ButtonImageOrder.cs" />
+    <Compile Include="Common\ButtonImageState.cs" />
+    <Compile Include="Common\AppLaunchState.cs" />
+    <Compile Include="Common\DPadControls.cs" />
+    <Compile Include="Common\BrowserControlTags.cs" />
+    <Compile Include="Common\OrientationType.cs" />
+    <Compile Include="Common\NewInstanceType.cs" />
+    <Compile Include="Common\AlignmentType.cs" />
+    <Compile Include="Common\PopupArrowAlignment.cs" />
+    <Compile Include="Common\ScreenMode.cs" />
+    <Compile Include="Common\AppIconLocation.cs" />
+    <Compile Include="Common\AppIconDownloadingPhases.cs" />
+    <Compile Include="Common\AppIncompatType.cs" />
+    <Compile Include="Common\OnboardingBlurbTags.cs" />
+    <Compile Include="Common\NativeGamepadState.cs" />
+    <Compile Include="Common\OpenExternalBrowserLinks.cs" />
+    <Compile Include="Common\InstanceSortOption.cs" />
+    <Compile Include="Common\GlMode.cs" />
+    <Compile Include="Common\1GLMode.cs" />
+    <Compile Include="Common\GuestOS.cs" />
+    <Compile Include="Common\BuildPlatform.cs" />
+    <Compile Include="Common\DownloadBuildType.cs" />
+    <Compile Include="Common\ErrorCodes.cs" />
+    <Compile Include="Common\NonResumableStreamException.cs" />
+    <Compile Include="Common\UnexpectedHttpStatusCodeException.cs" />
+    <Compile Include="Common\ReceiveFailureException.cs" />
+    <Compile Include="Common\NoResponseStreamException.cs" />
+    <Compile Include="Common\UnknownErrorException.cs" />
+    <Compile Include="Common\TimeoutException.cs" />
+    <Compile Include="Common\ConnectFailureException.cs" />
+    <Compile Include="Common\FeatureBitHelper.cs" />
+    <Compile Include="Common\GLRenderer.cs" />
+    <Compile Include="Common\GlProperty.cs" />
+    <Compile Include="Common\BlueStacksGL.cs" />
+    <Compile Include="Common\ImageUtils.cs" />
+    <Compile Include="Common\GuidUtils.cs" />
+    <Compile Include="Common\InteropUtils.cs" />
+    <Compile Include="Common\IOUtils.cs" />
+    <Compile Include="Common\HTTP.cs" />
+    <Compile Include="Common\FormFile.cs" />
+    <Compile Include="Common\HTTPRoutes.cs" />
+    <Compile Include="Common\GetOpt.cs" />
+    <Compile Include="Common\ArgAttribute.cs" />
+    <Compile Include="Common\Globalization.cs" />
+    <Compile Include="Common\ProcessDetails.cs" />
+    <Compile Include="Common\ProcessUtils.cs" />
+    <Compile Include="Common\RegSAM.cs" />
+    <Compile Include="Common\RegistryKeyKind.cs" />
+    <Compile Include="Common\RegistryUtils.cs" />
+    <Compile Include="Common\SerializableDictionary`2.cs" />
+    <Compile Include="Common\InstallerArchitectures.cs" />
+    <Compile Include="Common\SystemUtils.cs" />
+    <Compile Include="Common\StringUtils.cs" />
+    <Compile Include="Common\ServiceManager.cs" />
+    <Compile Include="Common\Logger.cs" />
+    <Compile Include="Common\Writer.cs" />
+    <Compile Include="Common\BrushToColorConvertor.cs" />
+    <Compile Include="Common\CornerRadiusToThicknessConvertor.cs" />
+    <Compile Include="Common\CornerRadiusToDoubleConvertor.cs" />
+    <Compile Include="Common\ColorUtils.cs" />
+    <Compile Include="Common\CustomWindow.cs" />
+    <Compile Include="Common\WpfUtils.cs" />
+    <Compile Include="Common\RenderHelper.cs" />
+    <Compile Include="Common\Strings.cs" />
+    <Compile Include="Common\MD5InitializerConstant.cs" />
+    <Compile Include="Common\Digest.cs" />
+    <Compile Include="Common\_MD5.cs" />
+    <Compile Include="Common\InstallerStatsEvent.cs" />
+    <Compile Include="Common\Countdown.cs" />
+    <Compile Include="Common\ReturnCodes.cs" />
+    <Compile Include="Common\GuestApkInstallFailCodes.cs" />
+    <Compile Include="Common\InstallerCodes.cs" />
+    <Compile Include="Common\ReturnCodesUInt.cs" />
+    <Compile Include="Common\MultiInstanceErrorCodesEnum.cs" />
+    <Compile Include="Common\MultiInstanceManagerCodes.cs" />
+    <Compile Include="Common\InstallerWrapperCodes.cs" />
+    <Compile Include="Common\PlayerErrorCodes.cs" />
+    <Compile Include="Common\DataManagerCodes.cs" />
+    <Compile Include="Common\DiskCompactionToolCodes.cs" />
+    <Compile Include="Common\ComRegistrarCodes.cs" />
+    <Compile Include="Common\COMPOSITIONFORM.cs" />
+    <Compile Include="Common\RECT.cs" />
+    <Compile Include="Common\COPYDATASTRUCT.cs" />
+    <Compile Include="Common\COPYGAMEPADDATASTRUCT.cs" />
+    <Compile Include="Common\GetAncestorFlags.cs" />
+    <Compile Include="Common\IconInfo.cs" />
+    <Compile Include="Common\InteropWindow.cs" />
+    <Compile Include="Common\Tuple`1.cs" />
+    <Compile Include="Common\Tuple`2.cs" />
+    <Compile Include="Common\Tuple`3.cs" />
+    <Compile Include="Common\Tuple`4.cs" />
+    <Compile Include="Common\Tuple.cs" />
+    <Compile Include="Common\ShortcutHelper.cs" />
+    <Compile Include="Common\XamlSizeConverter.cs" />
+    <Compile Include="Common\Version.cs" />
+    <Compile Include="ServiceInstaller\ServiceOpt.cs" />
+    <Compile Include="ServiceInstaller\Installer.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

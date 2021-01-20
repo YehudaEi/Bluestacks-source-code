@@ -1,0 +1,60 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ImportMacroScriptsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI.Controls"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Background="Transparent"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid x:Name="mMainGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Common:CustomCheckbox Checked="Box_Checked" Unchecked="Box_Unchecked" Name="mContent" Grid.Row="0" Height="20"
+                           TextFontSize="14" ImageMargin="2" Margin="0,1"
+                           Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+    <TextBlock x:Name="mSingleMacroRecordTextblock" Grid.Row="0" Height="20" Margin="0,1" FontSize="14"
+               Visibility="Collapsed"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}"/>
+    <Grid Name="mBlock" Margin="30,0,0,0" Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <TextBlock x:Name="mMacroImportedAsTextBlock" TextWrapping="WrapWithOverflow" Grid.Row="0" FontSize="12"
+                 Text="{Binding Path=LocaleModel.[STRING_MACRO_ALREADY_EXISTS], FallbackValue='Macro with the same name exists, would you like to'}"
+                 Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"/>
+      <Grid Row="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="mConflictingMacroOptionsPanel" Grid.Row="0" Orientation="Horizontal"
+                    HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="0,4,0,0">
+          <Common:CustomRadioButton x:Name="mReplaceExistingBtn" FontSize="13" TextMargin="5,-4,0,0"
+                                    Content="{Binding Path=LocaleModel.[STRING_REPLACE_EXISTING], FallbackValue='Replace Existing'}"/>
+          <Common:CustomRadioButton Checked="ConflictingMacroHandlingRadioBtn_Checked" x:Name="mRenameBtn" Margin="40,0,0,0"
+                                    FontSize="13" TextMargin="5,-4,0,0"
+                                    Content="{Binding Path=LocaleModel.[STRING_RENAME], FallbackValue=Rename}"/>
+        </StackPanel>
+        <Common:CustomTextBox TextChanged="ImportName_TextChanged" Name="mImportName" Grid.Row="1" Visibility="Collapsed"
+                              Height="24" HorizontalContentAlignment="Left" Margin="0, 5, 25, 0"/>
+        <TextBlock Name="mWarningMsg" Grid.Row="2" FontSize="12" TextWrapping="WrapWithOverflow"
+                   Visibility="Collapsed" Margin="0,1,0,1"
+                   Foreground="{Binding Path=ColorModel.[DeleteComboTextForeground]}"
+                   Text="{Binding Path=LocaleModel.[STRING_DUPLICATE_MACRO_NAME_WARNING], FallbackValue='Script exists, enter a new name'}"/>
+        <TextBlock Name="mDependentScriptsMsg" Grid.Row="3" FontSize="12" TextWrapping="WrapWithOverflow"
+                   Visibility="Collapsed" Margin="0,5,0,2"
+                   Foreground="{Binding Path=ColorModel.[OrangeMouseOutBorderBackground]}"
+                   Text="{Binding Path=LocaleModel.[STRING_DEPENDENT_MACRO_IMPORTED_AS], FallbackValue='The dependent macros will be imported as'}"/>
+        <StackPanel x:Name="mDependentScriptsPanel" Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Left"
+                    VerticalAlignment="Center"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

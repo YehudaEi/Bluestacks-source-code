@@ -1,0 +1,65 @@
+<Button x:Class="BlueStacks.BlueStacksUI.HomeAppTabButton"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+        xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+        Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+        Loaded="Button_Loaded" Background="Transparent" Margin="0,0,2,0"
+        Style="{DynamicResource ButtonStyle1}"
+        DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Style x:Key="ButtonStyle1" TargetType="{Type Button}">
+      <Setter Property="FrameworkElement.FocusVisualStyle" Value="{Null}"/>
+      <Setter Property="Control.Background" Value="Transparent"/>
+      <Setter Property="Control.BorderThickness" Value="1"/>
+      <Setter Property="Control.Foreground" Value="{DynamicResource {Static SystemColors.ControlTextBrushKey}}"/>
+      <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Control.Padding" Value="1"/>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{Type Button}">
+            <Grid Background="Transparent">
+              <ContentPresenter Margin="0" RecognizesAccessKey="true"
+                                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid x:Name="tabGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="0"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="15"/>
+      <ColumnDefinition Width="0"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="21"/>
+      <RowDefinition Height="9"/>
+      <RowDefinition Height="8"/>
+    </Grid.RowDefinitions>
+    <Common:CustomPictureBox x:Name="ImageBox" Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" Panel.ZIndex="1"/>
+    <TextBlock x:Name="mTabHeader" Grid.Column="2" Grid.Row="1" FontSize="16" FontWeight="DemiBold"
+               TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"
+               Text="{Binding Path=LocaleModel.[STRING_APP_CENTER], FallbackValue=AppCenter}"
+               Foreground="{Binding Path=ColorModel.[HomeAppTabForegroundColor]}"/>
+    <Border SizeChanged="mAppTabNotificationCountBorder_SizeChanged" x:Name="mAppTabNotificationCountBorder"
+            CornerRadius="9" Grid.Row="1" Grid.Column="3" Margin="10,0,0,0" Width="18" Height="18" Padding="0"
+            Background="Red" BorderBrush="Red" BorderThickness="1" Visibility="Collapsed">
+      <TextBlock x:Name="mAppTabNotificationCount" HorizontalAlignment="Center" VerticalAlignment="Center" Text="0"
+                 FontSize="10" Foreground="White" Padding="0,0,0,2"/>
+    </Border>
+    <Grid x:Name="mBottomGrid" Row="3" Column="0" ColumnSpan="6"
+          Background="{Binding Path=ColorModel.[HomeAppTabBackgroundColor]}"/>
+    <Grid x:Name="mGridHighlighterBox" Visibility="Hidden" Row="3" Column="0" ColumnSpan="6"
+          Background="{Binding Path=ColorModel.[SelectedHomeAppTabBackgroundColor]}"/>
+  </Grid>
+</Button>

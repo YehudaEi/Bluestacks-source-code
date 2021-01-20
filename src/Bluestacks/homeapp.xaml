@@ -1,0 +1,335 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.HomeApp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             PreviewMouseDown="HomeApp_PreviewMouseDown"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <DataTemplate x:Key="featureLabelTemplate">
+      <Grid Margin="0,0,0,0" Width="230">
+        <Common:CustomPictureBox x:Name="featureIcon" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                 Margin="10,0,5,0" ImageName="{Binding FeatureImage}"/>
+        <TextBlock Name="featureText" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap"
+                   TextAlignment="Left" MaxWidth="170" Foreground="#99A9CF" Margin="55,5,10,5" Padding="0"
+                   Text="{Binding FeatureText}"/>
+      </Grid>
+    </DataTemplate>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Popup.VerticalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <LinearGradientBrush x:Key="mOrangeGradientBrush" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="#ED2828" Offset="0"/>
+      <GradientStop Color="#F76B1C" Offset="1.0"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="mPurpleGradientBrush" StartPoint="0,0" EndPoint="1,0.5">
+      <GradientStop Color="#3023AE" Offset="0"/>
+      <GradientStop Color="#C86DD7" Offset="1.0"/>
+    </LinearGradientBrush>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid>
+      <Common:CustomPictureBox x:Name="mBackgroundImage" ImageName="fancybg.jpg" VerticalAlignment="Center"
+                               HorizontalAlignment="Center" Stretch="UniformToFill"/>
+    </Grid>
+    <Grid>
+      <Grid Margin="20,20,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="2"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="mInstalledAppText" Grid.Column="0" FontSize="14" FontWeight="SemiBold"
+               Content="{Binding Path=LocaleModel.[STRING_INSTALLED_APPS], FallbackValue='Installed Apps'}"
+               Foreground="{Binding Path=ColorModel.[AppIconTextColor]}">
+          <UIElement.Effect>
+            <DropShadowEffect Direction="270" Opacity=".8" Color="Black" ShadowDepth="1" BlurRadius="3"/>
+          </UIElement.Effect>
+        </Label>
+        <Grid x:Name="mGridSeparator" Column="1" Height="23" Margin="5,8,7,0" HorizontalAlignment="Left"
+              VerticalAlignment="Top" Width="2" Background="{Binding Path=ColorModel.[VerticalSeparator]}"/>
+        <Common:CustomPictureBox MouseEnter="mAppSettings_MouseEnter" x:Name="mAppSettings" Grid.Column="2" VerticalAlignment="Top"
+                                 Margin="0,8,0,0" HorizontalAlignment="Left" Height="15" Width="15" ImageName="app_settings"/>
+      </Grid>
+      <local:CustomPopUp x:Name="mAppSettingsPopup" Opened="mAppSettingsPopup_Opened" Closed="mAppSettingsPopup_Closed"
+                         VerticalOffset="65" HorizontalOffset="15" PopupAnimation="Fade" StaysOpen="false" IsOpen="false"
+                         AllowsTransparency="true" HorizontalAlignment="Right" Placement="Top"
+                         Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                         PlacementTarget="{Binding ElementName=mAppSettings}">
+        <Border Style="{StaticResource ShadowBorder}">
+          <Grid x:Name="dummyGrid">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="mAppSettingsPopupBorder" Style="{StaticResource OuterBorder}" Margin="5">
+              <Grid>
+                <UIElement.OpacityMask>
+                  <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder1}"/>
+                </UIElement.OpacityMask>
+                <Border x:Name="mMaskBorder1" Style="{StaticResource MaskBorder}"/>
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                  </Grid.RowDefinitions>
+                  <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                        MouseLeftButtonUp="mInstallApkGrid_MouseLeftButtonUp" Row="0" Margin="1,1,1,1">
+                    <TextBlock FontSize="12" Margin="8,5,10,5"
+                               Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                               Text="{Binding Path=LocaleModel.[STRING_INSTALL_APK], FallbackValue='Install APK'}"/>
+                  </Grid>
+                  <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                        MouseLeftButtonUp="mDeleteAppsGrid_MouseLeftButtonUp" Row="1" Margin="1,0,1,1">
+                    <TextBlock FontSize="12" Margin="8,5,10,5"
+                               Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                               Text="{Binding Path=LocaleModel.[STRING_DELETE_APPS], FallbackValue='Delete apps'}"/>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Border>
+            <Grid Row="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding Converter={Common:XamlSizeConverter}, ElementName=dummyGrid, Path=ActualHeight, ConverterParameter=0.08}"/>
+              </Grid.ColumnDefinitions>
+              <Path x:Name="LeftArrow" Grid.Column="0" Margin="0,-52,0,0" Data="M 0,12 L 0,0 -6,6 "
+                    HorizontalAlignment="Right" Fill="{Binding Path=ColorModel.[PopupBorderBrush]}"/>
+            </Grid>
+          </Grid>
+        </Border>
+      </local:CustomPopUp>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer ScrollChanged="InstalledAppsDrawerScrollBar_ScrollChanged" x:Name="InstalledAppsDrawerScrollBar"
+                      Grid.Column="0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto" Margin="20,60,10,75" FocusVisualStyle="{Null}">
+          <UIElement.OpacityMask>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+              <GradientStop Color="Transparent" Offset="0"/>
+              <GradientStop Color="#FF000000" Offset=".15"/>
+              <GradientStop Color="#FF000000" Offset=".8"/>
+              <GradientStop Color="Transparent" Offset="1"/>
+            </LinearGradientBrush>
+          </UIElement.OpacityMask>
+          <WrapPanel FocusVisualStyle="{Null}"/>
+        </ScrollViewer>
+        <Grid x:Name="mAppRecommendationsGrid" Column="1" Width="1" HorizontalAlignment="Right"
+              Visibility="Visible">
+          <Border BorderBrush="Black" BorderThickness="0.2">
+            <Rectangle Fill="Black">
+              <UIElement.OpacityMask>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                  <GradientStop Color="#90000000" Offset="0"/>
+                  <GradientStop Color="#20000000" Offset="1"/>
+                </LinearGradientBrush>
+              </UIElement.OpacityMask>
+            </Rectangle>
+          </Border>
+          <TextBlock x:Name="mDiscoverApps" Margin="20,22,20,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                     FontWeight="SemiBold" FontSize="14" Visibility="Hidden"
+                     Text="{Binding Path=LocaleModel.[STRING_DISCOVER_APPS], FallbackValue='Discover apps'}"
+                     Foreground="{Binding Path=ColorModel.[AppIconTextColor]}"/>
+          <ScrollViewer x:Name="appRecomScrollViewer" VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Disabled" Margin="0,118,0,0" Visibility="Hidden">
+            <Grid>
+              <StackPanel x:Name="mAppRecommendationSectionsPanel" Margin="0,-28,0,0" Orientation="Vertical"
+                          Visibility="Collapsed"/>
+              <StackPanel x:Name="mAppRecommendationsGenericMessages" VerticalAlignment="Center" Margin="20,0,20,75"
+                          HorizontalAlignment="Center" Visibility="Visible">
+                <Common:CustomPictureBox x:Name="mAppRecommendationsGenericMessageImage" ImageName="no_pending_recommendations"
+                                         MaxWidth="180" Height="Auto"/>
+                <TextBlock x:Name="mAppRecommendationsGenericMessageText" TextWrapping="WrapWithOverflow"
+                           TextAlignment="Center" Margin="0,20,0,0" FontSize="16" MaxWidth="240" Opacity="0.35"
+                           Foreground="{Binding Path=ColorModel.[AppIconTextColor]}"
+                           Text="{Binding Path=LocaleModel.[STRING_NO_APPRECOMMENDATIONS_LEFT_MESSAGE], FallbackValue='You have installed all the suggested apps of the days'}"/>
+              </StackPanel>
+            </Grid>
+          </ScrollViewer>
+        </Grid>
+        <Border MouseEnter="Search_MouseEnter" MouseLeave="search_MouseLeave" x:Name="mSearchGrid" Grid.Column="1"
+                Width="350" Height="36" Margin="0,20,20,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Padding="{Binding Path=CornerRadiusModel.[SearchButtonPadding], Converter={Common:CornerRadiusToThicknessConvertor}}">
+          <Grid>
+            <Border x:Name="searchTextBoxBorder" BorderThickness="1,1,1,1" Padding="5,0,0,0"
+                    RenderTransform="{Binding Path=TransformModel.[TextBoxTransForm]}"
+                    BorderBrush="{Binding Path=ColorModel.[SearchGridBorderColor]}"
+                    Background="{Binding Path=ColorModel.[SearchGridBackgroundColor]}"
+                    CornerRadius="{Binding Path=CornerRadiusModel.[TextBoxRadius]}">
+              <TextBox GotKeyboardFocus="SearchTextBox_GotKeyboardFocus"
+                       LostKeyboardFocus="SearchTextBox_LostKeyboardFocus" KeyDown="SearchTextBox_KeyDown"
+                       x:Name="mSearchTextBox" Padding="5,0,0,0" TextAlignment="Left" FontSize="16"
+                       VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" IsEnabled="false"
+                       TextWrapping="WrapWithOverflow"
+                       RenderTransform="{Binding Path=TransformModel.[TextBoxAntiTransForm]}"
+                       Background="{Binding Path=ColorModel.[SearchTextBoxBackgroundColor]}"
+                       Foreground="{Binding Path=ColorModel.[SearchGridForegroundColor]}"/>
+            </Border>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Border Name="Mask" BorderBrush="#FFFFFF" Background="#FFFFFF" BorderThickness="1" Grid.Column="1"
+                      CornerRadius="{Binding Path=CornerRadiusModel.[TextBoxRadius]}"/>
+              <Common:CustomPictureBox MouseUp="CustomPictureBox_MouseUp" Grid.Column="1" ImageName="search" HorizontalAlignment="Right">
+                <UIElement.OpacityMask>
+                  <VisualBrush Visual="{Binding ElementName=Mask}"/>
+                </UIElement.OpacityMask>
+              </Common:CustomPictureBox>
+            </Grid>
+          </Grid>
+        </Border>
+        <Border MouseLeave="search_MouseLeave" x:Name="mSearchRecommendationBorder" Grid.Column="1" Width="350"
+                Height="Auto" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="1,1,1,1"
+                CornerRadius="0,0,10,10" Margin="0,59,20,0" Visibility="Collapsed"
+                BorderBrush="{Binding Path=ColorModel.[SearchGridBorderColor]}"
+                Background="{Binding Path=ColorModel.[SearchGridBackgroundColor]}">
+          <StackPanel x:Name="searchRecomItems" Orientation="Vertical" ClipToBounds="true"/>
+        </Border>
+        <Grid x:Name="mMultiInstanceControlsGrid" Column="0" ColumnSpan="2">
+          <Border x:Name="mDockGridBorder" Width="Auto" Height="71" BorderThickness="1,1,1,0"
+                  VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                  Background="{Binding Path=ColorModel.[WidgetBarBackground]}"
+                  CornerRadius="{Binding Path=CornerRadiusModel.[PreferenceDropDownRadius]}"
+                  BorderBrush="{Binding Path=ColorModel.[WidgetBarBorder]}">
+            <Grid x:Name="mDockGrid">
+              <StackPanel x:Name="mDockPanel" Margin="10,0,10,0" Orientation="Horizontal"/>
+            </Grid>
+          </Border>
+          <local:CustomPopUp x:Name="mDockAppIconToolTipPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false"
+                             Placement="Top" PopupAnimation="None" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                             VerticalOffset="-5" PlacementTarget="{Binding ElementName=InstalledAppsDrawerScrollBar}">
+            <Border Style="{StaticResource ShadowBorderForPopup}">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Border Style="{StaticResource OuterBorder}">
+                  <Grid>
+                    <UIElement.OpacityMask>
+                      <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder2}"/>
+                    </UIElement.OpacityMask>
+                    <Border x:Name="mMaskBorder2" Style="{StaticResource MaskBorder}"/>
+                    <Grid Margin="14,5,14,5">
+                      <TextBlock x:Name="mDockIconText" Height="16" Margin="0,0,0,-0.4" VerticalAlignment="Top" Text="Play Store"
+                                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                    </Grid>
+                  </Grid>
+                </Border>
+                <Grid Row="1">
+                  <Path x:Name="mDownArrow" Data="M 0,0 L 8,10 16,0 " Margin="0,-1,0,0" HorizontalAlignment="Center"
+                        Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                        Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+                </Grid>
+              </Grid>
+            </Border>
+          </local:CustomPopUp>
+          <local:CustomPopUp x:Name="mMoreAppsDockPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false"
+                             Placement="Top" PopupAnimation="Fade" Style="{StaticResource CenteredHorizontalOffsetStyle}"
+                             VerticalOffset="10">
+            <Border Style="{StaticResource ShadowBorder}">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Grid Row="0">
+                  <Border Style="{StaticResource OuterBorder}" Margin="10">
+                    <Grid>
+                      <UIElement.OpacityMask>
+                        <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder3}"/>
+                      </UIElement.OpacityMask>
+                      <Border x:Name="mMaskBorder3" Style="{StaticResource MaskBorder}"/>
+                      <Grid Margin="10,10,10,10">
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="Auto"/>
+                          <RowDefinition Height="5"/>
+                          <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="mMoreAppsDockIconText" Grid.Row="0" Margin="10,0,0,0" FontWeight="SemiBold" FontSize="16"
+                                   Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"
+                                   Text="{Binding Path=LocaleModel.[STRING_MORE_APPS], FallbackValue='More apps'}"/>
+                        <Common:CustomPictureBox PreviewMouseLeftButtonUp="Close_PreviewMouseLeftButtonUp" x:Name="mCustomMessageBoxCloseButton"
+                                                 Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" ImageName="exit_close" Height="16"
+                                                 Width="16" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"/>
+                        <StackPanel x:Name="mMoreAppsDockPanel" Grid.Row="2" Margin="0,5,0,0" Orientation="Horizontal"/>
+                      </Grid>
+                    </Grid>
+                  </Border>
+                </Grid>
+                <Grid Row="1">
+                  <Grid>
+                    <Path Data="M 0,0 L 8,10 16,0 " Margin="0,-11,-10,0" HorizontalAlignment="Center"
+                          Stroke="{Binding Path=ColorModel.[PopupBorderBrush]}"
+                          Fill="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"/>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Border>
+          </local:CustomPopUp>
+        </Grid>
+      </Grid>
+      <local:CustomPopUp x:Name="mSuggestedAppPopUp" AllowsTransparency="true" StaysOpen="true" IsOpen="false"
+                         Style="{StaticResource CenteredHorizontalOffsetStyle}" Placement="Bottom" PopupAnimation="Fade"
+                         VerticalOffset="0" PlacementTarget="{Binding ElementName=InstalledAppsDrawerScrollBar}">
+        <Border Style="{StaticResource ShadowBorderForPopup}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="10"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" VerticalAlignment="Top" Style="{StaticResource OuterBorder}"
+                    Background="{StaticResource mOrangeGradientBrush}"
+                    BorderBrush="{StaticResource mOrangeGradientBrush}">
+              <Grid>
+                <UIElement.OpacityMask>
+                  <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder4}"/>
+                </UIElement.OpacityMask>
+                <Border x:Name="mMaskBorder4" Style="{StaticResource MaskBorder}"
+                        Background="{StaticResource mOrangeGradientBrush}"/>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="18"/>
+                  </Grid.ColumnDefinitions>
+                  <Common:CustomPictureBox MouseLeftButtonUp="mCloseAppSuggPopup_MouseLeftButtonUp" x:Name="mCloseAppSuggPopup"
+                                           Grid.Column="1" Height="13" Width="13" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                           Margin="1,11,11,10" ImageName="popup_close"/>
+                  <TextBlock x:Name="mAppSuggestionPopUp" Foreground="#FFFFFF" TextAlignment="Center" FontSize="16px"
+                             Grid.Column="0" MinWidth="50" MaxWidth="200" TextWrapping="Wrap"/>
+                </Grid>
+              </Grid>
+            </Border>
+            <Grid Row="0" Height="10" VerticalAlignment="Top">
+              <Path x:Name="UpArrow" Data="M 0,0 L 8,-10 16,0 " Fill="#ED2828" Margin="0,0,0,-1.3"
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            </Grid>
+          </Grid>
+        </Border>
+      </local:CustomPopUp>
+    </Grid>
+    <local:ProgressBar x:Name="mLoadingGrid" Visibility="Hidden"/>
+  </Grid>
+</UserControl>

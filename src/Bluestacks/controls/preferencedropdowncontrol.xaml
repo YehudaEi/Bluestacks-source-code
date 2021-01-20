@@ -1,0 +1,312 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.PreferenceDropDownControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MinWidth="224" Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Style x:Key="TextblockStyle" TargetType="{Type TextBlock}">
+      <Setter Property="TextBlock.Foreground" Value="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+      <Setter Property="TextBlock.FontSize" Value="16"/>
+      <Setter Property="FrameworkElement.Margin" Value="5,5,5,5"/>
+      <Setter Property="Grid.Column" Value="1"/>
+      <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
+      <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis"/>
+      <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
+      <Setter Property="FrameworkElement.ToolTip"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+    </Style>
+    <Style x:Key="ControlGridStyle" TargetType="{Type Grid}">
+      <Setter Property="Panel.Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="ImageStyle" TargetType="{Type Common:CustomPictureBox}">
+      <Setter Property="Grid.Column" Value="0"/>
+      <Setter Property="FrameworkElement.Margin" Value="10,5,4,5"/>
+      <Setter Property="FrameworkElement.Width" Value="16"/>
+      <Setter Property="FrameworkElement.Height" Value="16"/>
+    </Style>
+    <Style x:Key="LineStyle" TargetType="{Type Separator}">
+      <Setter Property="FrameworkElement.Margin" Value="12,10,12,10"/>
+      <Setter Property="Control.Background" Value="{Binding Path=ColorModel.[HorizontalSeparator]}"/>
+    </Style>
+    <Style x:Key="WideImageStyle" TargetType="{Type Common:CustomPictureBox}">
+      <Setter Property="Grid.Column" Value="2"/>
+      <Setter Property="FrameworkElement.Margin" Value="0,5,15,5"/>
+      <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+      <Setter Property="FrameworkElement.Width" Value="32"/>
+      <Setter Property="FrameworkElement.Height" Value="16"/>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid Margin="0,10,0,10">
+      <StackPanel>
+        <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+              PreviewMouseLeftButtonUp="EngineSettingGrid_MouseLeftButtonUp" x:Name="EngineSettingGrid"
+              Style="{StaticResource ControlGridStyle}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mEngineSettingsButtonImage" Style="{StaticResource ImageStyle}" ImageName="menu_settings"/>
+          <TextBlock Style="{StaticResource TextblockStyle}"
+                     Text="{Binding Path=LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"/>
+          <Ellipse x:Name="mSettingsBtnNotification" Fill="Red" Height="8" Width="8" StrokeThickness="5"
+                   VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Hidden" Margin="0,4,4,0"/>
+        </Grid>
+        <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" x:Name="mPinToTopGrid"
+              Style="{StaticResource ControlGridStyle}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mPinToTopImage" Style="{StaticResource ImageStyle}" ImageName="menu_pin_top"/>
+          <TextBlock Style="{StaticResource TextblockStyle}"
+                     Text="{Binding Path=LocaleModel.[STRING_PIN_TOP], FallbackValue='Pin to top'}"/>
+          <Common:CustomPictureBox PreviewMouseLeftButtonUp="PinToTop_MouseLeftButtonUp" x:Name="mPinToTopToggleButton"
+                                   ImageName="toggle_off" Style="{StaticResource WideImageStyle}"/>
+        </Grid>
+        <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" x:Name="mStreamingMode"
+              Style="{StaticResource ControlGridStyle}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mStreamingModeImage" Style="{StaticResource ImageStyle}" ImageName="menu_streaming"/>
+          <TextBlock Style="{StaticResource TextblockStyle}"
+                     Text="{Binding Path=LocaleModel.[STRING_STREAM_MODE], FallbackValue='Streaming Mode'}"/>
+          <Common:CustomPictureBox PreviewMouseLeftButtonUp="Streaming_MouseLeftButtonUp" x:Name="mStreaminModeToggleButton"
+                                   ImageName="toggle_off" Style="{StaticResource WideImageStyle}"/>
+        </Grid>
+        <Grid x:Name="mMultiInstanceSectionTag">
+          <Separator x:Name="mMultiInstanceSectionBorderLine" Style="{StaticResource LineStyle}"/>
+        </Grid>
+        <Grid x:Name="mMultiInstanceSection">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                PreviewMouseLeftButtonUp="SyncGrid_MouseLeftButtonUp" x:Name="mSyncGrid" Row="0"
+                Style="{StaticResource ControlGridStyle}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="30"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox x:Name="mSyncOperationsImage" Style="{StaticResource ImageStyle}" ImageName="menu_sync"/>
+            <TextBlock Style="{StaticResource TextblockStyle}"
+                       Text="{Binding Path=LocaleModel.[STRING_SYNC_OPERATIONS], FallbackValue='Sync operations'}"/>
+          </Grid>
+          <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                PreviewMouseLeftButtonUp="AutoAlign_MouseLeftButtonUp" x:Name="mAutoAlignGrid" Row="1"
+                Style="{StaticResource ControlGridStyle}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="30"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox x:Name="mAutoAlignImage" Style="{StaticResource ImageStyle}" ImageName="menu_align"/>
+            <TextBlock Style="{StaticResource TextblockStyle}"
+                       Text="{Binding Path=LocaleModel.[STRING_AUTO_ALIGN], FallbackValue='Auto align'}"/>
+          </Grid>
+        </Grid>
+        <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+              MouseLeftButtonUp="mUpgradeBluestacksStatus_MouseLeftButtonUp" x:Name="mUpgradeBluestacksStatus"
+              Visibility="Collapsed" Style="{StaticResource ControlGridStyle}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Common:CustomPictureBox x:Name="mUpdateImage" Grid.Column="0" Style="{StaticResource ImageStyle}" ImageName="menu_download"/>
+          <TextBlock x:Name="mUpgradeBluestacksStatusTextBlock" Style="{StaticResource TextblockStyle}" Grid.Column="1"
+                     FontSize="15" Margin="5,5,10,5" HorizontalAlignment="Left"
+                     Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundGreenColor]}"
+                     Text="{Binding Path=LocaleModel.[STRING_DOWNLOAD_UPDATE], FallbackValue='Download update'}"/>
+          <Label Name="mUpdateDownloadProgressPercentage" Grid.Column="2" FontSize="15" HorizontalAlignment="Right"
+                 Margin="0,0,10,0" Visibility="Collapsed"
+                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundGreenColor]}"/>
+        </Grid>
+        <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+              MouseLeftButtonUp="mUpgradeToFullBlueStacks_MouseLeftButtonUp" x:Name="mUpgradeToFullBlueStacks"
+              Visibility="Collapsed" Style="{StaticResource ControlGridStyle}">
+          <TextBlock x:Name="mUpgradeToFullTextBlock" Style="{StaticResource TextblockStyle}" HorizontalAlignment="Left"/>
+        </Grid>
+        <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+              MouseLeftButtonUp="LogoutButtonGrid_MouseLeftButtonUp" x:Name="mLogoutButtonGrid"
+              Visibility="Collapsed" Style="{StaticResource ControlGridStyle}">
+          <TextBlock Style="{StaticResource TextblockStyle}" HorizontalAlignment="Left"
+                     Text="{Binding Path=LocaleModel.[STRING_LOGOUT_BUTTON], FallbackValue=Logout}"/>
+        </Grid>
+        <Grid x:Name="mCustomiseSectionTag" Visibility="Collapsed">
+          <Separator x:Name="mCustomiseSectionBorderLine" Style="{StaticResource LineStyle}"/>
+        </Grid>
+        <Grid x:Name="mCustomiseSection">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                PreviewMouseLeftButtonUp="mChangeSkinGrid_MouseLeftButtonUp" x:Name="mChangeSkinGrid"
+                Visibility="Collapsed" Row="0" Style="{StaticResource ControlGridStyle}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="30"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox x:Name="mChangeSkinImage" Style="{StaticResource ImageStyle}" ImageName="menu_skin"/>
+            <TextBlock Style="{StaticResource TextblockStyle}"
+                       Text="{Binding Path=LocaleModel.[STRING_CHANGE_SKIN], FallbackValue='Change Skin'}"/>
+          </Grid>
+          <Grid MouseEnter="mChangeWallpaperGrid_MouseEnter" MouseLeave="mChangeWallpaperGrid_MouseLeave"
+                x:Name="mChangeWallpaperGrid" Visibility="Collapsed" Row="1" Background="Transparent">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="30"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox x:Name="mChangeWallpaperImage" Style="{StaticResource ImageStyle}" ImageName="menu_wallpaper"/>
+            <TextBlock Style="{StaticResource TextblockStyle}"
+                       Text="{Binding Path=LocaleModel.[STRING_CHANGE_WALLPAPER], FallbackValue='Change Wallpaper'}"/>
+          </Grid>
+        </Grid>
+        <Grid x:Name="mHelpandsupportSectionTag" Visibility="Collapsed">
+          <Separator x:Name="mHelpAndSupportSectionBorderLine" Style="{StaticResource LineStyle}"/>
+        </Grid>
+        <Grid x:Name="mHelpandsupportSection">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                MouseLeftButtonUp="ReportProblemGrid_MouseLeftButtonUp" x:Name="ReportProblemGrid" Row="0"
+                Style="{StaticResource ControlGridStyle}" Visibility="Collapsed">
+            <TextBlock Style="{StaticResource TextblockStyle}" HorizontalAlignment="Left"
+                       Text="{Binding Path=LocaleModel.[STRING_REPORT_A_PROBLEM], FallbackValue='Report a Problem'}"/>
+          </Grid>
+          <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                PreviewMouseLeftButtonUp="mHelpCenterGrid_MouseLeftButtonUp" x:Name="mHelpCenterGrid" Row="1"
+                Style="{StaticResource ControlGridStyle}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="30"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox x:Name="mHelpCenterImage" Style="{StaticResource ImageStyle}" ImageName="menu_help"/>
+            <TextBlock Style="{StaticResource TextblockStyle}" Grid.ColumnSpan="2"
+                       Text="{Binding Path=LocaleModel.[STRING_FEEDBACK], FallbackValue='Help and support'}"/>
+          </Grid>
+          <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+                PreviewMouseLeftButtonUp="SpeedUpBstGrid_MouseLeftButtonUp" x:Name="mSpeedUpBstGrid" Row="2"
+                Style="{StaticResource ControlGridStyle}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="30"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Common:CustomPictureBox x:Name="mSpeedUpBstImage" Style="{StaticResource ImageStyle}" ImageName="menu_speed_tips"/>
+            <TextBlock Style="{StaticResource TextblockStyle}"
+                       Text="{Binding Path=LocaleModel.[STRING_SPEED_UP_TIPS], FallbackValue='Speed Up Tips'}"/>
+          </Grid>
+        </Grid>
+      </StackPanel>
+      <local:CustomPopUp x:Name="mWallpaperPopup" MouseLeave="mWallpaperPopup_MouseLeave" Grid.Column="3"
+                         PopupAnimation="Fade" IsOpen="false" AllowsTransparency="true" HorizontalAlignment="Right"
+                         Placement="Left" HorizontalOffset="8" VerticalOffset="-30"
+                         PlacementTarget="{Binding ElementName=mChooseNewGrid}">
+        <Grid x:Name="mWallpaperPopupGrid" Background="Transparent">
+          <Border Style="{StaticResource ShadowBorderForPopup}">
+            <Grid x:Name="dummyGridForSize">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+              </Grid.ColumnDefinitions>
+              <Border x:Name="mWallpaperPopupBorder" Style="{StaticResource OuterBorder}">
+                <Grid>
+                  <UIElement.OpacityMask>
+                    <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+                  </UIElement.OpacityMask>
+                  <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"/>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="5"/>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="5"/>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="8"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="10"/>
+                      <ColumnDefinition Width="Auto"/>
+                      <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Row="1" Column="1">
+                      <TextBlock x:Name="mTitleText" FontSize="14" HorizontalAlignment="Left"
+                                 Text="{Binding Path=LocaleModel.[STRING_PREMIUM_FEATURE], FallbackValue='Premium Feature'}"
+                                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundHighlighterColor]}"/>
+                    </Grid>
+                    <Grid Row="3" Column="1">
+                      <TextBlock x:Name="mBodyText" MaxWidth="200" HorizontalAlignment="Left" TextWrapping="Wrap" Grid.Row="3"
+                                 Text="{Binding Path=LocaleModel.[STRING_PREMIUM_FEATURE_POPUP], FallbackValue='You need to buy BlueStacks Premium subscription to use this feature.'}"
+                                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Border>
+              <Grid Column="1">
+                <Path x:Name="RightArrow" Visibility="Visible" Data="M 0,0 L 0,10 5,5 " VerticalAlignment="Center"
+                      Fill="{Binding Path=ColorModel.[PopupBorderBrush]}"/>
+              </Grid>
+            </Grid>
+          </Border>
+        </Grid>
+      </local:CustomPopUp>
+      <local:CustomPopUp x:Name="mChooseWallpaperPopup" Opened="NotificationPopup_Opened" Closed="NotificationPopup_Closed"
+                         MouseLeave="mChooseWallpaperPopup_MouseLeave" PopupAnimation="Fade" AllowsTransparency="true"
+                         Placement="Left" HorizontalOffset="8" VerticalOffset="-10"
+                         PlacementTarget="{Binding ElementName=mChangeWallpaperGrid}">
+        <Grid x:Name="mChooseWallpaperPopupGrid" Background="Transparent">
+          <Border Style="{StaticResource ShadowBorderForPopup}">
+            <Grid x:Name="dummyGridForSize2">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+              </Grid.ColumnDefinitions>
+              <Border x:Name="mPopupGridBorder" Style="{StaticResource OuterBorder}">
+                <Grid>
+                  <UIElement.OpacityMask>
+                    <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder2}"/>
+                  </UIElement.OpacityMask>
+                  <Border x:Name="mMaskBorder2" Style="{StaticResource MaskBorder}"/>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid MouseEnter="ChooseNewGrid_MouseEnter" MouseLeave="ChooseNewGrid_MouseLeave"
+                          MouseLeftButtonUp="ChooseNewGrid_MouseLeftButtonUp" x:Name="mChooseNewGrid" Row="0">
+                      <TextBlock FontSize="12" HorizontalAlignment="Left" Margin="8,5,10,5"
+                                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                                 Text="{Binding Path=LocaleModel.[STRING_CHOOSE_NEW], FallbackValue='Choose New'}"/>
+                    </Grid>
+                    <Grid MouseEnter="SetDefaultGrid_MouseEnter" MouseLeave="SetDefaultGrid_MouseLeave"
+                          MouseLeftButtonUp="SetDefaultGrid_MouseLeftButtonUp" x:Name="mSetDefaultGrid" Row="1">
+                      <TextBlock x:Name="mRestoreDefaultText" HorizontalAlignment="Left" FontSize="12" Margin="8,5,10,5"
+                                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                                 Text="{Binding Path=LocaleModel.[STRING_RESTORE_DEFAULT], FallbackValue='Restore Default'}"/>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Border>
+              <Grid Column="1">
+                <Path x:Name="mRightArrow" Visibility="Visible" Data="M 0,0 L 0,10 5,5 " VerticalAlignment="Center"
+                      Fill="{Binding Path=ColorModel.[PopupBorderBrush]}"/>
+              </Grid>
+            </Grid>
+          </Border>
+        </Grid>
+      </local:CustomPopUp>
+    </Grid>
+  </Grid>
+</UserControl>

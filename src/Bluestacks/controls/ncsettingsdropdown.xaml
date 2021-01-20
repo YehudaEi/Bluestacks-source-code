@@ -1,0 +1,119 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.SettingsWindowDropdown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Style x:Key="TextblockStyle" TargetType="{Type TextBlock}">
+      <Setter Property="TextBlock.Foreground"
+              Value="{Binding Path=ColorModel.[SettingsWindowTabMenuItemForeground]}"/>
+      <Setter Property="TextBlock.FontSize" Value="13.5"/>
+      <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+      <Setter Property="FrameworkElement.Margin" Value="10,0,0,2"/>
+      <Setter Property="Grid.Column" Value="1"/>
+    </Style>
+    <Style x:Key="ControlGridStyle" TargetType="{Type Grid}">
+      <Setter Property="Panel.Background" Value="Transparent"/>
+      <Setter Property="FrameworkElement.Height" Value="24"/>
+      <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="FrameworkElement.Margin" Value="0,0,0,3"/>
+    </Style>
+    <Style x:Key="CustomPictureBoxStyle" TargetType="{Type Common:CustomPictureBox}">
+      <Setter Property="FrameworkElement.Width" Value="16"/>
+      <Setter Property="FrameworkElement.Height" Value="16"/>
+      <Setter Property="FrameworkElement.Margin" Value="10,0,0,0"/>
+    </Style>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid Margin="0,10,0,10">
+    <StackPanel Orientation="Vertical">
+      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" x:Name="mPinOnTopButtonGrid"
+            Style="{StaticResource ControlGridStyle}" Margin="0 0 0 4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox x:Name="mPinOnTopButtonImage" ImageName="menu_pin_to_top"
+                                 Style="{StaticResource CustomPictureBoxStyle}"/>
+        <TextBlock x:Name="mPinOnTopButtonText" Style="{StaticResource TextblockStyle}"
+                   Text="{Binding Path=LocaleModel.[STRING_PIN_TOP], FallbackValue='Pin top'}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="PinOnTop_MouseLeftButtonUp" x:Name="mPinOnTopToggleButton"
+                                 Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" ImageName="toggle_off"
+                                 Margin="0,0,15,0" Width="24" Height="12"/>
+      </Grid>
+      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+            PreviewMouseLeftButtonUp="FullscreenButton_MouseLeftButtonUp" x:Name="mFullScreenButtonGrid"
+            Style="{StaticResource ControlGridStyle}" Margin="0 4 0 4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox x:Name="mFullScreenImage" ImageName="menu_fullscreen"
+                                 Style="{StaticResource CustomPictureBoxStyle}"/>
+        <TextBlock x:Name="mFullScreenButtonText" Style="{StaticResource TextblockStyle}"
+                   Text="{Binding Path=LocaleModel.[STRING_Fullscreen], FallbackValue=Fullscreen}"/>
+      </Grid>
+      <Grid MouseLeave="Grid_MouseLeave" MouseEnter="Grid_MouseEnter"
+            PreviewMouseLeftButtonUp="SyncOperationsButton_PreviewMouseLeftButtonUp"
+            x:Name="mSyncOperationsButtonGrid" Style="{StaticResource ControlGridStyle}" Margin="0 4 0 4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox x:Name="mSyncOperationsButtonImage" ImageName="menu_sync"
+                                 Style="{StaticResource CustomPictureBoxStyle}"/>
+        <TextBlock x:Name="mSyncOperationsButtonText" Style="{StaticResource TextblockStyle}"
+                   Text="{Binding Path=LocaleModel.[STRING_SYNC_OPERATIONS], FallbackValue='Sync Operations'}"/>
+      </Grid>
+      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+            PreviewMouseLeftButtonUp="SortingButton_MouseLeftButtonUp" x:Name="mSortingGrid"
+            Style="{StaticResource ControlGridStyle}" Margin="0 4 0 4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox x:Name="mSortingButtonImage" ImageName="menu_arrange"
+                                 Style="{StaticResource CustomPictureBoxStyle}"/>
+        <TextBlock x:Name="mSortingButtonText" Style="{StaticResource TextblockStyle}" Margin="10,0,20,2"
+                   Text="{Binding Path=LocaleModel.[STRING_AUTOMATIC_SORTING], FallbackValue='Automatic sorting'}"/>
+      </Grid>
+      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+            PreviewMouseLeftButtonUp="AccountButton_MouseLeftButtonUp" x:Name="mAccountGrid"
+            Style="{StaticResource ControlGridStyle}" Margin="0 4 0 4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox x:Name="mAccountButtonImage" ImageName="menu_account"
+                                 Style="{StaticResource CustomPictureBoxStyle}"/>
+        <TextBlock x:Name="mAccountButtonText" Style="{StaticResource TextblockStyle}"
+                   Text="{Binding Path='LocaleModel.[STRING_ACCOUNT ]', FallbackValue=Account}"/>
+      </Grid>
+      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
+            PreviewMouseLeftButtonUp="SettingsButton_MouseLeftButtonUp" x:Name="mSettingsButtonGrid"
+            Style="{StaticResource ControlGridStyle}" Margin="0 4 0 4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomPictureBox x:Name="mSettingsButtonImage" ImageName="menu_gear" Style="{StaticResource CustomPictureBoxStyle}"/>
+        <TextBlock x:Name="mSettingsButtonText" Style="{StaticResource TextblockStyle}"
+                   Text="{Binding Path=LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"/>
+      </Grid>
+    </StackPanel>
+  </Grid>
+</UserControl>

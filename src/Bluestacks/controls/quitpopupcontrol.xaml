@@ -1,0 +1,42 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.QuitPopupControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             Width="768" Height="460"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Grid x:Name="mParentGrid">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="260"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid x:Name="mTitleGrid">
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="Close_PreviewMouseLeftButtonUp" x:Name="mCrossButtonPictureBox"
+                                 Margin="0,5,5,0" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                 ImageName="exit_close" Height="20" Width="20"
+                                 ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"/>
+        <TextBlock x:Name="mTitleText" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="24" Margin="0,30"
+                   Text="{Binding Path=LocaleModel.[STRING_TROUBLE_STARTING_BLUESTACKS], FallbackValue='Trouble starting BlueStacks?'}"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+      </Grid>
+      <Grid x:Name="mOptionsGrid" Row="1">
+        <StackPanel Name="mQuitElementStackPanel" Orientation="Horizontal" Margin="37,0"/>
+      </Grid>
+      <Grid x:Name="mFooterGrid" Margin="0,30" Row="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <Common:CustomButton PreviewMouseLeftButtonUp="ReturnBlueStacksButton_PreviewMouseLeftButtonUp"
+                               x:Name="mReturnBlueStacksButton" MinWidth="200" Margin="0,0,20,0" ButtonColor="White"
+                               Content="{Binding Path=LocaleModel.[STRING_RETURN_BLUESTACKS], FallbackValue='Return to BlueStacks'}"/>
+          <Common:CustomButton PreviewMouseLeftButtonUp="CloseBlueStacksButton_PreviewMouseLeftButtonUp"
+                               x:Name="mCloseBlueStacksButton" MinWidth="200" ButtonColor="Red"
+                               Content="{Binding Path=LocaleModel.[STRING_CLOSE_BLUESTACKS], FallbackValue='Close BlueStacks'}"/>
+        </StackPanel>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

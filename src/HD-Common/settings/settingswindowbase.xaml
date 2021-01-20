@@ -1,0 +1,73 @@
+<UserControl x:Class="BlueStacks.Common.SettingsWindowBase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.Common"
+             Loaded="UserControl_Loaded" MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             DataContext="{Binding Source={x:Static local:BlueStacksUIBinding.Instance}}">
+  <Grid MouseLeftButtonUp="Grid_MouseLeftButtonUp"
+        Background="{Binding Path=ColorModel.[SettingsWindowBackground]}">
+    <Grid x:Name="mGrid">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="40"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid Row="0" Background="{Binding Path=ColorModel.[SettingsWindowTitleBarBackground]}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <local:CustomPictureBox x:Name="mSettingsWindowIcon" Margin="20,0,0,0" Grid.Column="0" ImageName="settings_header.png"
+                                Height="16" Width="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label x:Name="mLblBlueStacksSettings" Grid.Column="1" Margin="8,0,8,0" HorizontalAlignment="Left"
+               VerticalAlignment="Center" FontSize="16" FontWeight="Normal"
+               Content="{Binding Path=LocaleModel.[STRING_SETTINGS], FallbackValue=Settings}"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTitleBarForeGround]}"/>
+        <local:CustomPictureBox x:Name="mCrossButton" MouseLeftButtonUp="CloseButton_MouseLeftButtonUp"
+                                PreviewMouseDown="mCrossButton_PreviewMouseDown" Grid.Column="2" ImageName="close" Height="17"
+                                Width="17" Margin="0,0,20,0" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE]}"/>
+        <local:CustomPopUp x:Name="mEnableVTPopup" MouseLeftButtonUp="mEnableVTPopup_MouseLeftButtonUp" Height="20"
+                           IsOpen="false" Placement="Bottom" AllowsTransparency="true">
+          <Grid Background="#FF402F">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="5*"/>
+              <ColumnDefinition Width="75*"/>
+              <ColumnDefinition Width="15*"/>
+              <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Grid.Row="1" FontSize="11" VerticalAlignment="Center" Foreground="White"
+                       Text="{Binding Path=LocaleModel.[STRING_ENABLE_VT], FallbackValue='Enable VT to make BlueStacks faster'}"/>
+            <Grid Column="2" Row="1">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="76*"/>
+                <RowDefinition Height="12*"/>
+              </Grid.RowDefinitions>
+              <Border Grid.Row="1" BorderThickness="1" CornerRadius="2" BorderBrush="#E91F22">
+                <TextBlock PreviewMouseLeftButtonUp="EnableVtInfo_PreviewMouseLeftButtonUp" x:Name="EnableVtInfo"
+                           FontSize="11" Foreground="White" Background="#E91F22" TextAlignment="Center"
+                           Text="{Binding Path=LocaleModel.[STRING_LEARN_MORE], FallbackValue='Learn more'}"/>
+              </Border>
+            </Grid>
+          </Grid>
+        </local:CustomPopUp>
+      </Grid>
+      <Grid x:Name="mBottomGrid" Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="180"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Column="0"
+                      Background="{Binding Path=ColorModel.[SettingsWindowTabMenuItemBackground]}">
+          <StackPanel Name="settingsStackPanel" Margin="0,25,0,0" Orientation="Vertical"/>
+        </ScrollViewer>
+        <Line x:Name="mSelectedLine" Grid.Column="1" X1="0" Y1="0" X2="0" StrokeThickness="1" Width="1"
+              HorizontalAlignment="Left" Y2="{Binding ActualHeight, ElementName=mBottomGrid}"
+              Stroke="{Binding Path=ColorModel.[VerticalSeparator]}"/>
+        <Grid Name="settingsWindowGrid" Column="1"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

@@ -1,0 +1,60 @@
+<local:CustomWindow x:Class="BlueStacks.Common.RichNotificationPopup"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:local="clr-namespace:BlueStacks.Common"
+                    ResizeMode="NoResize" Background="#212121" WindowStyle="None">
+  <Grid>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <local:CustomPictureBox x:Name="mBackgroundImage" Grid.Column="0" Grid.ColumnSpan="2" ImageName="" Stretch="Fill"
+                                Visibility="Visible"/>
+        <Grid Name="mCloseButtonGrid" Column="1" Margin="0,10,10,0">
+          <StackPanel Name="mCloseButtonStackPanel" Orientation="Horizontal" HorizontalAlignment="Right"
+                      VerticalAlignment="Top">
+            <local:CustomPictureBox x:Name="mMuteButton" ImageName="mute2" Visibility="Visible" Margin="0,0,10,0" MaxWidth="24"
+                                    MaxHeight="24"
+                                    ToolTip="{Binding Path=LocaleModel.[STRING_MUTE_NOTIFICATION_TOOLTIP], FallbackValue='Mute notification'}"/>
+            <local:CustomPictureBox x:Name="mCloseButton" ImageName="close" Visibility="Visible" MaxWidth="24" MaxHeight="24"
+                                    ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"/>
+          </StackPanel>
+        </Grid>
+      </Grid>
+      <Grid x:Name="mBottomGrid" Row="1" Margin="13" Height="38">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Column="0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <local:CustomPictureBox x:Name="mGameIcon" Grid.Column="0" Visibility="Visible" HorizontalAlignment="Left" ImageName=""
+                                  Margin="0,0,10,0"/>
+          <Grid x:Name="mGameDescriptionGrid" Column="1" HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="mGameTitle" Grid.Row="0" Visibility="Visible" FontSize="14" Foreground="#FFFFFF"
+                       FontWeight="SemiBold" TextWrapping="WrapWithOverflow" Text="" Margin="0,0,10,0"/>
+            <TextBlock x:Name="mGameDeveloper" Grid.Row="1" Visibility="Visible" FontSize="12" Foreground="#858585"
+                       FontWeight="SemiBold" Text=""/>
+          </Grid>
+        </Grid>
+        <local:CustomButton x:Name="mButton" Grid.Column="1" Visibility="Visible" Height="25" FontSize="14"
+                            HorizontalAlignment="Right" ButtonColor="Blue" Content="Play Now"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</local:CustomWindow>

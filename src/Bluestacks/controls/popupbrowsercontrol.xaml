@@ -1,0 +1,36 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.PopupBrowserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Border x:Name="mGridBorder" BorderThickness="1" BorderBrush="{Binding Path=ColorModel.[PopupBorderBrush]}">
+    <Grid x:Name="mOuterGrid" Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="40"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid Row="0" Background="{Binding Path=ColorModel.[ContextMenuItemBackgroundColor]}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="5"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="5"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="mTitle" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                   FontSize="19" Grid.Column="0" FontWeight="Medium"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        <Common:CustomPictureBox PreviewMouseLeftButtonUp="CloseBtn_PreviewMouseLeftButtonUp" x:Name="CloseBtn" Margin="0,0,10,0"
+                                 Height="25" Width="25" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                 ImageName="close"/>
+      </Grid>
+      <Grid x:Name="mGrid" Row="1">
+        <local:BrowserControl x:Name="mBrowser" Grid.Row="1"/>
+      </Grid>
+    </Grid>
+  </Border>
+</UserControl>

@@ -1,0 +1,41 @@
+<UserControl x:Class="BlueStacks.Common.CustomToggleButtonWithState"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.Common"
+             x:Name="mCustomToggleButton">
+  <FrameworkElement.Resources>
+    <local:BooleanToImageNameConverter x:Key="BooleanToImageNameConverter"/>
+    <local:BooleanToLocalizedStringConverter x:Key="BooleanToLocalizedStringConverter"/>
+    <local:BooleanToVisibilityConverter2 x:Key="BooleanToVisibilityConverter"/>
+  </FrameworkElement.Resources>
+  <Grid VerticalAlignment="Center">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <local:CustomPictureBox PreviewMouseLeftButtonUp="mToggleButton_PreviewMouseLeftButtonUp" Grid.Column="0"
+                            Width="{Binding ImageWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=local:CustomToggleButtonWithState}}"
+                            Height="{Binding ImageHeight, RelativeSource={RelativeSource FindAncestor, AncestorType=local:CustomToggleButtonWithState}}"
+                            ImageName="{Binding BoolValue, Converter={StaticResource BooleanToImageNameConverter}, ConverterParameter=ToggleOn|ToggleOff, RelativeSource={RelativeSource FindAncestor, AncestorType=local:CustomToggleButtonWithState}}"/>
+    <TextBlock Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Stretch"
+               Visibility="{Binding LabelVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=local:CustomToggleButtonWithState}}"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowTabMenuItemLegendForeground]}">
+      <FrameworkElement.Style>
+        <Style>
+          <Setter Property="TextBlock.Text">
+            <Setter.Value>
+              <MultiBinding Converter="{local:LocalizedStringMultiConverter}">
+                <Binding Path="BoolValue" Converter="{StaticResource BooleanToImageNameConverter}"
+                         ConverterParameter="STRING_ON|STRING_OFF"
+                         RelativeSource="{RelativeSource FindAncestor, AncestorType=local:CustomToggleButtonWithState}"/>
+                <Binding Path="LocaleModel" Source="{x:Static local:BlueStacksUIBinding.Instance}"/>
+              </MultiBinding>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </FrameworkElement.Style>
+    </TextBlock>
+  </Grid>
+</UserControl>

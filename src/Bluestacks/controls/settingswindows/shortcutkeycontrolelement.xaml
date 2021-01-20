@@ -1,0 +1,81 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.ShortcutKeyControlElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <FrameworkElement.Resources>
+    <Style x:Key="CenteredHorizontalOffsetStyle" TargetType="{Type Popup}">
+      <Setter Property="Popup.HorizontalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Popup.VerticalOffset">
+        <Setter.Value>
+          <MultiBinding Converter="{Common:CenterToolTipConverter}">
+            <Binding Path="PlacementTarget.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+            <Binding Path="Child.ActualHeight" RelativeSource="{RelativeSource Self}"/>
+          </MultiBinding>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </FrameworkElement.Resources>
+  <Grid Margin="3,3,0,3">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="10"/>
+      <ColumnDefinition Width="150"/>
+    </Grid.ColumnDefinitions>
+    <TextBlock x:Name="mShortcutNameTextBlock" Grid.Column="0" TextWrapping="WrapWithOverflow" FontWeight="Normal"
+               FontSize="16" VerticalAlignment="Center"
+               Foreground="{Binding Path=ColorModel.[SettingsWindowForegroundDimColor]}"/>
+    <Common:CustomTextBox PreviewKeyDown="ShortcutKeyTextBoxKeyDown" MouseEnter="ShortcutKeyTextBoxMouseEnter"
+                          MouseLeave="ShortcutKeyTextBoxMouseLeave" PreviewKeyUp="ShortcutKeyTextBoxKeyUp"
+                          x:Name="mShortcutKeyTextBox" Grid.Column="2" Visibility="Visible" FontSize="13" Height="28"
+                          FontWeight="SemiBold" Padding="4" IsTabStop="false" VerticalContentAlignment="Top"
+                          HorizontalContentAlignment="Left">
+      <FrameworkElement.ContextMenu>
+        <ContextMenu Visibility="Collapsed"/>
+      </FrameworkElement.ContextMenu>
+    </Common:CustomTextBox>
+    <local:CustomPopUp x:Name="mKeyInfoPopup" AllowsTransparency="true" StaysOpen="false" IsOpen="false" Placement="Top"
+                       PopupAnimation="Fade" Style="{StaticResource CenteredHorizontalOffsetStyle}" VerticalOffset="0"
+                       PlacementTarget="{Binding ElementName=mShortcutKeyTextBox}">
+      <Border Style="{StaticResource ShadowBorderForPopup}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+          </Grid.RowDefinitions>
+          <Border Style="{StaticResource OuterBorder}"
+                  BorderBrush="{Binding Path=ColorModel.[RedMouseOutGridBackGround]}"
+                  Background="{Binding Path=ColorModel.[ComboBoxBackgroundColor]}">
+            <Grid>
+              <UIElement.OpacityMask>
+                <VisualBrush Stretch="None" Visual="{Binding ElementName=mMaskBorder}"/>
+              </UIElement.OpacityMask>
+              <Border x:Name="mMaskBorder" Style="{StaticResource MaskBorder}"
+                      Background="{Binding Path=ColorModel.[ComboBoxBackgroundColor]}"/>
+              <Grid Margin="7,5,7,5">
+                <TextBlock x:Name="mKeyInfoText" MaxWidth="180" TextWrapping="WrapWithOverflow" FontWeight="Normal"
+                           Grid.Column="0" Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"
+                           Text="{Binding Path=LocaleModel.[STRING_DUPLICATE_SHORTCUTS_WARNING]}"/>
+              </Grid>
+            </Grid>
+          </Border>
+          <Grid Row="1">
+            <Path x:Name="mDownArrow" Data="M 0,0 L 8,10 16,0 " Margin="0,-1,0,0" HorizontalAlignment="Center"
+                  Fill="{Binding Path=ColorModel.[ComboBoxBackgroundColor]}"
+                  Stroke="{Binding Path=ColorModel.[RedMouseOutGridBackGround]}"/>
+          </Grid>
+        </Grid>
+      </Border>
+    </local:CustomPopUp>
+  </Grid>
+</UserControl>

@@ -1,0 +1,106 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.NotificationDrawerItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MouseLeftButtonUp="UserControl_MouseLeftButtonUp" MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave"
+             DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid Height="auto" Margin="16, 12">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="40"/>
+      <ColumnDefinition Width="12"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Common:CustomPictureBox x:Name="icon" Height="40" Width="40" ImageName="pika.gif" Grid.Column="0" VerticalAlignment="Top"
+                             HorizontalAlignment="Left"/>
+    <Grid Column="2" HorizontalAlignment="Stretch" Margin="0,1,0,0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto"/>
+        <RowDefinition Height="auto"/>
+      </Grid.RowDefinitions>
+      <Grid Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="titleText" Grid.Column="0" Text="Title" FontSize="13" Margin="0, 0, 6, 3"
+                   TextWrapping="Wrap" HorizontalAlignment="Left"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+        <TextBlock x:Name="dateText" Grid.Column="1" Text="Date" FontWeight="ExtraLight" FontSize="12"
+                   Margin="0, 0, 0, 2" TextWrapping="NoWrap" HorizontalAlignment="Right"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimDimColor]}"/>
+        <Grid x:Name="mNotificationActions" Column="2" VerticalAlignment="Top" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Separator Grid.Column="0" Background="#33FFFFFF" Width="1" Height="12" Opacity="0.5"
+                     Style="{StaticResource {Static ToolBar.SeparatorStyleKey}}" Margin="4, 0"/>
+          <Common:CustomPictureBox MouseLeftButtonUp="mSnoozeBtn_MouseLeftButtonUp" Name="mSnoozeBtn" Grid.Column="1"
+                                   ImageName="snooze" Width="16" Height="16"/>
+          <local:CustomPopUp x:Name="mMutePopup" IsTopmost="true" AllowsTransparency="true" VerticalOffset="-4"
+                             HorizontalOffset="-32" StaysOpen="false" Placement="Bottom" PopupAnimation="Slide"
+                             PlacementTarget="{Binding ElementName=mSnoozeBtn}">
+            <Border Style="{StaticResource ShadowBorder}">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="4"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Path Data="M 7,0 L 0,8 14,8 " Grid.Row="0" StrokeThickness="1" Margin="0,0,5.5,-1"
+                      HorizontalAlignment="Right" Stroke="{Binding ColorModel.[PopupBorderBrush]}"
+                      Fill="{Binding ColorModel.[ContextMenuItemBackgroundColor]}"/>
+                <Border BorderThickness="1" Grid.Row="1" BorderBrush="{Binding ColorModel.[PopupBorderBrush]}">
+                  <Grid MinHeight="60" MinWidth="50" Background="{Binding ColorModel.[ContextMenuItemBackgroundColor]}">
+                    <Grid>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                      </Grid.RowDefinitions>
+                      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Row="0">
+                        <TextBlock MouseUp="Lbl1Hour_MouseUp" x:Name="mLbl1Hour" HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" Margin="5, 1"
+                                   Text="{Binding LocaleModel.[STRING_HOUR], FallbackValue='1 Hour'}"
+                                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                      </Grid>
+                      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Row="1">
+                        <TextBlock MouseUp="Lbl1Day_MouseUp" x:Name="mLbl1Day" HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" Margin="5, 1"
+                                   Text="{Binding LocaleModel.[STRING_DAY], FallbackValue='1 Day'}"
+                                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                      </Grid>
+                      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Row="2">
+                        <TextBlock MouseUp="Lbl1Week_MouseUp" x:Name="mLbl1Week" HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" Margin="5, 1"
+                                   Text="{Binding LocaleModel.[STRING_WEEK], FallbackValue='1 Week'}"
+                                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                      </Grid>
+                      <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Row="3">
+                        <TextBlock MouseUp="LblForever_MouseUp" x:Name="mLblForever" HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" Margin="5, 1"
+                                   Text="{Binding LocaleModel.[STRING_FOREVER], FallbackValue=Forever}"
+                                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Border>
+              </Grid>
+            </Border>
+          </local:CustomPopUp>
+          <Common:CustomPictureBox MouseLeftButtonUp="mCloseBtn_MouseLeftButtonUp" Name="mCloseBtn" Grid.Column="2"
+                                   ImageName="close_icon" Width="16" Height="16"/>
+        </Grid>
+      </Grid>
+      <TextBlock x:Name="messageText" Grid.Row="1" Text="Notification message with a very long text." FontSize="12"
+                 TextWrapping="Wrap" LineStackingStrategy="BlockLineHeight" LineHeight="17"
+                 Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundDimColor]}"/>
+    </Grid>
+  </Grid>
+</UserControl>

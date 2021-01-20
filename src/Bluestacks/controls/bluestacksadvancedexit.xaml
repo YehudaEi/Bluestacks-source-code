@@ -1,0 +1,43 @@
+<UserControl x:Class="BlueStacks.BlueStacksUI.BlueStacksAdvancedExit"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:BlueStacks.BlueStacksUI"
+             xmlns:Common="clr-namespace:BlueStacks.Common;assembly=HD-Common"
+             MaxWidth="440" DataContext="{Binding Source={Static Common:BlueStacksUIBinding.Instance}}">
+  <Grid>
+    <Common:CustomPictureBox PreviewMouseLeftButtonUp="Close_PreviewMouseLeftButtonUp" x:Name="mCrossButtonPictureBox"
+                             HorizontalAlignment="Right" VerticalAlignment="Top" ImageName="exit_close" Height="20" Width="20"
+                             Margin="0,10,10,0" ToolTip="{Binding Path=LocaleModel.[STRING_CLOSE], FallbackValue=Close}"/>
+    <Grid x:Name="mParentGrid" Margin="25">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid x:Name="mTitleGrid">
+        <TextBlock x:Name="mTitleText" FontWeight="Normal" HorizontalAlignment="Center"
+                   TextWrapping="WrapWithOverflow" VerticalAlignment="Center" FontSize="20"
+                   Text="{Binding Path=LocaleModel.[STRING_EXIT_BLUESTACKS], FallbackValue='Would you like to exit BlueStacks?'}"
+                   Foreground="{Binding Path=ColorModel.[ContextMenuItemForegroundColor]}"/>
+      </Grid>
+      <Grid x:Name="mOptionsGrid" Row="1">
+        <StackPanel Name="mOptionsStackPanel" Orientation="Vertical" Margin="0,15,0,0"/>
+      </Grid>
+      <Grid x:Name="mFooterGrid" Row="2" Margin="0,20,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="10"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Common:CustomButton PreviewMouseLeftButtonUp="MNoButton_PreviewMouseLeftButtonUp" x:Name="mNoButton" Grid.Column="0"
+                             ButtonColor="White" MinWidth="150"
+                             Content="{Binding Path=LocaleModel.[STRING_NO], FallbackValue=No}"/>
+        <Common:CustomButton PreviewMouseLeftButtonUp="MYesButton_PreviewMouseLeftButtonUp" x:Name="mYesButton" Grid.Column="2"
+                             ButtonColor="Red" MinWidth="150"
+                             Content="{Binding Path=LocaleModel.[STRING_YES], FallbackValue=Yes}"/>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>
